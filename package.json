@@ -1,0 +1,26 @@
+{
+  "name": "flowhs",
+  "version": "1.0.0",
+  "description": "Flow Based Hardware Simulator",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eforen/FlowHS.git"
+  },
+  "author": "Ariel Lothlorien",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eforen/FlowHS/issues"
+  },
+  "homepage": "https://github.com/Eforen/FlowHS#readme",
+  "dependencies": {
+    "d3-node-editor": "^0.6.3",
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "electron": "~1.7.8"
+  }
+}
