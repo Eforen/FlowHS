@@ -4,16 +4,22 @@ const app = electron.app
 // Module to create native browser window.
 const BrowserWindow = electron.BrowserWindow
 
+const ipc = electron.ipcMain;
 const path = require('path')
 const url = require('url')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow
+let screenWindow
+let editorWindow
 
 function createWindow () {
   // Create the browser window.
-  mainWindow = new BrowserWindow({width: 800, height: 600})
+  mainWindow = new BrowserWindow({
+    width: 800, height: 600,
+    show: false
+  })
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -30,7 +36,56 @@ function createWindow () {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    mainWindow = null
+    //mainWindow = null
+
+    //Die if main window is closed
+    app.quit()
+  })
+
+  mainWindow.once('ready-to-show', function(){
+    mainWindow.show();
+  })
+
+  ///////////////////
+  // Screen Window //
+  ///////////////////
+
+  screenWindow = new BrowserWindow({
+    width: 400, height:300,
+    show: false
+  })
+  screenWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'screen.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  screenWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    screenWindow = null
+  })
+
+  ///////////////////
+  // Editor Window //
+  ///////////////////
+
+  editorWindow = new BrowserWindow({
+    width: 400, height:300,
+    show: false
+  })
+  editorWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'editor.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  editorWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    editorWindow = null
   })
 }
 
@@ -54,6 +109,11 @@ app.on('activate', function () {
   if (mainWindow === null) {
     createWindow()
   }
+})
+
+ipc.on('openEditor', (event, args) => {
+  event.returnValue = '';
+  editorWindow.show();
 })
 
 // In this file you can include the rest of your app's specific main process

@@ -1,0 +1,77 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+
+	<title>FlowHS Editor</title>
+    <style type="text/css">
+      .socket.number{
+        background: #96b38a
+      }
+    </style>
+</head>
+
+<body id="EditorPage">
+    <div id="d3ne" class="node-editor"></div>
+    <script type="text/javascript">
+    	var D3NE = require("d3-node-editor");
+
+		var numComp = new D3NE.Component('Number',{
+		    builder(node) {
+		        var out = new D3NE.Output('Number',numSocket); 
+		        var numControl = new D3NE.Control('<input type="number">',(element, control)=>{
+		            control.putData('num', 1);
+		         });
+
+		        return node
+		                  .addControl(numControl)
+		                  .addOutput(out);
+		    },
+		    worker(node, inputs, outputs){
+		        outputs[0] = node.data.num;
+		  }
+		});
+
+		var addComp = new D3NE.Component('Add',{
+		    template: '<div .... ',
+		    builder(node){
+		      //...
+		      return node;
+		    },
+		    async worker(node, inputs, outputs){
+		       await asyncTask();
+		   }
+		});
+
+		var components = [numComp,addComp];
+
+
+
+
+
+		var menu = new D3NE.ContextMenu({
+		                'Actions':{
+		                    'Action': function(){alert('Subitem selected');}
+		                },
+		                'Nodes':{
+		                    'Number': numComp, 
+		                    'Add': addComp
+		                }
+		           });
+		var container = document.querySelector('#d3ne');
+		var editor = new D3NE.NodeEditor('demo@0.1.0', container, components, menu);
+
+
+
+
+
+		var engine = new D3NE.Engine('demo@0.1.0', components);
+
+		editor.eventListener.on('change', async () => {
+		    await engine.abort();            
+		    var status = await engine.process(editor.toJSON());            
+		});
+    </script>
+</body>
+</html>
