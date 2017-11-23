@@ -2,7 +2,7 @@
   "name": "flowhs",
   "version": "1.0.0",
   "description": "Flow Based Hardware Simulator",
-  "main": "app/main.js",
+  "main": "app/index.js",
   "scripts": {
     "start": "electron ."
   },
