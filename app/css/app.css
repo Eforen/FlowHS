@@ -11953,6 +11953,22 @@ li.recentFiles-item.media:last-child {
 #EditorPage .socket.number {
   background: #96b38a;
 }
+
+#EditorPage .node-editor .node {
+  background: rgba(0, 138, 170, 0.8);
+  border: 2px solid #00a7cc;
+}
+
+#EditorPage .node-editor .node.selected {
+  background: #66e3ff;
+  border-color: #ccf6ff;
+}
+
+#EditorPage .node.selected .title,
+#EditorPage .node.selected .output-title,
+#EditorPage .node.selected .input-title {
+  color: #005366;
+}
 @charset "UTF-8";
 
 .context-menu {
@@ -12674,6 +12690,22 @@ li.recentFiles-item.media:last-child {
 
 #EditorPage .socket.number {
   background: #96b38a;
+}
+
+#EditorPage .node-editor .node {
+  background: rgba(0, 138, 170, 0.8);
+  border: 2px solid #00a7cc;
+}
+
+#EditorPage .node-editor .node.selected {
+  background: #66e3ff;
+  border-color: #ccf6ff;
+}
+
+#EditorPage .node.selected .title,
+#EditorPage .node.selected .output-title,
+#EditorPage .node.selected .input-title {
+  color: #005366;
 }
 
 
