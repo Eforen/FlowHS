@@ -5,15 +5,19 @@
 	</head>
 	  <!--
 		-->
-	<script src="https://cdn.jsdelivr.net/npm/alight@0.14.0/alight.min.js"></script>
+	<script src="js/includes/alight.min.js"></script>
 	<script type="text/javascript">window.alight = require('alight');</script>
-	<script src="https://cdn.jsdelivr.net/npm/d3@4.10.2/build/d3.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/d3-node-editor@0.6.3/build/d3-node-editor.js"></script>
+	<script src="js/includes/d3.min.js"></script>
+	<script src="js/includes/d3-node-editor.js"></script>
 	<!--<link href="https://cdn.jsdelivr.net/npm/d3-node-editor@0.6.3/build/d3-node-editor.css" rel="stylesheet"></link>-->
 	<link href="css/app.css" rel="stylesheet"></link>
 	<body id="EditorPage">
-	   <div id="nodeEditor" class="node-editor"></div>
-
+		<div class="titlebar">
+			<span class="title">FlowHS Editor</span>
+			<span id="min" class="button"><span aria-hidden="true" class="fa fa-window-minimize"></span></span>
+			<span id="close" class="button"><span aria-hidden="true" class="fa fa-times"></span></span>
+		</div>
+		<div id="nodeEditor" class="node-editor"></div>
 	</body>
 
 	<script src="js/editor.js"></script>

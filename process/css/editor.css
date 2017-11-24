@@ -2,8 +2,13 @@
 @import url('../../node_modules/d3-node-editor/build/d3-node-editor.css');
 
 #EditorPage #nodeEditor{
-   position: relative;
-  height: 100%
+   position: absolute;
+   top: 20px;
+   bottom: 0px;
+   left: 0px;
+   right: 0px;
+   height: auto;
+   overflow: hidden;
 }
 
 #EditorPage .socket.number{
@@ -22,6 +27,16 @@
 
 #EditorPage .node.selected .title,
 #EditorPage .node.selected .output-title,
-#EditorPage .node.selected .input-title{
+#EditorPage .node.selected .input-title,
+#EditorPage .node.selected .control{
   color: #005366;
+}
+
+#EditorPage .node .control input{
+    background: rgba(230, 250, 255, 0.2);
+    color: #e6faff;
+}
+#EditorPage .node.selected input{
+    background: rgba(230, 250, 255, 0.7);
+    color: #005366;
 }

@@ -74,7 +74,8 @@ function createWindow () {
 
   editorWindow = new BrowserWindow({
     width: 800, height:600,
-    show: false
+    show: false,
+    frame:false
   })
   editorWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'editor.html'),
