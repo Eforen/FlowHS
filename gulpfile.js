@@ -15,7 +15,7 @@ gulp.task('checkjs', function(){
 gulp.task('js', function() {
   return gulp.src( src + '/js/*.js' )
     .pipe(browserify({
-      transform: ['babelify','reactify'],
+      transform: ['reactify'],
       extensions: 'browserify-css',
       debug: true
     }))
@@ -26,7 +26,6 @@ gulp.task('js', function() {
 });
 /*
 
-const sourcemaps = require('gulp-sourcemaps');
 const babel = require('gulp-babel');
 
 gulp.task('js', function() {

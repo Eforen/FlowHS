@@ -1,4 +1,5 @@
 @import url('d3-node-editor.css');
+@import url('../../node_modules/d3-node-editor/build/d3-node-editor.css');
 
 #EditorPage #nodeEditor{
    position: relative;
