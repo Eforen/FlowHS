@@ -1,0 +1,10 @@
+@import url('d3-node-editor.css');
+
+#EditorPage #nodeEditor{
+   position: relative;
+  height: 100%
+}
+
+#EditorPage .socket.number{
+    background: #96b38a
+}

@@ -18,7 +18,8 @@ function createWindow () {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800, height: 600,
-    show: false
+    show: false,
+    frame:false
   })
 
   // and load the index.html of the app.
@@ -86,6 +87,10 @@ function createWindow () {
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
     editorWindow = null
+  })
+
+  editorWindow.once('ready-to-show', function(){
+    editorWindow.show();
   })
 }
 

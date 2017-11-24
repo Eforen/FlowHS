@@ -1,15 +1,21 @@
 var gulp = require('gulp'),
+    babelify = require('babelify'),
     browserify = require('gulp-browserify'),
     concatCss = require('gulp-concat-css'),
-    run = require('gulp-run');
+    run = require('gulp-run'),
+    jshint = require('gulp-jshint');
 
 var src = './process',
     app = './app';
 
+gulp.task('checkjs', function(){
+  return gulp.src([app + '/js/**/*.js', src + '/js/**/*.js']).pipe(jshint());
+});
+
 gulp.task('js', function() {
-  return gulp.src( src + '/js/render.js' )
+  return gulp.src( src + '/js/*.js' )
     .pipe(browserify({
-      transform: 'reactify',
+      transform: ['babelify','reactify'],
       extensions: 'browserify-css',
       debug: true
     }))
@@ -18,6 +24,25 @@ gulp.task('js', function() {
     })
     .pipe(gulp.dest(app + '/js'));
 });
+/*
+
+const sourcemaps = require('gulp-sourcemaps');
+const babel = require('gulp-babel');
+
+gulp.task('js', function() {
+  return gulp.src( [src + '/js/*.jsx', src + '/js/*.js'] )
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+        plugins: ["transform-runtime"],
+        presets: ['env', 'react']
+    }))
+    .on('error', function (err) {
+      console.error('Error!', err.message);
+    })
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest(app + '/js'));
+});
+*/
 
 gulp.task('html', function() {
   gulp.src( src + '/**/*.html');
