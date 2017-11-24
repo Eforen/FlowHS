@@ -1,18 +1,5 @@
+(function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);throw new Error("Cannot find module '"+o+"'")}var f=n[o]={exports:{}};t[o][0].call(f.exports,function(e){var n=t[o][1][e];return s(n?n:e)},f,f.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
-
-var _alight = require('../../node_modules/alight/alight');
-
-var alight = _interopRequireWildcard(_alight);
-
-var _d = require('../../node_modules/d3');
-
-var d3 = _interopRequireWildcard(_d);
-
-var _d3NodeEditor = require('../../node_modules/d3-node-editor/build/d3-node-editor');
-
-var D3NE = _interopRequireWildcard(_d3NodeEditor);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 console.log("WTF!");
 //var D3NE = require("d3-node-editor");
@@ -22,98 +9,15 @@ console.log("WTF!");
 //var d3 = nRequire("d3");
 //var D3NE = nRequire("d3-node-editor");
 
-var numSocket = new D3NE.Socket("number", "Number value", "hint");
+//import * as alight from '../../node_modules/alight/alight'
+//import * as d3 from '../../node_modules/d3'
+//import * as D3NE from '../../node_modules/d3-node-editor/build/d3-node-editor'
+//import * as alight from 'alight'
+//import * as d3 from 'd3'
+//import * as D3NE from 'd3-node-editor'
 
-var componentNum = new D3NE.Component("Number", {
-   builder: function builder(node) {
-      var out1 = new D3NE.Output("Number", numSocket);
-      var numControl = new D3NE.Control('<input type="number">', function (el, c) {
-         el.value = c.getData('num') || 1;
+var numSocket = new D3NE.Socket('number', 'Number value', 'hint');
+//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImZha2VfNzMyMmRiZTMuanMiXSwibmFtZXMiOlsiY29uc29sZSIsImxvZyIsIm51bVNvY2tldCIsIkQzTkUiLCJTb2NrZXQiXSwibWFwcGluZ3MiOiI7O0FBQUFBLFFBQVFDLEdBQVIsQ0FBWSxNQUFaO0FBQ0E7QUFDQTs7QUFFQTtBQUNBO0FBQ0E7O0FBRUE7QUFDQTtBQUNBO0FBQ0E7QUFDQTtBQUNBOztBQUVBLElBQUlDLFlBQVksSUFBSUMsS0FBS0MsTUFBVCxDQUFnQixRQUFoQixFQUEwQixjQUExQixFQUEwQyxNQUExQyxDQUFoQiIsImZpbGUiOiJmYWtlXzczMjJkYmUzLmpzIiwic291cmNlc0NvbnRlbnQiOlsiY29uc29sZS5sb2coXCJXVEYhXCIpXHJcbi8vdmFyIEQzTkUgPSByZXF1aXJlKFwiZDMtbm9kZS1lZGl0b3JcIik7XHJcbi8vdmFyIGFsaWdodCA9IHJlcXVpcmUoXCIuL2luY2x1ZGVzL2FsaWdodFwiKVxyXG5cclxuLy92YXIgYWxpZ2h0ID0gblJlcXVpcmUoXCJhbGlnaHRcIik7XHJcbi8vdmFyIGQzID0gblJlcXVpcmUoXCJkM1wiKTtcclxuLy92YXIgRDNORSA9IG5SZXF1aXJlKFwiZDMtbm9kZS1lZGl0b3JcIik7XHJcblxyXG4vL2ltcG9ydCAqIGFzIGFsaWdodCBmcm9tICcuLi8uLi9ub2RlX21vZHVsZXMvYWxpZ2h0L2FsaWdodCdcclxuLy9pbXBvcnQgKiBhcyBkMyBmcm9tICcuLi8uLi9ub2RlX21vZHVsZXMvZDMnXHJcbi8vaW1wb3J0ICogYXMgRDNORSBmcm9tICcuLi8uLi9ub2RlX21vZHVsZXMvZDMtbm9kZS1lZGl0b3IvYnVpbGQvZDMtbm9kZS1lZGl0b3InXHJcbi8vaW1wb3J0ICogYXMgYWxpZ2h0IGZyb20gJ2FsaWdodCdcclxuLy9pbXBvcnQgKiBhcyBkMyBmcm9tICdkMydcclxuLy9pbXBvcnQgKiBhcyBEM05FIGZyb20gJ2QzLW5vZGUtZWRpdG9yJ1xyXG5cclxudmFyIG51bVNvY2tldCA9IG5ldyBEM05FLlNvY2tldCgnbnVtYmVyJywgJ051bWJlciB2YWx1ZScsICdoaW50Jyk7XHJcbiJdfQ==
 
-         function upd() {
-            c.putData("num", parseFloat(el.value));
-            editor.eventListener.trigger("change");
-         }
-
-         el.addEventListener("input", upd);
-         el.addEventListener("mousedown", function (e) {
-            e.stopPropagation();
-         }); // prevent node movement when selecting text in the input field
-         upd();
-      });
-
-      return node.addControl(numControl).addOutput(out1);
-   },
-   worker: function worker(node, inputs, outputs) {
-      outputs[0] = node.data.num;
-   }
-});
-
-var componentAdd = new D3NE.Component("Add", {
-   builder: function builder(node) {
-      var inp1 = new D3NE.Input("Number", numSocket);
-      var inp2 = new D3NE.Input("Number", numSocket);
-      var out = new D3NE.Output("Number", numSocket);
-
-      var numControl = new D3NE.Control('<input readonly type="number">', function (el, control) {
-         control.setValue = function (val) {
-            el.value = val;
-         };
-      });
-
-      return node.addInput(inp1).addInput(inp2).addControl(numControl).addOutput(out);
-   },
-   worker: function worker(node, inputs, outputs) {
-      var sum = inputs[0][0] + inputs[1][0];
-      editor.nodes.find(function (n) {
-         return n.id == node.id;
-      }).controls[0].setValue(sum);
-      outputs[0] = sum;
-   }
-});
-
-var menu = new D3NE.ContextMenu({
-   Values: {
-      Value: componentNum,
-      Action: function Action() {
-         alert("ok");
-      }
-   },
-   Add: componentAdd
-});
-
-var container = document.getElementById("nodeEditor");
-var components = [componentNum, componentAdd];
-var editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
-
-var nn = componentNum.newNode();
-nn.data.num = 2;
-var n1 = componentNum.builder(nn);
-var n2 = componentNum.builder(componentNum.newNode());
-var add = componentAdd.builder(componentAdd.newNode());
-
-n1.position = [80, 200];
-n2.position = [80, 400];
-add.position = [500, 240];
-
-editor.connect(n1.outputs[0], add.inputs[0]);
-editor.connect(n2.outputs[0], add.inputs[1]);
-
-editor.addNode(n1);
-editor.addNode(n2);
-editor.addNode(add);
-//  editor.selectNode(tnode);
-
-var engine = new D3NE.Engine("demo@0.1.0", components);
-
-/*
-editor.eventListener.on("change", async function() {
-   await engine.abort();
-   await engine.process(editor.toJSON());
-});
-*/
-
-editor.view.zoomAt(editor.nodes);
-editor.eventListener.trigger("change");
-editor.view.resize();
-//# sourceMappingURL=editor.js.map
+},{}]},{},[1])
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIkM6XFxkZXZcXEhhcmR3YXJlU2ltdWxhdG9yXFxGbG93SFNcXG5vZGVfbW9kdWxlc1xcYnJvd3Nlci1wYWNrXFxfcHJlbHVkZS5qcyIsIkM6XFxkZXZcXEhhcmR3YXJlU2ltdWxhdG9yXFxGbG93SFNcXHByb2Nlc3NcXGpzXFxmYWtlXzczMjJkYmUzLmpzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBO0FDQUEsWUFBWSxDQUFDOztBQUViLE9BQU8sQ0FBQyxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7QUFDcEIsdUNBQXVDO0FBQ3ZDLDJDQUEyQzs7QUFFM0Msa0NBQWtDO0FBQ2xDLDBCQUEwQjtBQUMxQix3Q0FBd0M7O0FBRXhDLDREQUE0RDtBQUM1RCw2Q0FBNkM7QUFDN0MsZ0ZBQWdGO0FBQ2hGLGtDQUFrQztBQUNsQywwQkFBMEI7QUFDMUIsd0NBQXdDOztBQUV4QyxJQUFJLFNBQVMsR0FBRyxJQUFJLElBQUksQ0FBQyxNQUFNLENBQUMsUUFBUSxFQUFFLGNBQWMsRUFBRSxNQUFNLENBQUMsQ0FBQztBQUNsRSIsImZpbGUiOiJnZW5lcmF0ZWQuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlc0NvbnRlbnQiOlsiKGZ1bmN0aW9uIGUodCxuLHIpe2Z1bmN0aW9uIHMobyx1KXtpZighbltvXSl7aWYoIXRbb10pe3ZhciBhPXR5cGVvZiByZXF1aXJlPT1cImZ1bmN0aW9uXCImJnJlcXVpcmU7aWYoIXUmJmEpcmV0dXJuIGEobywhMCk7aWYoaSlyZXR1cm4gaShvLCEwKTt0aHJvdyBuZXcgRXJyb3IoXCJDYW5ub3QgZmluZCBtb2R1bGUgJ1wiK28rXCInXCIpfXZhciBmPW5bb109e2V4cG9ydHM6e319O3Rbb11bMF0uY2FsbChmLmV4cG9ydHMsZnVuY3Rpb24oZSl7dmFyIG49dFtvXVsxXVtlXTtyZXR1cm4gcyhuP246ZSl9LGYsZi5leHBvcnRzLGUsdCxuLHIpfXJldHVybiBuW29dLmV4cG9ydHN9dmFyIGk9dHlwZW9mIHJlcXVpcmU9PVwiZnVuY3Rpb25cIiYmcmVxdWlyZTtmb3IodmFyIG89MDtvPHIubGVuZ3RoO28rKylzKHJbb10pO3JldHVybiBzfSkiLCIndXNlIHN0cmljdCc7XG5cbmNvbnNvbGUubG9nKFwiV1RGIVwiKTtcbi8vdmFyIEQzTkUgPSByZXF1aXJlKFwiZDMtbm9kZS1lZGl0b3JcIik7XG4vL3ZhciBhbGlnaHQgPSByZXF1aXJlKFwiLi9pbmNsdWRlcy9hbGlnaHRcIilcblxuLy92YXIgYWxpZ2h0ID0gblJlcXVpcmUoXCJhbGlnaHRcIik7XG4vL3ZhciBkMyA9IG5SZXF1aXJlKFwiZDNcIik7XG4vL3ZhciBEM05FID0gblJlcXVpcmUoXCJkMy1ub2RlLWVkaXRvclwiKTtcblxuLy9pbXBvcnQgKiBhcyBhbGlnaHQgZnJvbSAnLi4vLi4vbm9kZV9tb2R1bGVzL2FsaWdodC9hbGlnaHQnXG4vL2ltcG9ydCAqIGFzIGQzIGZyb20gJy4uLy4uL25vZGVfbW9kdWxlcy9kMydcbi8vaW1wb3J0ICogYXMgRDNORSBmcm9tICcuLi8uLi9ub2RlX21vZHVsZXMvZDMtbm9kZS1lZGl0b3IvYnVpbGQvZDMtbm9kZS1lZGl0b3InXG4vL2ltcG9ydCAqIGFzIGFsaWdodCBmcm9tICdhbGlnaHQnXG4vL2ltcG9ydCAqIGFzIGQzIGZyb20gJ2QzJ1xuLy9pbXBvcnQgKiBhcyBEM05FIGZyb20gJ2QzLW5vZGUtZWRpdG9yJ1xuXG52YXIgbnVtU29ja2V0ID0gbmV3IEQzTkUuU29ja2V0KCdudW1iZXInLCAnTnVtYmVyIHZhbHVlJywgJ2hpbnQnKTtcbi8vIyBzb3VyY2VNYXBwaW5nVVJMPWRhdGE6YXBwbGljYXRpb24vanNvbjtjaGFyc2V0PXV0Zi04O2Jhc2U2NCxleUoyWlhKemFXOXVJam96TENKemIzVnlZMlZ6SWpwYkltWmhhMlZmTnpNeU1tUmlaVE11YW5NaVhTd2libUZ0WlhNaU9sc2lZMjl1YzI5c1pTSXNJbXh2WnlJc0ltNTFiVk52WTJ0bGRDSXNJa1F6VGtVaUxDSlRiMk5yWlhRaVhTd2liV0Z3Y0dsdVozTWlPaUk3TzBGQlFVRkJMRkZCUVZGRExFZEJRVklzUTBGQldTeE5RVUZhTzBGQlEwRTdRVUZEUVRzN1FVRkZRVHRCUVVOQk8wRkJRMEU3TzBGQlJVRTdRVUZEUVR0QlFVTkJPMEZCUTBFN1FVRkRRVHRCUVVOQk96dEJRVVZCTEVsQlFVbERMRmxCUVZrc1NVRkJTVU1zUzBGQlMwTXNUVUZCVkN4RFFVRm5RaXhSUVVGb1FpeEZRVUV3UWl4alFVRXhRaXhGUVVFd1F5eE5RVUV4UXl4RFFVRm9RaUlzSW1acGJHVWlPaUptWVd0bFh6Y3pNakprWW1VekxtcHpJaXdpYzI5MWNtTmxjME52Ym5SbGJuUWlPbHNpWTI5dWMyOXNaUzVzYjJjb1hDSlhWRVloWENJcFhISmNiaTh2ZG1GeUlFUXpUa1VnUFNCeVpYRjFhWEpsS0Z3aVpETXRibTlrWlMxbFpHbDBiM0pjSWlrN1hISmNiaTh2ZG1GeUlHRnNhV2RvZENBOUlISmxjWFZwY21Vb1hDSXVMMmx1WTJ4MVpHVnpMMkZzYVdkb2RGd2lLVnh5WEc1Y2NseHVMeTkyWVhJZ1lXeHBaMmgwSUQwZ2JsSmxjWFZwY21Vb1hDSmhiR2xuYUhSY0lpazdYSEpjYmk4dmRtRnlJR1F6SUQwZ2JsSmxjWFZwY21Vb1hDSmtNMXdpS1R0Y2NseHVMeTkyWVhJZ1JETk9SU0E5SUc1U1pYRjFhWEpsS0Z3aVpETXRibTlrWlMxbFpHbDBiM0pjSWlrN1hISmNibHh5WEc0dkwybHRjRzl5ZENBcUlHRnpJR0ZzYVdkb2RDQm1jbTl0SUNjdUxpOHVMaTl1YjJSbFgyMXZaSFZzWlhNdllXeHBaMmgwTDJGc2FXZG9kQ2RjY2x4dUx5OXBiWEJ2Y25RZ0tpQmhjeUJrTXlCbWNtOXRJQ2N1TGk4dUxpOXViMlJsWDIxdlpIVnNaWE12WkRNblhISmNiaTh2YVcxd2IzSjBJQ29nWVhNZ1JETk9SU0JtY205dElDY3VMaTh1TGk5dWIyUmxYMjF2WkhWc1pYTXZaRE10Ym05a1pTMWxaR2wwYjNJdlluVnBiR1F2WkRNdGJtOWtaUzFsWkdsMGIzSW5YSEpjYmk4dmFXMXdiM0owSUNvZ1lYTWdZV3hwWjJoMElHWnliMjBnSjJGc2FXZG9kQ2RjY2x4dUx5OXBiWEJ2Y25RZ0tpQmhjeUJrTXlCbWNtOXRJQ2RrTXlkY2NseHVMeTlwYlhCdmNuUWdLaUJoY3lCRU0wNUZJR1p5YjIwZ0oyUXpMVzV2WkdVdFpXUnBkRzl5SjF4eVhHNWNjbHh1ZG1GeUlHNTFiVk52WTJ0bGRDQTlJRzVsZHlCRU0wNUZMbE52WTJ0bGRDZ25iblZ0WW1WeUp5d2dKMDUxYldKbGNpQjJZV3gxWlNjc0lDZG9hVzUwSnlrN1hISmNiaUpkZlE9PSJdfQ==
