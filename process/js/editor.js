@@ -15,19 +15,8 @@ console.log("WTF! YO")
 //window.D3NE = D3NE = require('d3-node-editor')
 
 const MyEditor = require('./includes/MyEditor')
-
-var modSocket = (socket)=>{
-  socket.inputvalue = () => {
-
-  }
-}
-
-
-var numSocket = new D3NE.Socket("number", "8 Bit Socket", "hint");
-modSocket(numSocket)
-
-var bitSocket = new D3NE.Socket("bit", "1 Bit Socket", "hint");
-modSocket(bitSocket)
+const BuildIn = require('./BuiltInChips')
+window.BuildIn = BuildIn
 
 window.procNode = (node) => {
   if(node.inputs.length > 0){
@@ -41,79 +30,8 @@ window.procNode = (node) => {
 
 window.allnodes = []
 //Bit UserOutput
-var componentBit = new MyEditor.Component("Bit (User Input)", {
-   builder(node) {
-      var out1 = new MyEditor.Output("Bit", bitSocket);
-      var numControl = new D3NE.Control('<input type="checkbox">',
-         (el, c) => {
-            el.checked = c.getData('checked');
-
-            function upd() {
-              if(out1.value != el.checked){
-                 out1.value = el.checked;
-                 node.procLogic();
-              }
-               //editor.eventListener.trigger("change");
-            }
-
-            el.addEventListener("change", upd);
-            //el.addEventListener("mousedown", function(e){e.stopPropagation()});// prevent node movement when selecting text in the input field
-           upd();
-         }
-      );
-
-      window.allnodes[window.allnodes.length] = node
-      node.worker = (node, inputs, outputs) => {
-         outputs[0] = node.data.checked;
-      }
-      return node.addControl(numControl).addOutput(out1);
-   },
-   worker(node, inputs, outputs) {
-      node.worker(node, inputs, outputs)
-   },
-   logic(self) {
-      return true; //this is a source so when ever it asks if it should proc
-   }
-});
 
 //AND Gate
-var componentAnd = new MyEditor.Component("AND", {
-   builder(node) {
-      var inp1 = new MyEditor.Input("A", bitSocket, false);
-      var inp2 = new MyEditor.Input("B", bitSocket, false);
-      var out = new MyEditor.Output("Out", bitSocket);
-
-      var numControl = new D3NE.Control(
-         '<input readonly type="checkbox">',
-         (el, control) => {
-            control.setValue = val => {
-               el.checked = val;
-            };
-         }
-      );
-      window.allnodes[window.allnodes.length] = node
-      node.myworker = (node) => {
-         var out = inputs[0][0] && inputs[1][0];
-         editor.nodes.find(n => n.id == node.id).controls[0].setValue(out);
-         outputs[0] = out;
-      }
-      return node
-         .addInput(inp1)
-         .addInput(inp2)
-         .addControl(numControl)
-         .addOutput(out);
-   },
-   worker(node, inputs, outputs) {
-      node.worker(node, inputs, outputs)
-   },
-   logic(self) {
-      var out = self.inputs[0].getValue() && self.inputs[1].getValue();
-      self.controls[0].setValue(out)
-      if(self.outputs[0].value == out) return false; //Was unchanged tell procUpdate to stop propagation of update
-      self.outputs[0].value = out;
-      return true; //Was Changed so return true
-   }
-});
 //OR Gate
 //NOT Gate
 //NAND Gate
@@ -185,10 +103,10 @@ var componentAdd = new D3NE.Component("Add", {
 
 var menu = new D3NE.ContextMenu({
   UserInput: {
-    Bit:componentBit
+    Bit:BuildIn.Input.Bit
   },
   Basic_Gates: {
-    AND_Gate:componentAnd
+    AND_Gate:BuildIn.Logic.AND
   }/*,
   Values: {
     Value: componentNum,
@@ -201,7 +119,8 @@ var menu = new D3NE.ContextMenu({
 });
 
 var container = document.getElementById("nodeEditor");
-var components = [componentBit, componentAnd];
+//var components = [BuildIn.Input.Bit, BuildIn.Logic.AND];
+var components = BuildIn.AllComponents
 window.nodeComps = components
 var editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
 /*
