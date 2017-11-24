@@ -14,21 +14,46 @@ console.log("WTF! YO")
 //window.d3 = d3 = require('d3');
 //window.D3NE = D3NE = require('d3-node-editor')
 
+const MyEditor = require('./includes/MyEditor')
+
+var modSocket = (socket)=>{
+  socket.inputvalue = () => {
+
+  }
+}
+
+
 var numSocket = new D3NE.Socket("number", "8 Bit Socket", "hint");
+modSocket(numSocket)
 
 var bitSocket = new D3NE.Socket("bit", "1 Bit Socket", "hint");
+modSocket(bitSocket)
 
+window.procNode = (node) => {
+  if(node.inputs.length > 0){
+    for (var n = 0; n < node.inputs.length; n++) {
+      if(node.inputs[n].connections.length > 0) {
+        //node.inputs[n].connections[0]
+      }
+    }
+  }
+}
+
+window.allnodes = []
 //Bit UserOutput
-var componentBit = new D3NE.Component("Bit (User Input)", {
+var componentBit = new MyEditor.Component("Bit (User Input)", {
    builder(node) {
-      var out1 = new D3NE.Output("Bit", bitSocket);
+      var out1 = new MyEditor.Output("Bit", bitSocket);
       var numControl = new D3NE.Control('<input type="checkbox">',
          (el, c) => {
             el.checked = c.getData('checked');
 
             function upd() {
-               c.putData("checked", el.checked);
-               editor.eventListener.trigger("change");
+              if(out1.value != el.checked){
+                 out1.value = el.checked;
+                 node.procLogic();
+              }
+               //editor.eventListener.trigger("change");
             }
 
             el.addEventListener("change", upd);
@@ -37,19 +62,26 @@ var componentBit = new D3NE.Component("Bit (User Input)", {
          }
       );
 
+      window.allnodes[window.allnodes.length] = node
+      node.worker = (node, inputs, outputs) => {
+         outputs[0] = node.data.checked;
+      }
       return node.addControl(numControl).addOutput(out1);
    },
    worker(node, inputs, outputs) {
-      outputs[0] = node.data.checked;
+      node.worker(node, inputs, outputs)
+   },
+   logic(self) {
+      return true; //this is a source so when ever it asks if it should proc
    }
 });
 
 //AND Gate
-var componentAnd = new D3NE.Component("AND", {
+var componentAnd = new MyEditor.Component("AND", {
    builder(node) {
-      var inp1 = new D3NE.Input("A", bitSocket);
-      var inp2 = new D3NE.Input("B", bitSocket);
-      var out = new D3NE.Output("Out", bitSocket);
+      var inp1 = new MyEditor.Input("A", bitSocket, false);
+      var inp2 = new MyEditor.Input("B", bitSocket, false);
+      var out = new MyEditor.Output("Out", bitSocket);
 
       var numControl = new D3NE.Control(
          '<input readonly type="checkbox">',
@@ -59,7 +91,12 @@ var componentAnd = new D3NE.Component("AND", {
             };
          }
       );
-
+      window.allnodes[window.allnodes.length] = node
+      node.myworker = (node) => {
+         var out = inputs[0][0] && inputs[1][0];
+         editor.nodes.find(n => n.id == node.id).controls[0].setValue(out);
+         outputs[0] = out;
+      }
       return node
          .addInput(inp1)
          .addInput(inp2)
@@ -67,9 +104,14 @@ var componentAnd = new D3NE.Component("AND", {
          .addOutput(out);
    },
    worker(node, inputs, outputs) {
-      var out = inputs[0][0] && inputs[1][0];
-      editor.nodes.find(n => n.id == node.id).controls[0].setValue(out);
-      outputs[0] = out;
+      node.worker(node, inputs, outputs)
+   },
+   logic(self) {
+      var out = self.inputs[0].getValue() && self.inputs[1].getValue();
+      self.controls[0].setValue(out)
+      if(self.outputs[0].value == out) return false; //Was unchanged tell procUpdate to stop propagation of update
+      self.outputs[0].value = out;
+      return true; //Was Changed so return true
    }
 });
 //OR Gate
@@ -80,6 +122,8 @@ var componentAnd = new D3NE.Component("AND", {
 //XNOR Gate
 
 
+
+/*
 
 var componentNum = new D3NE.Component("Number", {
    builder(node) {
@@ -105,7 +149,6 @@ var componentNum = new D3NE.Component("Number", {
       outputs[0] = node.data.num;
    }
 });
-
 var componentAdd = new D3NE.Component("Add", {
    builder(node) {
       var inp1 = new D3NE.Input("Number", numSocket);
@@ -121,6 +164,11 @@ var componentAdd = new D3NE.Component("Add", {
          }
       );
 
+      node.worker = (node, inputs, outputs) => {
+         var sum = inputs[0][0] + inputs[1][0];
+         editor.nodes.find(n => n.id == node.id).controls[0].setValue(sum);
+         outputs[0] = sum;
+      }
       return node
          .addInput(inp1)
          .addInput(inp2)
@@ -133,6 +181,7 @@ var componentAdd = new D3NE.Component("Add", {
       outputs[0] = sum;
    }
 });
+*/
 
 var menu = new D3NE.ContextMenu({
   UserInput: {
@@ -140,7 +189,7 @@ var menu = new D3NE.ContextMenu({
   },
   Basic_Gates: {
     AND_Gate:componentAnd
-  },
+  }/*,
   Values: {
     Value: componentNum,
     Action: function() {
@@ -148,10 +197,12 @@ var menu = new D3NE.ContextMenu({
       }
     },
     Add: componentAdd
+    */
 });
 
 var container = document.getElementById("nodeEditor");
-var components = [componentBit, componentAnd, componentNum, componentAdd];
+var components = [componentBit, componentAnd];
+window.nodeComps = components
 var editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
 /*
 var nn = componentNum.newNode();
@@ -175,10 +226,10 @@ editor.addNode(add);
 
 var engine = new D3NE.Engine("demo@0.1.0", components);
 editor.eventListener.on('change', () => {
-    engine.process(1,null); // imagine that it could take one second of time
+    //engine.process(editor.toJSON(),null); // imagine that it could take one second of time
 });
 /*
 */
 editor.view.zoomAt(editor.nodes);
-editor.eventListener.trigger("change");
+//editor.eventListener.trigger("change");
 editor.view.resize();
