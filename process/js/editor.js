@@ -1,3 +1,5 @@
+var $ = jQuery = require('jquery')
+var bootstrap = require('bootstrap')
 var fs = eRequire('fs')
 var ipc = eRequire('electron').ipcRenderer
 
@@ -175,6 +177,10 @@ var getSaveData = () => {
 
 var currentFileName = ""
 
+var updateTitle = ()=>{
+  $("#EditorPage .titlebar span.title").html("FlowHS Editor ("+currentFileName+")")
+}
+
 var newRecentFiles = (file) => {
   if(file == "NewFile.fhsc"){
     console.log("NewFile not updating recentFilesList");
@@ -231,11 +237,32 @@ var openFile = (e, arg) => {
   var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
   editor.fromJSON(saveData)
   newRecentFiles(currentFileName)
+  updateTitle()
 }
 
 openFile(null, 'Default.fhsc')
 
 ipc.on("openFile", openFile)
+
+
+  /////////////////////
+ // File Menu Stuff //
+/////////////////////
+
+$("#EditorPage #FileMenu #menu #btnSave").tooltip()
+$("#EditorPage #FileMenu #menu #btnRename").tooltip()
+
+
+
+
+
+
+
+
+
+
+
+
 
 /*
 */

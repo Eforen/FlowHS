@@ -1,6 +1,70 @@
 @import url('d3-node-editor.css');
 @import url('../../node_modules/d3-node-editor/build/d3-node-editor.css');
 
+#EditorPage #FileMenu{
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    font-size: 30px;
+    height: 70px;
+    width: 70px;
+    background-color: rgba(100, 100, 100, 0.2);
+    border-bottom-left-radius: 30px;
+    border-bottom-color: rgba(0, 104, 128, 0.35);
+    border-bottom-style: solid;
+}
+
+#EditorPage #FileMenu:hover{/**/
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    font-size: 30px;
+    height: 70px;
+    width: 145px;
+    background-color: rgba(100, 100, 100, 0.2);
+    border-bottom-left-radius: 30px;
+    border-bottom-color: rgba(0, 104, 128, 0.35);
+    border-bottom-style: solid;
+}
+
+#EditorPage #FileMenu > i{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+
+#EditorPage #FileMenu #menu{
+  display: none;
+}
+
+#EditorPage #FileMenu:hover #menu{
+/*#EditorPage #FileMenu #menu{*/
+  display: inline;
+}
+
+#EditorPage #FileMenu #menu a#btnSave
+#EditorPage #FileMenu #menu a#btnRename{
+}
+
+#EditorPage #FileMenu #menu a:link{
+   color: #2CD4FC;
+}
+
+#EditorPage #FileMenu #menu a:link:hover{
+   color: #187186;
+}
+
+#EditorPage #FileMenu #menu a#btnSave{
+  position: absolute;
+  top: 20px;
+  right: 60px;
+}
+#EditorPage #FileMenu #menu a#btnRename{
+    position: absolute;
+  top: 20px;
+  right: 100px;
+}
+
 #EditorPage #nodeEditor{
    position: absolute;
    top: 20px;
