@@ -15,34 +15,64 @@ var React = require('react')
 var ReactDOM = require('react-dom')
 var RecentFilesListItem = require('./includes/RecentFilesListItem')
 
+var ipc = eRequire('electron').ipcRenderer
+
+var openFile = (file) => {
+	console.log("openFile: "+file.file)
+	ipc.sendSync("openFile", file.file)
+}
+window.openFile = openFile
+
+var internalContext = null;
 
 class MainInterface extends React.Component {
-	constructor() {
-		super();
+	constructor(props) {
+		super(props);
+		internalContext = this
 		this.state ={
-			recentFiles: loadRecent
+			recentFiles: props.recent
 		}
 	}
-	getInitialState() {
-		return {
-			recentFiles: loadRecent
-		} //return
-	} //getInitialState
+	//getInitialState() {
+		//return {
+		//	recentFiles: this.props.recent
+		//} //return
+	//} //getInitialState
   render(){
-		var recentFiles = this.state.recentFiles;
+		var recentFiles = this.props.recent;
+
+		var openSettings = () => {
+
+		}
+
+		var newFile = () => {
+			ipc.sendSync("newFile")
+		}
+
+		var closeWindow = () => {
+			ipc.sendSync("closeWindow", "main")
+		}
+
+		var minWindow = () => {
+			ipc.sendSync("minWindow", "main")
+		}
 
 		var myRecentFiles = recentFiles.map(function(item, index) {
 			return (
-				<RecentFilesListItem key = {index} singleItem = {item}/>
+				<RecentFilesListItem key = {index} singleItem = {item} onClick = {() => {openFile(item)}} />
 			)
 		}.bind(this)); //recentFiles.map
 
 		return(
 			<div className="application">
-				<div className="titlebar"><span className="title">FlowHS (Hardware Simulator)</span><span id="min" className="button"><FontAwesome name='window-minimize' /></span><span id="close" className="button"><FontAwesome name='times' /></span></div>
+				<div className="titlebar">
+					<span className="title">FlowHS (Hardware Simulator)</span>
+					<a href="#" onClick={minWindow}><span id="min" className="button"><FontAwesome name='window-minimize' /></span></a>
+					<a href="#" onClick={closeWindow}><span id="close" className="button"><FontAwesome name='times' /></span></a>
+				</div>
 				<div className="header">
-				<span id="Settings" className="h1"><FontAwesome name="cog"/></span>
-				<span id="NewFile" className="h1"><FontAwesome name="plus"/></span>
+				<a href="#" onClick={openSettings}><span id="Settings" className="h1"><FontAwesome name="cog"/></span></a>
+				<a href="#" onClick={newFile}><span id="NewFile" className="h1"><FontAwesome name="plus"/></span></a>
 				<span className="h1">Recent Files</span>
 				</div>
 				<div className="container">
@@ -57,8 +87,20 @@ class MainInterface extends React.Component {
 	}//render
 }
 
+
+ipc.on("updateRecentFiles", (event, arg) => {
+	console.log("Refresh");
+  event.returnValue = '';
+	loadRecent = JSON.parse(fs.readFileSync(recentFilesLocation));
+	console.log(loadRecent);
+	ReactDOM.render(
+		<MainInterface recent={loadRecent}/>,
+		document.getElementById("ApplicationWrapper")
+	)
+})
+
 ReactDOM.render(
-	<MainInterface />,
+	<MainInterface recent={loadRecent}/>,
 	document.getElementById("ApplicationWrapper")
 ) //render
 

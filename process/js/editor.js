@@ -1,4 +1,5 @@
 var fs = eRequire('fs')
+var ipc = eRequire('electron').ipcRenderer
 
 //var D3NE = require("d3-node-editor");
 //var alight = require("./includes/alight")
@@ -31,6 +32,7 @@ window.procNode = (node) => {
 
 window.allnodes = []
 //Bit UserOutput
+
 
 //AND Gate
 //OR Gate
@@ -159,9 +161,81 @@ window.getSaveData = ()=>{
 }
 
 
-let saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', 'BasicGateTest.fhsc');
-var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
-editor.fromJSON(saveData)
+window.closeWindow = () => {
+  ipc.sendSync("closeWindow", "editor")
+}
+
+window.minWindow = () => {
+  ipc.sendSync("minWindow", "editor")
+}
+
+var getSaveData = () => {
+  return JSON.stringify(engine.toJSON())
+}
+
+var currentFileName = ""
+
+var newRecentFiles = (file) => {
+  if(file == "NewFile.fhsc"){
+    console.log("NewFile not updating recentFilesList");
+    return
+  }
+  let recentFilesLocation = eRequire('path').resolve(dirName, '..', 'data', 'recentFiles.json');
+  var loadRecent = JSON.parse(fs.readFileSync(recentFilesLocation));
+  for (var i = 0; i < loadRecent.length; i++) {
+    if(loadRecent[i].file == file){
+      loadRecent.splice(i, 1)
+      i--;
+    }
+  }
+  var now = new Date();
+  var pretty = [
+    (now.getMonth() + 1) < 10 ? ("0" + (now.getMonth() + 1)) : (now.getMonth() + 1),
+    '/',
+    now.getDate() < 10 ? "0" + now.getDate() : now.getDate(),
+    '/',
+    now.getFullYear(),
+    ' ',
+    now.getHours(),
+    ':',
+    now.getMinutes()
+  ].join('');
+  loadRecent.unshift({name:file.substr(0, file.length - 5), file:file, date:pretty})
+  while(loadRecent.length > 10){
+    loadRecent.pop()
+  }
+  fs.writeFileSync(recentFilesLocation, JSON.stringify(loadRecent));
+  ipc.send("updateRecentFiles")
+}
+
+window.saveFile = () => {
+  if(currentFileName == "NewFile.fhsc"){
+    window.saveAsFile()
+    return
+  }
+  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', currentFileName);
+  fs.writeFileSync(saveFileLocation, getSaveData());
+}
+window.saveAsFile = () => {
+  var fileName = prompt("Please enter a filename:", currentFileName);
+  currentFileName = fileName.substr(fileName.length - 5) == ".fhsc" ? fileName : (fileName + ".fhsc");
+  window.saveFile()
+}
+var openFile = (e, arg) => {
+  console.log("Recieved Command to open " + arg );
+  if(arg == "Default.fhsc")
+    currentFileName = "NewFile.fhsc";
+  else
+    currentFileName = arg.substr(arg.length - 5) == ".fhsc" ? arg : (arg + ".fhsc");
+  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', arg);
+  var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
+  editor.fromJSON(saveData)
+  newRecentFiles(currentFileName)
+}
+
+openFile(null, 'Default.fhsc')
+
+ipc.on("openFile", openFile)
 
 /*
 */

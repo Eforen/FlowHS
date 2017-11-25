@@ -90,9 +90,12 @@ function createWindow () {
     editorWindow = null
   })
 
+  /*
   editorWindow.once('ready-to-show', function(){
     editorWindow.show();
   })
+  */
+
 }
 
 // This method will be called when Electron has finished
@@ -122,5 +125,49 @@ ipc.on('openEditor', (event, args) => {
   editorWindow.show();
 })
 
+ipc.on("openFile", (event, arg) => {
+  event.returnValue = '';
+  editorWindow.send("openFile", arg)
+  editorWindow.show()
+})
+
+ipc.on("newFile", (event, arg) => {
+  event.returnValue = '';
+  editorWindow.send("openFile", "Default.fhsc")
+  editorWindow.show()
+})
+
+ipc.on("updateRecentFiles", (event, arg) => {
+  event.returnValue = '';
+  mainWindow.send("updateRecentFiles")
+})
+
+ipc.on("closeWindow", (event, arg) => {
+  event.returnValue = '';
+  switch (arg) {
+    case "main":
+      app.quit()
+      break
+    case "editor":
+      editorWindow.hide()
+      break
+    default:
+      break
+  }
+})
+
+ipc.on("minWindow", (event, arg) => {
+  event.returnValue = '';
+  switch (arg) {
+    case "main":
+      mainWindow.minimize()
+      break
+    case "editor":
+      editorWindow.minimize()
+      break
+    default:
+      break
+  }
+})
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
