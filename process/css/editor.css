@@ -20,7 +20,7 @@
     right: 0px;
     font-size: 30px;
     height: 70px;
-    width: 145px;
+    width: 185px;
     background-color: rgba(100, 100, 100, 0.2);
     border-bottom-left-radius: 30px;
     border-bottom-color: rgba(0, 104, 128, 0.35);
@@ -63,6 +63,11 @@
     position: absolute;
   top: 20px;
   right: 100px;
+}
+#EditorPage #FileMenu #menu a#btnTestChip{
+    position: absolute;
+  top: 20px;
+  right: 140px;
 }
 
 #EditorPage #nodeEditor{

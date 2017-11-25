@@ -1,4 +1,5 @@
 var ex = {
+  Chip: require('./Chip'),
   Input: require('./Input'),
   Logic: require('./Logic'),
   Socket: require('./Sockets'),
@@ -11,6 +12,7 @@ var addComps = (comps) => {
   }
 }
 
+addComps(ex.Chip)
 addComps(ex.Input)
 addComps(ex.Logic)
 

@@ -106,7 +106,9 @@ var componentAdd = new D3NE.Component("Add", {
 });
 */
 
+//TODO: Replace with Own ContextMenu Component
 var menu = new D3NE.ContextMenu({
+  Chip:BuildIn.Chip,
   UserInput:BuildIn.Input,
   Basic_Gates:BuildIn.Logic/*,
   Values: {
@@ -346,6 +348,7 @@ ipc.on("openFile", openFile)
 
 $("#EditorPage #FileMenu #menu #btnSave").tooltip()
 $("#EditorPage #FileMenu #menu #btnRename").tooltip()
+$("#EditorPage #FileMenu #menu #btnTestChip").tooltip()
 
 
 
