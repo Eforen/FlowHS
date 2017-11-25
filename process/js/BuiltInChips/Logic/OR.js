@@ -7,7 +7,7 @@ module.exports = new MyEditor.Component("OR (Built-In)", {
       var inp2 = new MyEditor.Input("B", Socket.Bit, false);
       var out = new MyEditor.Output("Out", Socket.Bit, false);
 
-      var numControl = new D3NE.Control(
+      var numControl = new MyEditor.Control(
          '<input  class="bit" type="checkbox" onclick="return false;">',
          (el, control) => {
             control.setValue = val => {

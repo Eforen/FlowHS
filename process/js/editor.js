@@ -1,4 +1,5 @@
-console.log("WTF! YO")
+var fs = eRequire('fs')
+
 //var D3NE = require("d3-node-editor");
 //var alight = require("./includes/alight")
 
@@ -118,7 +119,7 @@ var container = document.getElementById("nodeEditor");
 //var components = [BuildIn.Input.Bit, BuildIn.Logic.AND];
 var components = BuildIn.AllComponents
 window.nodeComps = components
-var editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
+window.nodeeditor = editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
 /*
 var nn = componentNum.newNode();
 nn.data.num = 2;
@@ -152,6 +153,15 @@ editor.eventListener.on('connectionremove', (param) => {
   //console.log(param)
   setTimeout(()=>{param.input.node.procLogic()}, 10);
 });
+
+window.getSaveData = ()=>{
+  return JSON.stringify(editor.toJSON())
+}
+
+
+let saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', 'BasicGateTest.fhsc');
+var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
+editor.fromJSON(saveData)
 
 /*
 */

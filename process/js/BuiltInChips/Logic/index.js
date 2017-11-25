@@ -5,13 +5,13 @@ var ex = {
   //NOT Gate
   NOT: require('./NOT'),
   //NAND Gate
-  //NAND: require('./NAND'),
+  NAND: require('./NAND'),
   //NOR Gate
-  //NOR: require('./NOR'),
+  NOR: require('./NOR'),
   //XOR Gate
-  //XOR: require('./XOR'),
+  XOR: require('./XOR'),
   //XNOR Gate
-  //XNOR: require('./XNOR')
+  XNOR: require('./XNOR')
   //all: []
 }
 
