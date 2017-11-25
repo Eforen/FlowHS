@@ -19,7 +19,7 @@ module.exports = new MyEditor.Component("Bit (User Input)", {
             }
 
             el.addEventListener("change", upd);
-            //el.addEventListener("mousedown", function(e){e.stopPropagation()});// prevent node movement when selecting text in the input field
+            el.addEventListener("mousedown", function(e){e.stopPropagation()});// prevent node movement when selecting text in the input field
            upd();
          }
       );
