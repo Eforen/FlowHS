@@ -12,8 +12,9 @@ module.exports = new MyEditor.Component("Bit (User Input)", {
 
             function upd() {
               if(out1.value != el.checked){
-                 out1.setValue(el.checked);
-                 node.procLogic();
+                window.saveStateFalse()
+                out1.setValue(el.checked);
+                node.procLogic();
               }
                //editor.eventListener.trigger("change");
             }

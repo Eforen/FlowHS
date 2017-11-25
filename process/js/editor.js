@@ -158,10 +158,6 @@ editor.eventListener.on('connectionremove', (param) => {
   setTimeout(()=>{param.input.node.procLogic()}, 10);
 });
 
-window.getSaveData = ()=>{
-  return JSON.stringify(editor.toJSON())
-}
-
 
 window.closeWindow = () => {
   ipc.sendSync("closeWindow", "editor")
@@ -171,14 +167,33 @@ window.minWindow = () => {
   ipc.sendSync("minWindow", "editor")
 }
 
-var getSaveData = () => {
-  return JSON.stringify(engine.toJSON())
+var getSaveData = window.getSaveData = () => {
+  return JSON.stringify(editor.toJSON())
 }
 
 var currentFileName = ""
+var newFileName = ""
+window.savedStateAcurate = true
+
+var saveStateFalse = window.saveStateFalse = (param) => {
+  window.savedStateAcurate = false
+  updateTitle()
+  //console.log("Save Invalid...")
+}
+editor.eventListener.on('connectioncreate', saveStateFalse);
+editor.eventListener.on('connectionremove', saveStateFalse);
+editor.eventListener.on('nodecreate', saveStateFalse);
+editor.eventListener.on('groupcreate', saveStateFalse);
+editor.eventListener.on('connectioncreate', saveStateFalse);
+editor.eventListener.on('noderemove', saveStateFalse);
+editor.eventListener.on('groupremove', saveStateFalse);
+editor.eventListener.on('connectionremove', saveStateFalse);
 
 var updateTitle = ()=>{
-  $("#EditorPage .titlebar span.title").html("FlowHS Editor ("+currentFileName+")")
+  var state = currentFileName
+  if(newFileName!="" && newFileName != currentFileName) state += " => " + newFileName
+  if(window.savedStateAcurate == false) state += "*"
+  $("#EditorPage .titlebar span.title").html("FlowHS Editor ("+state+")")
 }
 
 var newRecentFiles = (file) => {
@@ -214,19 +229,93 @@ var newRecentFiles = (file) => {
   ipc.send("updateRecentFiles")
 }
 
-window.saveFile = () => {
+window.onClickSave =()=>{
+  if(currentFileName == "NewFile.fhsc"){
+    if(newFileName != ""){
+    }
+    saveAsFile()
+  } else{
+    saveFile()
+  }
+}
+
+window.onClickSaveAs =()=>{
+    saveAsFile()
+}
+
+$(window).keypress(function(e) {
+  console.log(e.which);
+    if (e.ctrlKey && e.shiftKey && e.which === 19) { //Ctrl+Shift+S
+        console.log('Ctrl+Shift+S');
+        window.onClickSaveAs()
+        e.preventDefault();
+        return false;
+    } else if (e.ctrlKey && e.which === 19) { //Ctrl+S
+        console.log('Ctrl+S');
+        window.onClickSave()
+        e.preventDefault();
+        return false;
+    }
+    return true
+});
+
+var saveFile = () => {
   if(currentFileName == "NewFile.fhsc"){
     window.saveAsFile()
     return
   }
-  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', currentFileName);
-  fs.writeFileSync(saveFileLocation, getSaveData());
+
+  var fileName = newFileName != "" ? newFileName : currentFileName
+
+  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', fileName);
+  if(newFileName != "" && currentFileName != newFileName && fs.exists(saveFileLocation)){
+    $('#SaveConfirm #filename').html(fileName)
+    $('#SaveConfirm').modal('show')
+  } else{
+    fs.writeFileSync(saveFileLocation, getSaveData());
+    newRecentFiles(fileName)
+    window.savedStateAcurate = true
+    updateTitle()
+  }
 }
-window.saveAsFile = () => {
-  var fileName = prompt("Please enter a filename:", currentFileName);
+window.saveFilePart2 = () => {
+    $('#SaveConfirm').modal('hide')
+    var fileName = newFileName != "" ? newFileName : currentFileName
+    var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', fileName);
+    fs.writeFileSync(saveFileLocation, getSaveData());
+    newRecentFiles(fileName)
+    window.savedStateAcurate = true
+    updateTitle()
+}
+
+var saveAsFile = () => {
+  var fileName = newFileName != "" ? newFileName : currentFileName
+  $('#SaveAs #filename').val(fileName)
+  $('#SaveAs').modal('show')
+  //fileName = prompt("Please enter a filename:", fileName);
+  //currentFileName = fileName.substr(fileName.length - 5) == ".fhsc" ? fileName : (fileName + ".fhsc");
+  //window.saveFile()
+}
+
+
+window.onEnterDo = (action)=>{
+  if(event.key === 'Enter') {
+    action()
+  }
+}
+
+window.saveAsPart2 = ()=>{
+  $('#SaveAs').modal('hide')
+  var fileName = ""+$('#SaveAs #filename').val()
+  if(filename=="" || filename==".fhsc") return
   currentFileName = fileName.substr(fileName.length - 5) == ".fhsc" ? fileName : (fileName + ".fhsc");
-  window.saveFile()
+  saveFile()
 }
+
+$('#SaveAs').on('shown.bs.modal', function () {
+  $('#SaveAs #filename').trigger('focus')
+})
+
 var openFile = (e, arg) => {
   console.log("Recieved Command to open " + arg );
   if(arg == "Default.fhsc")
@@ -235,9 +324,15 @@ var openFile = (e, arg) => {
     currentFileName = arg.substr(arg.length - 5) == ".fhsc" ? arg : (arg + ".fhsc");
   var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', arg);
   var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
+  window.savedStateAcurate = true
+  updateTitle()
   editor.fromJSON(saveData)
   newRecentFiles(currentFileName)
-  updateTitle()
+  setTimeout(function () {
+    window.savedStateAcurate = true
+    updateTitle()
+    //console.log("Save Valid...")
+  }, 50);
 }
 
 openFile(null, 'Default.fhsc')
