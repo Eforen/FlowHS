@@ -1,16 +1,18 @@
+var $ = jQuery = require('jquery')
 const MyEditor = require('../../includes/MyEditor')
 var Socket = require('../Sockets')
+var BoolBitHandeler = require('../BoolBitHandeler')
 
 module.exports = new MyEditor.Component("Bit (User Input)", {
    builder(node) {
-      var out1 = new MyEditor.Output("Bit", Socket.Bit);
+      var out1 = new MyEditor.Output("Bit", Socket.Bit, false, BoolBitHandeler);
       var numControl = new MyEditor.Control('<input class="bit" type="checkbox">',
          (el, c) => {
             el.checked = c.getData('checked');
 
             function upd() {
               if(out1.value != el.checked){
-                 out1.value = el.checked;
+                 out1.setValue(el.checked);
                  node.procLogic();
               }
                //editor.eventListener.trigger("change");

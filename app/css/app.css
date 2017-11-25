@@ -12022,6 +12022,16 @@ li.recentFiles-item.media:last-child {
   background: #96b38a;
 }
 
+#EditorPage .socket.value-bit-low {
+  border-color: #ff5757;
+  background-color: rgba(255, 174, 174, 0.26);
+}
+
+#EditorPage .socket.value-bit-high {
+  border-color: #18ff7f;
+  background: rgba(152, 255, 183, 0.62);
+}
+
 #EditorPage .node-editor .node {
   background: rgba(0, 138, 170, 0.8);
   border: 2px solid #00a7cc;
@@ -12843,6 +12853,16 @@ li.recentFiles-item.media:last-child {
 
 #EditorPage .socket.number {
   background: #96b38a;
+}
+
+#EditorPage .socket.value-bit-low {
+  border-color: #ff5757;
+  background-color: rgba(255, 174, 174, 0.26);
+}
+
+#EditorPage .socket.value-bit-high {
+  border-color: #18ff7f;
+  background: rgba(152, 255, 183, 0.62);
 }
 
 #EditorPage .node-editor .node {
