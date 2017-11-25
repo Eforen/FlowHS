@@ -6,8 +6,8 @@ var ex = {
 }
 
 var addComps = (comps) => {
-  for (var i = 0; i < comps.all.length; i++) {
-    ex.AllComponents.push(comps.all[i])
+  for (var key in comps) {
+    ex.AllComponents.push(comps[key])
   }
 }
 

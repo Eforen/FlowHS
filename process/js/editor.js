@@ -102,12 +102,8 @@ var componentAdd = new D3NE.Component("Add", {
 */
 
 var menu = new D3NE.ContextMenu({
-  UserInput: {
-    Bit:BuildIn.Input.Bit
-  },
-  Basic_Gates: {
-    AND_Gate:BuildIn.Logic.AND
-  }/*,
+  UserInput:BuildIn.Input,
+  Basic_Gates:BuildIn.Logic/*,
   Values: {
     Value: componentNum,
     Action: function() {
@@ -147,6 +143,16 @@ var engine = new D3NE.Engine("demo@0.1.0", components);
 editor.eventListener.on('change', () => {
     //engine.process(editor.toJSON(),null); // imagine that it could take one second of time
 });
+
+editor.eventListener.on('connectioncreate', (param) => {
+  //console.log(param)
+  setTimeout(()=>{param.input.node.procLogic()}, 10);
+});
+editor.eventListener.on('connectionremove', (param) => {
+  //console.log(param)
+  setTimeout(()=>{param.input.node.procLogic()}, 10);
+});
+
 /*
 */
 editor.view.zoomAt(editor.nodes);

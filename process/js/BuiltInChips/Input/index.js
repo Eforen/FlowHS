@@ -1,8 +1,5 @@
 var ex = {
-  Bit: require('./Bit'),
-  all: []
+  Bit: require('./Bit')
 }
-
-ex.all.push(ex.Bit)
 
 module.exports = ex

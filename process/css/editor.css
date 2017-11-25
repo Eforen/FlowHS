@@ -40,3 +40,8 @@
     background: rgba(230, 250, 255, 0.7);
     color: #005366;
 }
+
+#EditorPage .node .control input.bit {
+  position: relative;
+  height: 30px;
+}

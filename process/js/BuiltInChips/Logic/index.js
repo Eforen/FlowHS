@@ -1,9 +1,9 @@
 var ex = {
   AND: require('./AND'),
   //OR Gate
-  //OR: require('./OR'),
+  OR: require('./OR'),
   //NOT Gate
-  //NOT: require('./NOT'),
+  NOT: require('./NOT'),
   //NAND Gate
   //NAND: require('./NAND'),
   //NOR Gate
@@ -12,10 +12,10 @@ var ex = {
   //XOR: require('./XOR'),
   //XNOR Gate
   //XNOR: require('./XNOR')
-  all: []
+  //all: []
 }
 
-ex.all.push(ex.AND)
+//ex.all.push(ex.AND)
 //ex.all.push(ex.OR)
 //ex.all.push(ex.NOT)
 //ex.all.push(ex.NAND)

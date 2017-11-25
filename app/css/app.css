@@ -11986,6 +11986,11 @@ li.recentFiles-item.media:last-child {
   background: rgba(230, 250, 255, 0.7);
   color: #005366;
 }
+
+#EditorPage .node .control input.bit {
+  position: relative;
+  height: 30px;
+}
 @charset "UTF-8";
 
 .context-menu {
@@ -12739,6 +12744,11 @@ li.recentFiles-item.media:last-child {
 #EditorPage .node.selected input {
   background: rgba(230, 250, 255, 0.7);
   color: #005366;
+}
+
+#EditorPage .node .control input.bit {
+  position: relative;
+  height: 30px;
 }
 
 
