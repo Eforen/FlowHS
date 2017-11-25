@@ -4,8 +4,7 @@ var Socket = require('../Sockets')
 module.exports = new MyEditor.Component("NOT (Built-In)", {
    builder(node) {
       var inp1 = new MyEditor.Input("In", Socket.Bit, false);
-      var out = new MyEditor.Output("Out", Socket.Bit);
-      out.value = true;
+      var out = new MyEditor.Output("Out", Socket.Bit, true);
 
       var numControl = new D3NE.Control(
          '<input class="bit" type="checkbox" onclick="return false;" checked>',
