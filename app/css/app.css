@@ -11351,6 +11351,36 @@ body {
   color: #2CD4FC;
 }
 
+.modal-content {
+  border-color: rgba(44, 212, 252, 0.45);
+  background-color: #001e27;
+}
+
+.modal-header {
+  border-bottom: 1px solid #136579;
+}
+
+.modal-footer {
+  border-top: 1px solid #136579;
+}
+
+.modal-content .form-control {
+  color: #2bd2fa;
+  background-color: rgba(255, 255, 255, 0);
+  border: 1px solid #136579;
+}
+
+.btn-secondary {
+  background-color: #001e27;
+  border-color: #2e6da4;
+}
+
+.btn-secondary:hover {
+  background-color: #00394a;
+  border-color: #2e6da4;
+  color: #a7ebff;
+}
+
 .titlebar {
   -webkit-user-select: none;
   -webkit-app-region: drag;

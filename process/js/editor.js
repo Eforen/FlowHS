@@ -107,7 +107,7 @@ var componentAdd = new D3NE.Component("Add", {
 */
 
 //TODO: Replace with Own ContextMenu Component
-var menu = new D3NE.ContextMenu({
+var menu = new MyEditor.ContextMenu({
   Chip:BuildIn.Chip,
   UserInput:BuildIn.Input,
   Basic_Gates:BuildIn.Logic/*,
@@ -126,6 +126,20 @@ var container = document.getElementById("nodeEditor");
 var components = BuildIn.AllComponents
 window.nodeComps = components
 window.nodeeditor = editor = new D3NE.NodeEditor("demo@0.1.0", container, components, menu);
+
+menu.onClickOverride = (item) => {
+    if (item instanceof D3NE.Component) {
+        let node = item.newNode();
+
+        item.builder(node);
+        editor.addNode(node, true);
+        editor.selectNode(node);
+    }
+    else
+        item();
+
+    //this.contextMenu.hide();
+};
 /*
 var nn = componentNum.newNode();
 nn.data.num = 2;
@@ -350,8 +364,125 @@ $("#EditorPage #FileMenu #menu #btnSave").tooltip()
 $("#EditorPage #FileMenu #menu #btnRename").tooltip()
 $("#EditorPage #FileMenu #menu #btnTestChip").tooltip()
 
+  ///////////////////
+ // Chip Testing //
+//////////////////
+
+var testRunning = false
+var testPinIns = []
+var testPinInValues = []
+var testPinOuts = []
+var testProgress = 0
+var testProgressMax = 0
+var testOutput = ""
 
 
+window.onClickTestChip = () => {
+  if(testRunning) return
+  testRunning = true
+  testPinIns = allnodes.filter((node)=>{
+    if (node.title == "Bit Pin (Chip Input)") return true
+    return false
+  })
+  if(testPinIns == 0){
+    testRunning = false
+    return
+  }
+  testPinOuts = allnodes.filter((node)=>{
+    if (node.title == "Bit Pin (Chip Output)") return true
+    return false
+  })
+
+  var output = ""
+  for (var i = 0; i < testPinIns.length; i++) {
+    testPinInValues[i] = false;
+    testPinIns[i].outputs[0].value = false
+    testPinIns[i].controls[0].setValue(testPinInValues[i])
+    testPinIns[i].procLogic()
+  }
+
+  //$("#TestingAlert").alert("show")
+  if(testPinIns.length>32){
+    window.debug = $("#TestingAlert #TestProgress .progress-bar").attr('aria-valuemax', testPinIns.length).css('width', '0%').attr('aria-valuenow', 0)
+  } else{
+    window.debug = $("#TestingAlert #TestProgress .progress-bar").attr('aria-valuemax', Math.pow(2,testPinIns.length)).css('width', '0%').attr('aria-valuenow', 0)
+    testProgressMax = Math.pow(2,testPinIns.length+1)
+  }
+
+  setTimeout(testingNextStep, 5);
+  testProgress = 0
+  testOutput = ""
+  setTimeout(testingUpdateProgress, 250);
+  $("#TestingAlert").show(250)
+}
+$("#TestingAlert").alert()
+$("#TestingAlert").hide()
+
+var testingUpdateProgress = ()=>{
+  if(testRunning == false){
+    $("#TestingAlert").hide(1000)
+    return
+  }
+  if(testPinIns.length>32)
+    $("#TestingAlert #TestProgress .progress-bar").css('width', (testProgress/testPinIns.length*100)+'%').attr('aria-valuenow', testProgress)
+  else{
+    var pos = 0;
+    for (var i = 0; i < testPinInValues.length; i++) {
+      if(testPinInValues[i]) pos++
+      pos = pos << 1 //111110110111010000
+    }
+    $("#TestingAlert #TestProgress .progress-bar").css('width', (pos/testProgressMax*100)+'%').attr('aria-valuenow', pos)
+  }
+  setTimeout(testingUpdateProgress, 250);
+}
+
+var testingNextStep = () => {
+  if(window.NodeLogicProc > 0) {
+    setTimeout(testingNextStep, 5);
+    return
+  }
+
+  var pos = testPinInValues.length-1
+  while(pos >= 0){
+    if(testPinInValues[pos]){
+      //Set false and continue
+      testPinInValues[pos] = false
+      pos--
+    } else{
+      //Set true and exit
+      testPinInValues[pos] = true
+      break;
+    }
+  }
+  //console.log(testPinInValues);
+  if(pos >= 0){
+    if(testPinIns.length > 32 && testPinIns.length-pos > testProgress) testProgress = pos
+    for (var i = testPinIns.length-1; i >= pos; i--) {
+      testPinIns[i].outputs[0].value = testPinInValues[i]
+      testPinIns[i].controls[0].setValue(testPinInValues[i])
+      testPinIns[i].procLogic()
+    }
+    var output = ""
+
+    for (var i = 0; i < testPinIns.length; i++) {
+      output += testPinIns[i].outputs[0].value ? 1 : 0
+    }
+    output+="|"
+    for (var i = 0; i < testPinOuts.length; i++) {
+      output += testPinOuts[i].outputValue ? 1 : 0
+    }
+    //console.log(output);
+    testOutput += "\n"+output
+    //console.log(testPinInValues);
+    //console.log(testPinIns);
+    setTimeout(testingNextStep, 1);
+  }else{
+    $('#ChipTestOutput .modal-body').html("<pre>"+testOutput+"</pre>")
+    $('#ChipTestOutput').modal('show')
+    console.log("End Of Test")
+    testRunning = false
+  }
+}
 
 
 

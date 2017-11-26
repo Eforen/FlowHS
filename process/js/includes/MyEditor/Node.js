@@ -5,6 +5,8 @@ class Node extends D3NE.Node {
   }
 
   procLogic() {
+    if(window.NodeLogicProc == undefined) window.NodeLogicProc = 0
+    window.NodeLogicProc++
     //if changed update logic down this branch to its output connections
     if(this.logic != null && this.logic(this))
       for (var o = 0; o < this.outputs.length; o++) {
@@ -12,6 +14,7 @@ class Node extends D3NE.Node {
           this.outputs[o].connections[c].input.node.procLogic() //Is connected chain down logic update
         }
       }
+    window.NodeLogicProc--
   }
 }
 

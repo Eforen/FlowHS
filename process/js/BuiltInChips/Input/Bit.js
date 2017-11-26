@@ -9,7 +9,6 @@ module.exports = new MyEditor.Component("Bit (User Input)", {
       var numControl = new MyEditor.Control('<input class="bit" type="checkbox">',
          (el, c) => {
             el.checked = c.getData('checked');
-
             function upd() {
               if(out1.value != el.checked){
                 window.saveStateFalse()

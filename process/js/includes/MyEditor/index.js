@@ -3,5 +3,6 @@ module.exports = {
   Output: require('./Output'),
   Component: require('./Component'),
   Node: require('./Node'),
-  Control: require('./Control')
+  Control: require('./Control'),
+  ContextMenu: require('./ContextMenu')
 }
