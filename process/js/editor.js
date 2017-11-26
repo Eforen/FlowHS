@@ -184,43 +184,19 @@ window.minWindow = () => {
 }
 
 var getSaveData = window.getSaveData = () => {
-  return JSON.stringify(editor.toJSON())
+  return JSON.stringify({props:props, chip:editor.toJSON()})
 }
 
-var currentFileName = ""
-var newFileName = ""
-window.savedStateAcurate = true
+var newRecentFiles = () => {
 
-var saveStateFalse = window.saveStateFalse = (param) => {
-  window.savedStateAcurate = false
-  updateTitle()
-  //console.log("Save Invalid...")
-}
-editor.eventListener.on('connectioncreate', saveStateFalse);
-editor.eventListener.on('connectionremove', saveStateFalse);
-editor.eventListener.on('nodecreate', saveStateFalse);
-editor.eventListener.on('groupcreate', saveStateFalse);
-editor.eventListener.on('connectioncreate', saveStateFalse);
-editor.eventListener.on('noderemove', saveStateFalse);
-editor.eventListener.on('groupremove', saveStateFalse);
-editor.eventListener.on('connectionremove', saveStateFalse);
-
-var updateTitle = ()=>{
-  var state = currentFileName
-  if(newFileName!="" && newFileName != currentFileName) state += " => " + newFileName
-  if(window.savedStateAcurate == false) state += "*"
-  $("#EditorPage .titlebar span.title").html("FlowHS Editor ("+state+")")
-}
-
-var newRecentFiles = (file) => {
-  if(file == "NewFile.fhsc"){
+  if(currentFileName == "NewFile.fhsc"){
     console.log("NewFile not updating recentFilesList");
     return
   }
   let recentFilesLocation = eRequire('path').resolve(dirName, '..', 'data', 'recentFiles.json');
   var loadRecent = JSON.parse(fs.readFileSync(recentFilesLocation));
   for (var i = 0; i < loadRecent.length; i++) {
-    if(loadRecent[i].file == file){
+    if(loadRecent[i].file == currentFileName){
       loadRecent.splice(i, 1)
       i--;
     }
@@ -237,7 +213,7 @@ var newRecentFiles = (file) => {
     ':',
     now.getMinutes()
   ].join('');
-  loadRecent.unshift({name:file.substr(0, file.length - 5), file:file, date:pretty})
+  loadRecent.unshift({name:props.ChipName, file:currentFileName, date:pretty})
   while(loadRecent.length > 10){
     loadRecent.pop()
   }
@@ -281,19 +257,12 @@ var saveFile = () => {
     return
   }
 
-  var fileName = newFileName != "" ? newFileName : currentFileName
-
-  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', fileName);
-  if(newFileName != "" && currentFileName != newFileName && fs.exists(saveFileLocation)){
-    $('#SaveConfirm #filename').html(fileName)
-    $('#SaveConfirm').modal('show')
-  } else{
-    fs.writeFileSync(saveFileLocation, getSaveData());
-    newRecentFiles(fileName)
-    window.savedStateAcurate = true
-    updateTitle()
-  }
+  fs.writeFileSync(fileLocation, getSaveData());
+  newRecentFiles()
+  window.savedStateAcurate = true
+  updateTitle()
 }
+/*
 window.saveFilePart2 = () => {
     $('#SaveConfirm').modal('hide')
     var fileName = newFileName != "" ? newFileName : currentFileName
@@ -303,11 +272,19 @@ window.saveFilePart2 = () => {
     window.savedStateAcurate = true
     updateTitle()
 }
+*/
 
 var saveAsFile = () => {
-  var fileName = newFileName != "" ? newFileName : currentFileName
-  $('#SaveAs #filename').val(fileName)
-  $('#SaveAs').modal('show')
+  //var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', fileName);
+  //var fileName = currentFileName != "" ? newFileName : currentFileName
+  //$('#SaveAs #filename').val(fileName)
+  //$('#SaveAs').modal('show')
+  var filename = dialog.showSaveDialog({
+    filters: [{ name: 'FlowHS Chip file', extensions: ['fhsc'] }],
+    defaultPath: fileLocation
+  })
+
+  dialog.showMessageBox({ message: "The file is: "+filename, buttons: ["OK"] });
   //fileName = prompt("Please enter a filename:", fileName);
   //currentFileName = fileName.substr(fileName.length - 5) == ".fhsc" ? fileName : (fileName + ".fhsc");
   //window.saveFile()
@@ -319,7 +296,7 @@ window.onEnterDo = (action)=>{
     action()
   }
 }
-
+/*
 window.saveAsPart2 = ()=>{
   $('#SaveAs').modal('hide')
   var fileName = ""+$('#SaveAs #filename').val()
@@ -331,18 +308,59 @@ window.saveAsPart2 = ()=>{
 $('#SaveAs').on('shown.bs.modal', function () {
   $('#SaveAs #filename').trigger('focus')
 })
+*/
+
+var props = {}
+
+var setDefaultProps = ()=>{
+  props = {
+    FileSyntaxVersion: 1,
+    ChipName: "Untitled"
+  }
+}
+
+setDefaultProps()
+
+//var fileLocationType = 0
+var fileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', "NewFile.fhsc");
 
 var openFile = (e, arg) => {
   console.log("Recieved Command to open " + arg );
+    //currentFileName = arg.substr(arg.length - 5) == ".fhsc" ? arg : (arg + ".fhsc");
+  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', arg);
+  //var newfileLocationType = 0
+  console.log(fs.existsSync(saveFileLocation)+":"+saveFileLocation);
+  if(fs.existsSync(saveFileLocation) == false){
+    saveFileLocation = eRequire('path').resolve(dirName, '..', arg);
+    console.log(fs.existsSync(saveFileLocation)+":"+saveFileLocation);
+    //newfileLocationType = 1
+    if(fs.existsSync(saveFileLocation) == false){
+      //saveFileLocation = eRequire('path').resolve(arg);
+      //newfileLocationType = 2
+      console.log(fs.existsSync(arg)+":"+arg);
+      if(fs.existsSync(arg) == false){
+        dialog.showMessageBox({ message: "Could not load file: "+arg, buttons: ["OK"] });
+        return
+      }
+    }
+  }
+  fileLocation = saveFileLocation
+  //fileLocationType = newfileLocationType
   if(arg == "Default.fhsc")
     currentFileName = "NewFile.fhsc";
   else
-    currentFileName = arg.substr(arg.length - 5) == ".fhsc" ? arg : (arg + ".fhsc");
-  var saveFileLocation = eRequire('path').resolve(dirName, '..', 'data', 'saves', arg);
+    currentFileName = arg
   var saveData = JSON.parse(fs.readFileSync(saveFileLocation));
+
+  setDefaultProps()
+  if(saveData.props) Object.assign(props, saveData.props)
+
   window.savedStateAcurate = true
   updateTitle()
-  editor.fromJSON(saveData)
+  if(saveData.props)
+    editor.fromJSON(saveData.chip)
+  else
+    editor.fromJSON(saveData)
   newRecentFiles(currentFileName)
   setTimeout(function () {
     window.savedStateAcurate = true
@@ -350,8 +368,6 @@ var openFile = (e, arg) => {
     //console.log("Save Valid...")
   }, 50);
 }
-
-openFile(null, 'Default.fhsc')
 
 ipc.on("openFile", openFile)
 
@@ -484,17 +500,65 @@ var testingNextStep = () => {
   }
 }
 
+  /////////////////
+ // Rename Chip //
+/////////////////
 
 
+window.onClickRename = ()=>{
+  $('#RenameDialog #chipname').val(props.ChipName)
+  $('#RenameDialog').modal('show')
+}
+
+window.renamePart2 = ()=>{
+  $('#RenameDialog').modal('hide')
+  props.ChipName = ""+$('#RenameDialog #chipname').val()
+  saveStateFalse()
+  updateTitle()
+}
+
+$('#RenameDialog').on('shown.bs.modal', function () {
+  $('#RenameDialog #chipname').trigger('focus')
+})
 
 
+  ////////////////////////
+ // Titlebar Handeling //
+////////////////////////
+
+var currentFileName = "NewFile.fhsc"
+var newFileName = ""
+window.savedStateAcurate = true
+
+var saveStateFalse = window.saveStateFalse = (param) => {
+  window.savedStateAcurate = false
+  updateTitle()
+  //console.log("Save Invalid...")
+}
+editor.eventListener.on('connectioncreate', saveStateFalse);
+editor.eventListener.on('connectionremove', saveStateFalse);
+editor.eventListener.on('nodecreate', saveStateFalse);
+editor.eventListener.on('groupcreate', saveStateFalse);
+editor.eventListener.on('connectioncreate', saveStateFalse);
+editor.eventListener.on('noderemove', saveStateFalse);
+editor.eventListener.on('groupremove', saveStateFalse);
+editor.eventListener.on('connectionremove', saveStateFalse);
+
+var updateTitle = ()=>{
+  var state = currentFileName
+  if(newFileName!="" && newFileName != currentFileName) state += " => " + newFileName
+  if(window.savedStateAcurate == false) state += "*"
+  $("#EditorPage .titlebar span.title").html("FlowHS Editor ("+state+") "+props.ChipName)
+}
 
 
+  /////////////////////////
+ // Default State Setup //
+/////////////////////////
 
 
+openFile(null, 'Default.fhsc')
 
-/*
-*/
 editor.view.zoomAt(editor.nodes);
 //editor.eventListener.trigger("change");
 editor.view.resize();

@@ -11442,11 +11442,22 @@ body {
 #mainWindow #NewFile {
   position: absolute;
   top: 19px;
-  right: 60px;
+  right: 105px;
   font-size: 29px;
 }
 
 #mainWindow #NewFile:hover {
+  color: #008AAA;
+}
+
+#mainWindow #OpenFile {
+  position: absolute;
+  top: 19px;
+  right: 60px;
+  font-size: 29px;
+}
+
+#mainWindow #OpenFile:hover {
   color: #008AAA;
 }
 
@@ -12950,11 +12961,22 @@ li.recentFiles-item.media:last-child {
 #mainWindow #NewFile {
   position: absolute;
   top: 19px;
-  right: 60px;
+  right: 105px;
   font-size: 29px;
 }
 
 #mainWindow #NewFile:hover {
+  color: #008AAA;
+}
+
+#mainWindow #OpenFile {
+  position: absolute;
+  top: 19px;
+  right: 60px;
+  font-size: 29px;
+}
+
+#mainWindow #OpenFile:hover {
   color: #008AAA;
 }
 
