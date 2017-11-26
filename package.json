@@ -4,7 +4,8 @@
   "description": "Flow Based Hardware Simulator",
   "main": "app/index.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "pack": "electron-packager . FlowHS --out builds --overwrite --icon ./icons/icon"
   },
   "repository": {
     "type": "git",
