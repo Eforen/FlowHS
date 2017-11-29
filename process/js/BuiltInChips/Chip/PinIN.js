@@ -27,12 +27,34 @@ module.exports = new MyEditor.Component("Bit Pin (Chip Input)", {
            upd();
          }
       );
+      var nameControl = new MyEditor.Control('<input id="name" type="text">',
+         (el, c) => {
+
+            function upd() {
+              if(node.data.name != el.value){
+                window.saveStateFalse()
+                node.data.name = el.value
+              }
+               //editor.eventListener.trigger("change");
+            }
+
+            el.addEventListener("change", upd);
+            el.addEventListener("mousedown", function(e){e.stopPropagation()});// prevent node movement when selecting text in the input field
+           upd();
+         }
+      );
 
       window.allnodes[window.allnodes.length] = node
       node.worker = (node, inputs, outputs) => {
          outputs[0] = node.data.checked;
       }
-      return node.addControl(numControl).addOutput(out1);
+      console.log(node.data.name);
+      if(node.data.name == undefined){
+        console.log("No Name for PinIN assigning: PinIN #"+window.FileProps.nextPinOUT);
+        node.data.name = "PinIN #"+window.FileProps.nextPinIN
+        window.FileProps.nextPinIN++
+      }
+      return node.addControl(numControl).addControl(nameControl).addOutput(out1);
    },
    worker(node, inputs, outputs) {
       node.worker(node, inputs, outputs)

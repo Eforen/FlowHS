@@ -3,6 +3,8 @@ var bootstrap = require('bootstrap')
 var fs = eRequire('fs')
 var ipc = eRequire('electron').ipcRenderer
 
+let baseDir = eRequire('path').resolve(dirName, '..')
+
 //var D3NE = require("d3-node-editor");
 //var alight = require("./includes/alight")
 
@@ -236,19 +238,19 @@ window.onClickSaveAs =()=>{
 }
 
 $(window).keypress(function(e) {
-  console.log(e.which);
-    if (e.ctrlKey && e.shiftKey && e.which === 19) { //Ctrl+Shift+S
-        console.log('Ctrl+Shift+S');
-        window.onClickSaveAs()
-        e.preventDefault();
-        return false;
-    } else if (e.ctrlKey && e.which === 19) { //Ctrl+S
-        console.log('Ctrl+S');
-        window.onClickSave()
-        e.preventDefault();
-        return false;
-    }
-    return true
+  //console.log(e.which);
+  if (e.ctrlKey && e.shiftKey && e.which === 19) { //Ctrl+Shift+S
+    console.log('Ctrl+Shift+S');
+    window.onClickSaveAs()
+    e.preventDefault();
+    return false;
+  } else if (e.ctrlKey && e.which === 19) { //Ctrl+S
+    console.log('Ctrl+S');
+    window.onClickSave()
+    e.preventDefault();
+    return false;
+  }
+  return true
 });
 
 var saveFile = () => {
@@ -284,10 +286,18 @@ var saveAsFile = () => {
     defaultPath: fileLocation
   })
 
-  dialog.showMessageBox({ message: "The file is: "+filename, buttons: ["OK"] });
+  if (filename == undefined) return
+  //fileLocation = dialog.showMessageBox({ message: "The file is: "+filename, buttons: ["OK"] });
+
+  fileLocation = filename
+
+	if(fileLocation.includes(baseDir)) {
+		currentFileName = fileLocation.substring(baseDir.length+1)
+	}
+
   //fileName = prompt("Please enter a filename:", fileName);
   //currentFileName = fileName.substr(fileName.length - 5) == ".fhsc" ? fileName : (fileName + ".fhsc");
-  //window.saveFile()
+  saveFile()
 }
 
 
@@ -310,12 +320,14 @@ $('#SaveAs').on('shown.bs.modal', function () {
 })
 */
 
-var props = {}
+var props = window.FileProps = {}
 
 var setDefaultProps = ()=>{
-  props = {
+  props = window.FileProps = {
     FileSyntaxVersion: 1,
-    ChipName: "Untitled"
+    ChipName: "Untitled",
+    nextPinIN: 0,
+    nextPinOUT: 0
   }
 }
 

@@ -10,6 +10,8 @@ Flow Based Hardware Simulator
 - [x] Brute Force Chip Tester (Truth Table Builder)
 - [ ] Customizable Chip Tester (Truth Table Tester) {Only Test Select Pin Combinations}
 - [x] Titlebar Reflects the state of the file and what the current ChipName is
+- [ ] Chip Pin Renaming
+- [ ] Toggle PinIN or Constant with Keyboard Hotkey
 - [ ] Embed Chips inside other chips to easily build up complex chips from simpler chips
 - [ ] Library of general purpose logic chips like Mux chips, Adders, etc...
 - [ ] Keyboard Input Functionality

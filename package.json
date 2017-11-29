@@ -2,10 +2,10 @@
   "name": "flowhs",
   "version": "1.0.0",
   "description": "Flow Based Hardware Simulator",
-  "main": "app/index.js",
+  "main": "app/main.js",
   "scripts": {
-    "start": "electron .",
-    "pack": "electron-packager . FlowHS --out builds --overwrite --icon ./icons/icon"
+    "pack": "electron-packager . FlowHS --out builds --overwrite --icon ./icons/icon --ignore\"\\(mediaDev|process|.babelrc|.gitignore|package-lock.json|gulpfile.js)\"",
+    "packall": "electron-packager . FlowHS --out builds --platform=all --overwrite --icon ./icons/icon --ignore\"\\(mediaDev|process|.babelrc|.gitignore|package-lock.json|gulpfile.js)\""
   },
   "repository": {
     "type": "git",

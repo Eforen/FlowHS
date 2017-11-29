@@ -6,6 +6,9 @@ class Output extends D3NE.Output {
     this.syncer = syncer
   }
 
+  getValue(){
+    return this.value
+  }
   setValue(value){
     this.syncer(this, value)
     this.value = value

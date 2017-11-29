@@ -16,11 +16,34 @@ module.exports = new MyEditor.Component("Bit Pin (Chip Output)", {
             };
          }
       );
+      var nameControl = new MyEditor.Control('<input id="name" type="text">',
+         (el, c) => {
+
+            function upd() {
+              if(node.data.name != el.value){
+                window.saveStateFalse()
+                node.data.name = el.value
+              }
+               //editor.eventListener.trigger("change");
+            }
+
+            el.addEventListener("change", upd);
+            el.addEventListener("mousedown", function(e){e.stopPropagation()});// prevent node movement when selecting text in the input field
+           upd();
+         }
+      );
       //Set to true be cause starting out input defaults to false thus NOT false is the state without any connections
+
+      if(node.data.name == undefined){
+        console.log("No Name for PinOUT assigning: PinOUT #"+window.FileProps.nextPinOUT);
+        node.data.name = "PinOUT #"+window.FileProps.nextPinOUT
+        window.FileProps.nextPinOUT++
+      }
       window.allnodes[window.allnodes.length] = node
       return node
          .addInput(inp1)
          .addControl(numControl)
+         .addControl(nameControl)
          //.addOutput(out);
    },
    worker(node, inputs, outputs) {
