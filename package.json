@@ -2,7 +2,7 @@
     "name": "flowhs",
     "productName": "flowhs",
     "version": "1.0.0",
-    "description": "My Electron application description",
+    "description": "Flow Based Hardware Simulator",
     "main": "src/index.js",
     "scripts": {
         "start": "electron-forge start",
@@ -11,9 +11,17 @@
         "publish": "electron-forge publish",
         "lint": "eslint src --color"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Eforen/FlowHS.git"
+    },
     "keywords": [],
-    "author": "Eforen",
+    "author": "Ariel Lothlorien",
     "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/Eforen/FlowHS/issues"
+    },
+    "homepage": "https://github.com/Eforen/FlowHS#readme",
     "config": {
         "forge": {
             "make_targets": {
