@@ -1,22 +1,22 @@
 import * as React from "react";
-import * as FontAwesome from 'react-fontawesome'
+import * as FontAwesome from 'react-fontawesome';
 import RecentFileRecord from "./RecentFileRecord";
 import { ipcRenderer as ipc, dialog } from "electron";
 
 import * as path from 'path'
 
 // Defines the interface of the properties of the TodoItem component
-interface IMainInterfaceProps {
-    recent: RecentFileRecord[];
-  }
+export interface IMainInterfaceProps {
+	recent: RecentFileRecord[];
+}
   
-  // Defines the interface of the state of the TodoItem component
-  interface IMainInterfaceState {
-    recentFiles: RecentFileRecord[];
-  }
+// Defines the interface of the state of the TodoItem component
+export interface IMainInterfaceState {
+	recentFiles: RecentFileRecord[];
+}
 
 export default class MainInterface extends React.Component<IMainInterfaceProps, IMainInterfaceState> {
-	constructor(props) {
+	constructor(props: IMainInterfaceProps) {
         super(props);
         
 		this.state ={
@@ -28,7 +28,7 @@ export default class MainInterface extends React.Component<IMainInterfaceProps, 
 		//	recentFiles: this.props.recent
 		//} //return
 	//} //getInitialState
-  render(){
+  render() {
 		let recentFiles = (this.props as any).recent;
 
 		let btnOpenSettings = () => undefined

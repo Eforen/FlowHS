@@ -3,23 +3,23 @@ import RecentFileRecord from './RecentFileRecord';
 
 
 // Defines the interface of the properties of the TodoItem component
-interface IRecentFilesListItemProps {
+export interface IRecentFilesListItemProps {
   singleItem: RecentFileRecord;
-  onClick: (event : any) => void;
+  onClick: (event: any) => void;
 }
 
 // Defines the interface of the state of the TodoItem component
-interface IRecentFilesListItemState {
+export interface IRecentFilesListItemState {
 }
 
 export default class RecentFilesListItem extends React.Component<IRecentFilesListItemProps, IRecentFilesListItemState> {
   
-  constructor(props : IRecentFilesListItemProps) {
+  constructor(props: IRecentFilesListItemProps) {
     super(props);
   }
   
   //var clicked = () => { this.props.clickCallback(this.props.singleItem.file) }
-  render(){
+  render() {
 		return(
       <a href="#" onClick={this.props.onClick}>
       <li className="recentFiles-item media">
