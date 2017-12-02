@@ -1,0 +1,15 @@
+{
+  "extends": "eslint-config-airbnb",
+  "rules": {
+    "import/extensions": 0,
+    "import/no-extraneous-dependencies": 0,
+    "import/no-unresolved": [2, { "ignore": ["electron"] }],
+    "linebreak-style": 0,
+    "no-trailing-spaces": 0,
+    "spaced-comment": 0,
+    "padded-blocks": 0,
+    "no-unused-vars": 1,
+    "object-property-newline": 0,
+    "key-spacing": 1
+  }
+}
