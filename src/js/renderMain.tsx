@@ -1,6 +1,8 @@
 import * as jQuery from 'jquery';
 const $ = jQuery;
-//import * as bootstrap from 'bootstrap';
+(window as any).jQuery = jQuery;
+// @ts-ignore
+import 'bootstrap';
 
 //let editor = require('./editor')
 //require('./editor')
@@ -19,6 +21,8 @@ import * as ReactDOM from 'react-dom';
 import Electron, { ipcRenderer as ipc, remote } from 'electron';
 import RecentFileRecord from './includes/RecentFileRecord';
 import MainInterface from './includes/MainInterface';
+import { AppContainer } from 'react-hot-loader';
+
 //const { dialog } = remote;
 
 declare global {
@@ -26,7 +30,7 @@ declare global {
 }
 
 let baseDir = path.resolve(__dirname, '..');
-let recentFilesLocation = path.resolve(__dirname, '..', 'data', 'recentFiles.json');
+let recentFilesLocation = path.resolve(baseDir, '..', 'data', 'recentFiles.json');
 let loadRecent = JSON.parse(fs.readFileSync(recentFilesLocation).toString());
 console.log(loadRecent);
 
@@ -44,25 +48,41 @@ window.openFile = (file) => {
 // @ts-ignore
 let internalContext = null;
 
+let render = () => {
+	//const { MainInterface } = require('./js/MainInterface');
+	ReactDOM.render(<AppContainer><MainInterface recent={loadRecent} /></AppContainer>, document.getElementById('ApplicationWrapper'));
+}
+
+render();
+if ((module as any).hot) { (module as any).hot.accept(render); }
+
 ipc.on("updateRecentFiles", (event: any) => {
 	console.log("Refresh");
   event.returnValue = '';
 	loadRecent = JSON.parse(fs.readFileSync(recentFilesLocation).toString());
 	console.log(loadRecent);
+	render();
+	/*
 	ReactDOM.render(
-		(<MainInterface recent={loadRecent}/>),
+		( <MainInterface recent={loadRecent} /> ),
 		document.getElementById("ApplicationWrapper")
 	)
+	*/
 })
 
+
+/*
 ReactDOM.render(
-	(<MainInterface recent={loadRecent}/>),
+	( <MainInterface recent={loadRecent} /> ),
 	document.getElementById("ApplicationWrapper")
 ) //render
+*/
+$(function () {
+	$(".header #Settings").tooltip();
+	$(".header #OpenFile").tooltip();
+	$(".header #NewFile").tooltip();
+ });
 
-$(".header #Settings").tooltip()
-$(".header #OpenFile").tooltip()
-$(".header #NewFile").tooltip()
 //Test Bootstrap
 //$(function() {
 //	$("#mainWindow").append('<h3 class="text-success">App Loaded</h3>');

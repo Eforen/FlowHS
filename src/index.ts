@@ -1,20 +1,30 @@
 // import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import { app, BrowserWindow } from 'electron';
-import path from 'path';
-import url from 'url';
+import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
+import { enableLiveReload } from 'electron-compile';
+
+import * as path from 'path';
+import * as url from 'url';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
-  app.quit();
+//if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+//  app.quit();
+//}
+
+
+const isDevMode = process.execPath.match(/[\\/]electron/);
+
+if (isDevMode) {
+  enableLiveReload({strategy: 'react-hmr'});
 }
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let mainWindow;
-let screenWindow;
-let editorWindow;
+let mainWindow: BrowserWindow;
+let screenWindow: BrowserWindow;
+let editorWindow: BrowserWindow;
 
-const createWindow = () => {
+const createWindow = async () => {
   
   /////////////////
   // Main Window //
@@ -37,7 +47,10 @@ const createWindow = () => {
   }));
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (isDevMode) {
+    await installExtension(REACT_DEVELOPER_TOOLS);
+    mainWindow.webContents.openDevTools();
+  }
 
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
@@ -71,7 +84,7 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    screenWindow = null;
+    (screenWindow as any) = null;
   });
 
   ///////////////////
@@ -94,7 +107,7 @@ const createWindow = () => {
     // Dereference the window object, usually you would store windows
     // in an array if your app supports multi windows, this is the time
     // when you should delete the corresponding element.
-    editorWindow = null;
+    (editorWindow as any)  = null;
   });
 };
 

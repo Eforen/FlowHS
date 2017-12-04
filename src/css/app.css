@@ -1,6 +1,3 @@
-@import url('../../node_modules/bootstrap/dist/css/bootstrap.css');
-@import url('../../node_modules/font-awesome/css/font-awesome.min.css');
-
 html, body{
    height: 100%;
    margin: 0;
@@ -93,5 +90,5 @@ body {
     color: #006982;
 }
 
-@import url('mainWindow.css');
-@import url('editor.css');
+/*@import url('mainWindow.css');
+@import url('editor.css');*/

@@ -1,7 +1,9 @@
 import * as React from "react";
 import * as FontAwesome from 'react-fontawesome';
 import RecentFileRecord from "./RecentFileRecord";
-import { ipcRenderer as ipc, dialog } from "electron";
+import { ipcRenderer as ipc, remote } from "electron";
+let { dialog } = remote;
+import RecentFilesListItem from "./RecentFilesListItem"
 
 import * as path from 'path'
 
@@ -19,7 +21,7 @@ export default class MainInterface extends React.Component<IMainInterfaceProps, 
 	constructor(props: IMainInterfaceProps) {
         super(props);
         
-		this.state ={
+		this.state = {
 			recentFiles: props.recent
 		}
 	}
@@ -41,7 +43,7 @@ export default class MainInterface extends React.Component<IMainInterfaceProps, 
 				if (fileNames === undefined) return;
 				let fileName = fileNames[0];
 				//dialog.showMessageBox({ message: "The file is: "+fileName, buttons: ["OK"] });
-				window.openFile(new RecentFileRecord(null,fileName, null))
+				window.openFile(new RecentFileRecord("", fileName, Date.now()));
 				/*fs.readFile(fileName, 'utf-8', function (err, data) {
 					document.getElementById("editor").value = data;
 				});*/
@@ -60,7 +62,7 @@ export default class MainInterface extends React.Component<IMainInterfaceProps, 
 			ipc.sendSync("minWindow", "main")
 		}
 
-		let myRecentFiles = recentFiles.map(function(item, index) {
+		let myRecentFiles = recentFiles.map(function(item: any, index: any) {
 			return (
 				// @ts-ignore
 				<RecentFilesListItem key = {index} singleItem = {item} onClick = {() => {openFile(item)}} />

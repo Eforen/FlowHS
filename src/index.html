@@ -3,12 +3,25 @@
   <head>
     <meta charset="UTF-8">
     <title>FlowHS</title>
-    <link rel="stylesheet" type="text/css" href="css/app.css">
+    <style>
+      @import url('../node_modules/bootstrap/dist/css/bootstrap.css');
+      @import url('../node_modules/font-awesome/css/font-awesome.min.css');
+      @import url('./css/app.css');
+      @import url('./css/mainWindow.css');
+      @import url('./css/editor.css');
+    </style>
   </head>
   <body id="mainWindow">
     <dev id="ApplicationWrapper">
 
     </dev>
-    <script type="text/javascript" src="js/renderMain.tsx"></script>
+    <script type="text/javascript">
+    //import 'js/renderMain';
+    let jQuery = null
+    let $ = jQuery = require('jquery')
+    let bootstrap = require('bootstrap')
+    require('./js/renderMain');
+    </script>
+    <!--<script type="text/javascript" src="js/renderMain.tsx"></script>-->
   </body>
 </html>

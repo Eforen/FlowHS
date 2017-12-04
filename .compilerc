@@ -1,41 +1,45 @@
 {
   "env": {
     "development": {
-      "application/javascript": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "electron": 1.7
-              }
-            }
-          ],
-          "react"
-        ],
-        "plugins": [
-          "transform-async-to-generator"
-        ],
-        "sourceMaps": "inline"
+      "text/typescript": {
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "declaration": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": false,
+        "noImplicitThis": true,
+        "noUnusedParameters": false,
+        "inlineSourceMap": true,
+        "inlineSources": true,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "module": "none",
+        "jsx": "react"
       }
     },
     "production": {
-      "application/javascript": {
-        "presets": [
-          [
-            "env",
-            {
-              "targets": {
-                "electron": 1.7
-              }
-            }
-          ],
-          "react"
-        ],
-        "plugins": [
-          "transform-async-to-generator"
-        ],
-        "sourceMaps": "none"
+      "text/typescript": {
+        "removeComments": false,
+        "preserveConstEnums": true,
+        "declaration": true,
+        "noImplicitAny": false,
+        "noImplicitReturns": false,
+        "suppressImplicitAnyIndexErrors": true,
+        "strictNullChecks": true,
+        "noUnusedLocals": false,
+        "noImplicitThis": true,
+        "noUnusedParameters": false,
+        "sourceMap": false,
+        "importHelpers": true,
+        "noEmitHelpers": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "jsx": "react"
       }
     }
   }
