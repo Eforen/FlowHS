@@ -1,4 +1,7 @@
-class LinkedInput extends D3NE.Input {
+// @ts-ignore
+import {Output as OldOutput, Socket} from 'd3-node-editor';
+
+export default class LinkedInput extends D3NE.Input {
   constructor(title, socket, link) {
     super(title, socket)
     this.defaultValue = link.defaultValue

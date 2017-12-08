@@ -1,5 +1,5 @@
 // import { app, BrowserWindow, ipcMain as ipc } from 'electron';
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain as ipc } from 'electron';
 import installExtension, { REACT_DEVELOPER_TOOLS } from 'electron-devtools-installer';
 import { enableLiveReload } from 'electron-compile';
 
@@ -133,5 +133,59 @@ app.on('activate', () => {
   }
 });
 
+// @ts-ignore
+ipc.on('openEditor', (event: any, args: any) => {
+  event.returnValue = '';
+  editorWindow.show();
+})
+
+// @ts-ignore
+ipc.on("openFile", (event: any, arg: any) => {
+  event.returnValue = '';
+  (editorWindow as any).send("openFile", arg)
+  editorWindow.show()
+})
+
+// @ts-ignore
+ipc.on("newFile", (event: any, args: any) => {
+  event.returnValue = '';
+  (editorWindow as any).send("openFile", "Default.fhsc")
+  editorWindow.show()
+})
+
+// @ts-ignore
+ipc.on("updateRecentFiles", (event: any, args: any) => {
+  event.returnValue = '';
+  (mainWindow as any).send("updateRecentFiles")
+})
+
+ipc.on("closeWindow", (event: any, args: any) => {
+  event.returnValue = '';
+  switch (args) {
+    case "main":
+      app.quit()
+      break
+    case "editor":
+      editorWindow.hide()
+      break
+    default:
+      break
+  }
+})
+
+ipc.on("minWindow", (event: any, args: any) => {
+  event.returnValue = '';
+  switch (args) {
+    case "main":
+      mainWindow.minimize()
+      break
+    case "editor":
+      editorWindow.minimize()
+      break
+    default:
+      break
+  }
+})
 // In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
+// code. You can also put them in separate files and require them here.
+

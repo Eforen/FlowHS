@@ -16,7 +16,7 @@
     "no-use-before-declare": true,
     "no-var-requires": true,
     "no-require-imports": false,
-    "one-line": [true,
+    "one-line": [false,
       "check-else",
       "check-whitespace",
       "check-open-brace"],

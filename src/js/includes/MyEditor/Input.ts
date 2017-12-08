@@ -1,4 +1,7 @@
-class Input extends D3NE.Input {
+// @ts-ignore
+import {Output as OldOutput, Socket} from 'd3-node-editor';
+
+export default class Input extends D3NE.Input {
   constructor(title, socket, defaultValue, syncer) {
     super(title, socket)
     this.defaultValue = defaultValue

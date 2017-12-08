@@ -1,4 +1,4 @@
-module.exports = {
+export default {
   Input: require('./Input'),
   Output: require('./Output'),
   Component: require('./Component'),
