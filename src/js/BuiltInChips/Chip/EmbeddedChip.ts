@@ -1,18 +1,32 @@
-var $ = jQuery = require('jquery')
-const MyEditor = require('../../includes/MyEditor')
-var Socket = require('../Sockets')
-var BoolBitHandeler = require('../BoolBitHandeler')
-var fs = eRequire('fs')
+import * as jQuery from 'jquery';
+const $ = jQuery;
+
+import * as Editor from '../../includes/MyEditor'
+import * as Sockets from '../Sockets'
+import * as BoolBitHandeler from '../BoolBitHandeler'
+import * as fs from 'fs';
+
+declare global {
+  interface Window {
+    EmbedManager: {
+      Embeded: object,
+      code: {
+        loadChip: object
+      }
+      nextEmbedID: number
+    }
+  }
+}
 
 window.EmbedManager = {
-  Embeded:{},
-  code:{
-    loadChip:{}
+  Embeded: {},
+  code: {
+    loadChip: {}
   },
   nextEmbedID: 0
 }
 
-module.exports = new MyEditor.Component("Embedded Chip", {
+module.exports = new Editor.Component("Embedded Chip", {
    builder(node) {
       node.EmbedID = window.EmbedManager.nextEmbedID
       window.EmbedManager.nextEmbedID++

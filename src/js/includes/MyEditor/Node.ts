@@ -1,6 +1,12 @@
 // @ts-ignore
 import {Node as OldNode, Socket, Input} from '../../NodeEditor';
 
+declare global {
+  interface Window {
+    NodeLogicProc: number
+  }
+}
+
 export default class Node extends OldNode {
   constructor(title: string, logic: any) {
     super(title)

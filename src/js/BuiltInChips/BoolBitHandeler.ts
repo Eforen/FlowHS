@@ -1,6 +1,8 @@
-var $ = jQuery = require('jquery')
+import * as jQuery from 'jquery';
+const $ = jQuery;
+
 module.exports = (self, bit) => {
-  if(bit){
+  if (bit){
     $(self.el).addClass("value-bit-high")
     $(self.el).removeClass("value-bit-low")
   } else{
