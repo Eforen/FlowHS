@@ -1,14 +1,25 @@
-class Command {
+import NodeEditor from './editor';
+
+export class Command {
     constructor(exec, undo, args) {
         this.exec = () => { exec(...args) };
         this.undo = () => { undo(...args) };
         this.a = args[0];
     }
+
+    exec: () => void;
+    undo: () => void;
+    a: any;
 }
 
 export default class History {
 
-    constructor(editor) {
+    editor: NodeEditor;
+    list: Command[];
+    _locked: boolean;
+    position: number;
+
+    constructor(editor: NodeEditor) {
         this.editor = editor;
         this.list = [];
         this._locked = false;

@@ -1,11 +1,13 @@
-import { Group } from './group';
-import { Node } from './node';
+import Group from './group';
+import Node from './node';
 
 export default class Selected {
 
     constructor() {
         this.list = [];
     }
+
+    list: (Node | Group) []
 
     add(item: Node | Group, accumulate = false) {
         if (accumulate) {
@@ -19,28 +21,28 @@ export default class Selected {
     }
 
     clear() {
-        this.each(item => {
+        this.each((item: (Node | Group)) => {
             this.remove(item);
         });
     }
 
-    remove(item) {
+    remove(item: (Node | Group)) {
         this.list.splice(this.list.indexOf(item), 1);
     }
 
-    contains(item) {
+    contains(item: (Node | Group)) {
         return this.list.indexOf(item) !== -1;
     }
 
-    each(callback) {
+    each(callback: any) {
         this.list.forEach(callback);
     }
 
-    eachNode(callback) {
+    eachNode(callback: any) {
         this.list.filter(item => item instanceof Node).forEach(callback);
     }
 
-    eachGroup(callback) {
+    eachGroup(callback: any) {
         this.list.filter(item => item instanceof Group).forEach(callback);
     }
 

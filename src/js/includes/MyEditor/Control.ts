@@ -1,7 +1,7 @@
 // @ts-ignore
-import {Output as OldOutput, Socket} from 'd3-node-editor';
+import {Control as OldControl, Socket} from '../../NodeEditor';
 
-export default class Control extends D3NE.Control {
+export default class Control extends OldControl {
   constructor(html, handler, setValue) {
     super(html, handler)
     if(setValue) this.setValue = setValue

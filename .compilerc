@@ -17,7 +17,7 @@
         "importHelpers": true,
         "noEmitHelpers": true,
         "experimentalDecorators": true,
-        "target": "es5",
+        "target": "es6",
         "module": "none",
         "jsx": "react"
       }
@@ -38,7 +38,7 @@
         "importHelpers": true,
         "noEmitHelpers": true,
         "experimentalDecorators": true,
-        "target": "es5",
+        "target": "es6",
         "jsx": "react"
       }
     }

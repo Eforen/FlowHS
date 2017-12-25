@@ -1,5 +1,6 @@
 import Component from './component';
 import Utils from './utils';
+import Node from './node';
 
 enum State {
     AVALIABLE = 0,
@@ -93,15 +94,16 @@ export default class Engine {
 
     async extractInputData(node: Node) {
         return await Promise.all(node.inputs.map(async (input) => {
-            var conns = input.connections;
+            let conns = input.connections;
             let connData = await Promise.all(conns.map(async (c) => {
 
                 let outputs = await this.processNode(this.data.nodes[c.node]);
 
                 if (!outputs) 
                     this.abort();
-                else
-                    return outputs[c.output];
+                //else
+                    //return outputs[c.output];
+                //TODO: Figure Out what the goal was here...
             }));
 
             return connData;
@@ -119,8 +121,8 @@ export default class Engine {
 
             node.outputData = node.outputs.map(() => null);
         
-            var key = node.title;
-            var component = this.components.find(c => c.name === key);
+            let key = node.title;
+            let component = this.components.find(c => c.name === key);
 
             try {
                 await component.worker(node, inputData, node.outputData, ...this.args);

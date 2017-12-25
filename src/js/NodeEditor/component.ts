@@ -1,10 +1,10 @@
 import Node from './node';
-import * as pug from 'pug'
 // @ts-ignore
 //import template from './templates/node.pug';
 
 //let defaultTemplate = template();
-let defaultTemplate = pug.compileFile('./templates/node.pug');
+import * as pug from 'pug'
+let defaultTemplate = pug.compileFile('./src/js/NodeEditor/templates/node.pug');
 
 export interface ComponentProps {
     template: pug.compileTemplate;

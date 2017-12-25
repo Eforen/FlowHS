@@ -1,9 +1,12 @@
-import { Group, GroupHandler, GroupTitle } from './group';
-import { PickInput, PickOutput } from './io';
-import { Connection } from './connection';
-import { Control } from './control';
-import { Item } from './contextmenu';
-import { Node } from './node';
+import Group from './group';
+import GroupHandler from './group';
+import GroupTitle from './group';
+import PickInput from './io';
+import PickOutput from './io';
+import Connection from './connection';
+import Control from './control';
+import Item from './contextmenu';
+import Node from './node';
 
 export function declareViewDirectives(view, alight) {
     

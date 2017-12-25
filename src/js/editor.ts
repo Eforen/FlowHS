@@ -26,6 +26,7 @@ let baseDir = path.resolve(__dirname, '..')
 
 import * as MyEditor from './includes/MyEditor';
 
+//import * as BuildIn from './BuiltInChips';
 const BuildIn = require('./BuiltInChips')
 window.BuildIn = BuildIn
 

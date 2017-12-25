@@ -7,7 +7,7 @@
     "noImplicitAny": false,
     "noImplicitReturns": false,
     "suppressImplicitAnyIndexErrors": true,
-    "strictNullChecks": true,
+    "strictNullChecks": false,
     "noUnusedLocals": false,
     "noImplicitThis": true,
     "noUnusedParameters": false,
@@ -16,8 +16,12 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "pretty": true,
-    "target": "es5",
-    "jsx": "react"
+    "target": "es6",
+    "jsx": "react",
+    "lib": [
+      "dom",
+      "es7"
+    ]
   },
   "formatCodeOptions": {
     "indentSize": 2,

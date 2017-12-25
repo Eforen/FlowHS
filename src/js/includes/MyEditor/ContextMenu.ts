@@ -1,7 +1,7 @@
 // @ts-ignore
-import {Output as OldOutput, Socket} from 'd3-node-editor';
+import {ContextMenu as OldContextMenu, Socket} from '../../NodeEditor';
 
-export default class ContextMenu extends D3NE.ContextMenu {
+export default class ContextMenu extends OldContextMenu {
   constructor(items, searchBar) {
     super(items, searchBar)
     //this.onClickOverride = onClickOverride

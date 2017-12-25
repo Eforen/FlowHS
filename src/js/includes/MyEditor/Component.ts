@@ -1,6 +1,7 @@
-var Node = require('./Node')
+// @ts-ignore
+import {Component as OldComponent, Socket} from '../../NodeEditor';
 
-class Component extends D3NE.Component {
+export default class Component extends OldComponent {
   constructor(title, props) {
     super(title, props)
     this.logic = props.logic

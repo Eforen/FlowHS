@@ -2,6 +2,8 @@ import Connection from './connection';
 import Control from './control';
 import Socket from './socket';
 import IO from './io';
+import Node from './node'
+import Output from './output';
 
 export default class Input extends IO {
    
@@ -35,8 +37,8 @@ export default class Input extends IO {
         return {
             'connections': this.connections.map(c => {
                 return {
-                    node: c.output.node.id,
-                    output: c.output.node.outputs.indexOf(c.output)
+                    node: (<Node>(<Output>(<Connection>c).output).node).id,
+                    output: (<Node>(<Output>(<Connection>c).output).node).outputs.indexOf(c.output)
                 };
             })
         };

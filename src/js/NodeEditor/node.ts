@@ -4,9 +4,10 @@ import Control from './control';
 import Input from './input';
 import Output from './output';
 import Group from './group'
+import Connection from './connection';
 
 export default class Node extends Block {
-   
+   static latestId: number;
     constructor(public title: string) {
         super(Node);
         this.group = null;
@@ -27,6 +28,10 @@ export default class Node extends Block {
     data: any;
     width: number;
     height: number;
+
+    unlockPool: any[];
+    outputData: any;
+    busy: boolean;
 
     addControl(control: Control, index: number | null = null) {
         control.parent = this;
@@ -67,8 +72,8 @@ export default class Node extends Block {
         return this;
     }
 
-    getConnections(type: string) {
-        let conns = [];
+    getConnections(type: string | undefined = undefined) {
+        let conns = Connection[0];
 
         if (type === 'input' || !type)
             this.inputs.map(input => {
@@ -87,7 +92,7 @@ export default class Node extends Block {
     }
 
     inputsWithVisibleControl() {
-        return this.inputs.filter((input)=> {
+        return this.inputs.filter((input) => {
             return input.showControl();
         });
     }
@@ -105,13 +110,13 @@ export default class Node extends Block {
     }
 
     static async fromJSON(component: Component, json: Object) {
-        var node = component.newNode();
+        let node: Node = component.newNode();
 
-        node.id = json.id;
-        node.data = json.data;
+        node.id = (<any>json).id;
+        node.data = (<any>json).data;
         Node.latestId = Math.max(node.id, Node.latestId);
-        node.position = json.position;
-        node.title = json.title;
+        node.position = (<any>json).position;
+        node.title = (<any>json).title;
 
         await component.builder(node);
 

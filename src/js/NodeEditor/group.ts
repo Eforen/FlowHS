@@ -21,6 +21,9 @@ export default class Group extends Block {
     }
 
     nodes: Node[]
+    minWidth: number;
+    minHeight: number;
+    static latestId: number;
 
     setMinSizes(width, height) {
         this.minWidth = width;
@@ -36,8 +39,8 @@ export default class Group extends Block {
     }
 
     isCoverNode(node: Node) {
-        var gp = this.position;
-        var np = node.position;
+        let gp = this.position;
+        let np = node.position;
 
         return np[0] > gp[0] && np[1] > gp[1]
             && np[0] + node.width < gp[0] + this.width
@@ -45,12 +48,12 @@ export default class Group extends Block {
     }
 
     coverNodes(nodes: Node[]) {
-        var self = this;
-        var margin = 30;
-        var bbox = Utils.nodesBBox(nodes);
+        let self = this;
+        let margin = 30;
+        let bbox = Utils.nodesBBox(nodes);
 
         nodes.forEach(node => {
-            if (node.group !== null) node.group.removeNode(node.group);
+            if (node.group !== null) node.group.removeNode(node);
             self.addNode(node);
         });
         this.position = [bbox.left - margin, bbox.top - 2 * margin];
@@ -95,8 +98,8 @@ export default class Group extends Block {
         }
     }
 
-    static fromJSON(json: Object) {
-        var group = new Group(json.title, {
+    static fromJSON(json: Object | any) {
+        let group = new Group(json.title, {
             position: json.position,
             width: json.width,
             height: json.height

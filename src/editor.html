@@ -4,13 +4,20 @@
          <title>Node Editor</title>
       </head>
         <!--
-        -->
       <script src="js/includes/alight.min.js"></script>
       <script type="text/javascript">window.alight = require('alight');</script>
       <script src="js/includes/d3.min.js"></script>
       <script src="js/includes/d3-node-editor.js"></script>
-      <!--<link href="https://cdn.jsdelivr.net/npm/d3-node-editor@0.6.3/build/d3-node-editor.css" rel="stylesheet"></link>-->
-      <link href="css/app.css" rel="stylesheet"></link>
+        -->
+      <!--<link href="https://cdn.jsdelivr.net/npm/d3-node-editor@0.6.3/build/d3-node-editor.css" rel="stylesheet"></link>
+      <link href="css/app.css" rel="stylesheet"></link>-->
+      <style>
+        @import url('../node_modules/bootstrap/dist/css/bootstrap.css');
+        @import url('../node_modules/font-awesome/css/font-awesome.min.css');
+        @import url('./css/app.css');
+        @import url('./css/mainWindow.css');
+        @import url('./css/editor.css');
+      </style>
       <body id="EditorPage">
         <div class="titlebar">
           <span class="title">FlowHS Editor</span>
@@ -96,12 +103,23 @@
       </div>
     </body>
     
+      <!--
       <script type="text/javascript">
         var eRequire = require;
         var dirName = __dirname;
         var dialog = window.dialog = require('electron').remote.dialog;
       </script>
-      <script src="js/editor.js"></script>
+      <script src="js/editor.ts"></script>
+      -->
+
+      <script type="text/javascript">
+        //import 'js/renderMain';
+        let jQuery = null
+        let $ = jQuery = require('jquery')
+        let bootstrap = require('bootstrap')
+        //let D3NE = require('D3NE');
+        require('./js/editor');
+      </script>
     
     </html>
     

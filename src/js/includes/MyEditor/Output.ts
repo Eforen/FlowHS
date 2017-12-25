@@ -1,5 +1,5 @@
 // @ts-ignore
-import {Output as OldOutput, Socket} from 'd3-node-editor';
+import {Output as OldOutput, Socket} from '../../NodeEditor';
 
 export default class Output extends OldOutput {
   constructor(title: string, socket: Socket, defaultValue: any, syncer: any) {

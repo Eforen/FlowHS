@@ -1,5 +1,5 @@
 // @ts-ignore
-import {Node as OldNode, Socket} from 'd3-node-editor';
+import {Node as OldNode, Socket, Input} from '../../NodeEditor';
 
 export default class Node extends OldNode {
   constructor(title: string, logic: any) {
@@ -22,7 +22,7 @@ export default class Node extends OldNode {
     window.NodeLogicProc--
   }
 
-  removeInput(input) {
+  removeInput(input: Input) {
     if (input.node !== this)
       throw new Error('Input is not on this node');
     for (let i = 0; i < this.inputs.length; i++) {

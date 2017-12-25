@@ -11,6 +11,7 @@ export default class IO {
 
     node: Node | null;
     connections: Connection[];
+    el: HTMLElement;
     
     removeConnection(connection: Connection) {
         this.connections.splice(this.connections.indexOf(connection), 1);

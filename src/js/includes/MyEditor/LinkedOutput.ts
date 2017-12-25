@@ -1,7 +1,8 @@
 // @ts-ignore
-import {Output as OldOutput, Socket} from 'd3-node-editor';
+import {Socket} from '../../NodeEditor';
+import Output from './Output'
 
-export default class LinkedOutput extends D3NE.Output {
+export default class LinkedOutput extends Output {
   constructor(title, socket, link) {
     super(title, socket)
     this.value = link.value

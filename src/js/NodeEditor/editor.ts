@@ -10,6 +10,7 @@ import Node from './node';
 import Output from './output';
 import Selected from './selected';
 import Utils from './utils';
+import * as d3 from 'd3'
 
 export default class NodeEditor {
 
@@ -40,6 +41,7 @@ export default class NodeEditor {
     nodes: Node[];
     groups: Group[];
     readOnly: boolean;
+    paths: any[];
 
     addNode(node: Node, mousePlaced = false) {
         if (this.eventListener.trigger('nodecreate', node)) {
@@ -64,7 +66,7 @@ export default class NodeEditor {
     }
 
     removeNode(node: Node) {
-        var index = this.nodes.indexOf(node);
+        let index = this.nodes.indexOf(node);
 
         if (this.eventListener.trigger('noderemove', node)) {
             node.getConnections().forEach(c => this.removeConnection(c));
@@ -90,7 +92,7 @@ export default class NodeEditor {
         this.view.update(); 
     }
 
-    connect(output: Output | Connection, input: ?Input) {
+    connect(output: Output | Connection, input: Input = undefined) {
         if (output instanceof Connection) {
             input = output.input;
             output = output.output;
@@ -98,7 +100,7 @@ export default class NodeEditor {
 
         if (this.eventListener.trigger('connectioncreate', { output, input })) {
             try {
-                var connection = output.connectTo(input);
+                let connection = output.connectTo(input);
 
                 this.eventListener.trigger('change');
                 this.history.add(this.connect.bind(this),
@@ -144,7 +146,7 @@ export default class NodeEditor {
         this.view.update();
     }
     
-    keyDown() {
+    keyDown(event: any) {
         if (this.readOnly) return;
 
         switch (d3.event.keyCode) {
@@ -177,8 +179,8 @@ export default class NodeEditor {
     }
 
     toJSON() {
-        var nodes = {};
-        var groups = {};
+        let nodes = {};
+        let groups = {};
 
         this.nodes.forEach(node => nodes[node.id] = node.toJSON());
         this.groups.forEach(group => groups[group.id] = group.toJSON());
@@ -190,8 +192,8 @@ export default class NodeEditor {
         };
     }
 
-    async fromJSON(json: Object) {
-        var checking = Utils.validate(this.id, json);
+    async fromJSON(json: Object | any) {
+        let checking = Utils.validate(this.id, json);
         
         if (!checking.success) {
             this.eventListener.trigger('error', checking.msg);
@@ -202,12 +204,12 @@ export default class NodeEditor {
         this.eventListener.persistent = false;
         
         this.clear();
-        var nodes = {};
+        let nodes = {};
 
         try {
             await Promise.all(Object.keys(json.nodes).map(async id => {
-                var node = json.nodes[id];
-                var component = this.components.find(c => {
+                let node = json.nodes[id];
+                let component = this.components.find(c => {
                     return c.name === node.title
                 });
 
@@ -218,14 +220,14 @@ export default class NodeEditor {
             }));
         
             Object.keys(json.nodes).forEach(id => {
-                var jsonNode = json.nodes[id];
-                var node = nodes[id];
+                let jsonNode = json.nodes[id];
+                let node = nodes[id];
                 
                 jsonNode.outputs.forEach((outputJson, i) => {
                     outputJson.connections.forEach(jsonConnection => {
-                        var nodeId = jsonConnection.node;
-                        var inputIndex = jsonConnection.input;
-                        var targetInput = nodes[nodeId].inputs[inputIndex];
+                        let nodeId = jsonConnection.node;
+                        let inputIndex = jsonConnection.input;
+                        let targetInput = nodes[nodeId].inputs[inputIndex];
 
                         this.connect(node.outputs[i], targetInput);
                     });
@@ -235,10 +237,10 @@ export default class NodeEditor {
 
             if (typeof json.groups === 'object')
                 Object.keys(json.groups).forEach(id => {
-                    var group = Group.fromJSON(json.groups[id]);
+                    let group = Group.fromJSON(json.groups[id]);
 
                     json.groups[id].nodes.forEach(nodeId => {
-                        var node = nodes[nodeId];
+                        let node = nodes[nodeId];
 
                         group.addNode(node);
                     })

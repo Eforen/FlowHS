@@ -3,7 +3,7 @@ import { declareMenuDirectives } from './directives/index';
 import * as alight from 'alight'
 import * as d3 from 'd3'
 import * as pug from 'pug'
-let template = pug.compileFile('./templates/menu.pug');
+let template = pug.compileFile('./src/js/NodeEditor/templates/menu.pug');
 
 export default class ContextMenu {
 
@@ -14,7 +14,7 @@ export default class ContextMenu {
         this.default = {
             items,
             searchBar,
-            onClick() { throw new TypeError('onClick should be overrided');}
+            onClick() { throw new TypeError('onClick should be overrided'); }
         };
 
         this.bindTemplate(template());

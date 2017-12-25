@@ -8,7 +8,9 @@ export default class Output extends IO {
     constructor(title: string, socket: Socket, multiConns: boolean = true) {
         super(title, socket, multiConns);
     }
-    
+
+    connections: Connection[];
+
     hasConnection() {
         return this.connections.length > 0;
     }
