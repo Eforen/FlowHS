@@ -1,0 +1,6 @@
+.ChipEditorGrid {
+    background-image: url('imgs/gridtile.png');
+    background-repeat: repeat;
+    width: 300px;
+    height: 200px;
+}

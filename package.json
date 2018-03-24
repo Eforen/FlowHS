@@ -1,54 +1,70 @@
 {
   "name": "flowhs",
+  "productName": "flowhs",
   "version": "1.0.0",
-  "description": "Flow Based Hardware Simulator",
-  "main": "app/main.js",
+  "description": "My Electron application description",
+  "main": "src/index.ts",
   "scripts": {
-    "pack": "electron-packager . FlowHS --out builds --overwrite --icon ./icons/icon --ignore\"\\(mediaDev|process|.babelrc|.gitignore|package-lock.json|gulpfile.js)\"",
-    "packall": "electron-packager . FlowHS --out builds --platform=all --overwrite --icon ./icons/icon --ignore\"\\(mediaDev|process|.babelrc|.gitignore|package-lock.json|gulpfile.js)\""
+    "start": "electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make",
+    "publish": "electron-forge publish",
+    "lint": "tslint --project tsconfig.json --type-check --force"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Eforen/FlowHS.git"
+  "keywords": [],
+  "author": "Eforen",
+  "license": "MIT",
+  "config": {
+    "forge": {
+      "make_targets": {
+        "win32": [
+          "squirrel"
+        ],
+        "darwin": [
+          "zip"
+        ],
+        "linux": [
+          "deb",
+          "rpm"
+        ]
+      },
+      "electronPackagerConfig": {
+        "packageManager": "yarn"
+      },
+      "electronWinstallerConfig": {
+        "name": "flowhs"
+      },
+      "electronInstallerDebian": {},
+      "electronInstallerRedhat": {},
+      "github_repository": {
+        "owner": "",
+        "name": ""
+      },
+      "windowsStoreConfig": {
+        "packageName": "",
+        "name": "flowhs"
+      }
+    }
   },
-  "author": "Ariel Lothlorien",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Eforen/FlowHS/issues"
-  },
-  "homepage": "https://github.com/Eforen/FlowHS#readme",
   "dependencies": {
-    "alight": "^0.14.0",
-    "bootstrap": "^3.3.7",
-    "d3": "^4.12.0",
-    "d3-node-editor": "^0.6.3",
-    "d3v4": "^4.2.2",
-    "electron-reload": "^1.2.2",
-    "express": "^4.16.2",
-    "font-awesome": "^4.7.0",
-    "jquery": "^3.2.1",
-    "lodash": "^4.17.4",
-    "react-fontawesome": "^1.6.1"
+    "@types/electron-devtools-installer": "2.0.2",
+    "@types/react": "^0.14.55",
+    "@types/react-dom": "0.14.20",
+    "electron-compile": "6.4.2",
+    "electron-devtools-installer": "2.1.0",
+    "electron-squirrel-startup": "1.0.0",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "tslib": "^1.4.0"
   },
   "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-react": "^6.24.1",
-    "babelify": "^8.0.0",
-    "electron": "~1.7.8",
-    "electron-packager": "^10.1.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-browserify": "^0.5.1",
-    "gulp-concat-css": "^2.3.0",
-    "gulp-jshint": "^2.0.4",
-    "gulp-react": "^3.1.0",
-    "gulp-run": "^1.7.1",
-    "gulp-sourcemaps": "^2.6.1",
-    "jshint": "^2.9.5",
-    "react": "^16.1.1",
-    "react-dom": "^16.1.1",
-    "reactify": "^1.1.1"
+    "babel-plugin-transform-async-to-generator": "6.24.1",
+    "babel-preset-env": "1.6.1",
+    "babel-preset-react": "6.24.1",
+    "electron-forge": "5.1.1",
+    "electron-prebuilt-compile": "1.8.4",
+    "tslint": "^5.1.0",
+    "typescript": "~2.2.2"
   }
 }
