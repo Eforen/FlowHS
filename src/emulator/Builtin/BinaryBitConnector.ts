@@ -6,11 +6,10 @@ export default class BinaryBitConnector extends Connector {
     protected value: boolean;
 
     public setValue(value: boolean) {
-        if (value == this.value) return
-        
         //Call update on connected gates if value is dif
+        super.setValue(value)
     }
     public getValue(): boolean {
-        return this.value;
+        return super.getValue() as boolean
     }
 }
