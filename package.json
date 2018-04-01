@@ -9,7 +9,8 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
-    "lint": "tslint --project tsconfig.json --type-check --force"
+    "lint": "tslint --project tsconfig.json --type-check --force",
+    "test": "tsc && mocha"
   },
   "keywords": [],
   "author": "Eforen",
@@ -55,6 +56,7 @@
     "electron-squirrel-startup": "1.0.0",
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
+    "react-draggable": "^3.0.5",
     "react-hot-loader": "^3.0.0-beta.6",
     "tslib": "^1.4.0"
   },
