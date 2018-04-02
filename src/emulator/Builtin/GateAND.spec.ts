@@ -1,17 +1,18 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
-import GateNAND from './GateNAND';
+import GateAND from './GateAND';
 
-describe('NAND Gates', () => {
+
+describe('AND Gates', () => {
     let truthTable = [
-        [0, 0, 1],
-        [0, 1, 1],
-        [1, 0, 1],
-        [1, 1, 0]
+        [0, 0, 0],
+        [0, 1, 0],
+        [1, 0, 0],
+        [1, 1, 1]
     ]
     truthTable.forEach((table) => {
-        it('NAND Logic [' + table[0] + ', ' + table[1] + '] == ' + table[2], () => {
-            let test = new GateNAND()
+        it('AND Logic [' + table[0] + ', ' + table[1] + '] == ' + table[2], () => {
+            let test = new GateAND()
 
             test.pinA.setValue(table[0] == 1)
             test.pinB.setValue(table[1] == 1)

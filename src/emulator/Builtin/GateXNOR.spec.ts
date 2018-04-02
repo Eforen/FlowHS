@@ -1,17 +1,17 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
-import GateNAND from './GateNAND';
+import GateXNOR from './GateXNOR';
 
-describe('NAND Gates', () => {
+describe('XNOR Gates', () => {
     let truthTable = [
         [0, 0, 1],
-        [0, 1, 1],
-        [1, 0, 1],
-        [1, 1, 0]
+        [0, 1, 0],
+        [1, 0, 0],
+        [1, 1, 1]
     ]
     truthTable.forEach((table) => {
-        it('NAND Logic [' + table[0] + ', ' + table[1] + '] == ' + table[2], () => {
-            let test = new GateNAND()
+        it('XNOR Logic [' + table[0] + ', ' + table[1] + '] == ' + table[2], () => {
+            let test = new GateXNOR()
 
             test.pinA.setValue(table[0] == 1)
             test.pinB.setValue(table[1] == 1)
