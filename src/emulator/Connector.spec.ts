@@ -3,6 +3,7 @@ import { expect } from 'chai';
 import { describe } from 'mocha';
 import * as TypeMoq from 'typemoq';
 import Wire from './Wire';
+import Gate from './Gate';
 
 describe('Connector', () => {
     describe('value', () => {
@@ -153,6 +154,23 @@ describe('Connector', () => {
         })
     })
 
+    describe('gate', () => {
+        it('should update gate when updated', () => {
+            let test = new Connector('test')
+            let gate = TypeMoq.Mock.ofInstance(new Gate('test', [test], []))
+
+            test.gate = gate.object
+
+            expect(test.gate).to.not.be.undefined
+            expect(test.gate).to.equal(gate.object)
+            gate.setup(x => x.update(TypeMoq.It.isValue(test))).verifiable(TypeMoq.Times.once())
+
+            test.update()
+
+            gate.verifyAll()
+        })
+    })
+
     describe('type', () => {
         it('should default to type any', () => {
             expect(new Connector('test').type).to.be.equal('any')
@@ -160,14 +178,37 @@ describe('Connector', () => {
         it('should be able to connect to type any if type is specifide', () => {
             let test = new Connector('test')
             let target = new Connector('target')
+
+            expect(target.acceptedTypes).to.contain('any')
+            expect(target.canConnectWith(test)).to.be.equal(true)
+
+            test.type = 'foo'
+            expect(target.canConnectWith(test)).to.be.equal(true)
+
+            test.type = 'bar'
+            expect(target.canConnectWith(test)).to.be.equal(true)
+        })
+        it('should be able to connect from accepted types only', () => {
+            let test = new Connector('test')
+            let target = new Connector('target')
             
-            expect(target.canConnectWith(test)).to.be.true
-        })
-        it.skip('should be able to connect to desired types', () => {
+            target.acceptedTypes = ['foo']
+            
+            expect(target.canConnectWith(test)).to.be.equal(false) //any only matches if target accepts that type
 
-        })
-        it.skip('should not be able to connect to non desired types', () => {
+            test.type = 'foo'
+            expect(target.canConnectWith(test)).to.be.equal(true) 
 
+            test.type = 'bar'
+            expect(target.canConnectWith(test)).to.be.equal(false)
+
+            target.acceptedTypes = ['bar']
+
+            test.type = 'foo'
+            expect(target.canConnectWith(test)).to.be.equal(false)
+
+            test.type = 'bar'
+            expect(target.canConnectWith(test)).to.be.equal(true)
         })
     })
 })

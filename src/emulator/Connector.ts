@@ -1,10 +1,12 @@
 import Wire from './Wire';
+import Gate from './Gate';
 
 export default class Connector {
     constructor(public name: string) {
 
     }
 
+    public gate: Gate;
     public output: boolean;
 
     public type: string = 'any';
@@ -33,6 +35,8 @@ export default class Connector {
 
     public connections: Wire[] = []
     public update: () => void = () => {
-        
+        if (this.gate != undefined){
+            this.gate.update(this)
+        }
     }
 }

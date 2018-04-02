@@ -1,8 +1,8 @@
 import Connector from '../Connector';
 
 export default class BinaryBitConnector extends Connector {
-    public type: string | string[] = 'BinBit';
-    public acceptedTypes: string[] = ['BinBit'];
+    public type: string = 'bit';
+    public acceptedTypes: string[] = ['bit'];
     protected value: boolean;
 
     public setValue(value: boolean) {
@@ -13,3 +13,4 @@ export default class BinaryBitConnector extends Connector {
         return super.getValue() as boolean
     }
 }
+
