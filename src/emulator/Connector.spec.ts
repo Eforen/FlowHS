@@ -175,6 +175,9 @@ describe('Connector', () => {
         it('should default to type any', () => {
             expect(new Connector('test').type).to.be.equal('any')
         })
+        it.skip('should not accept anything as a connect if is output', () => {
+            //Maybe it should just check the other thing if something trys to connect to it
+        })
         it('should be able to connect to type any if type is specifide', () => {
             let test = new Connector('test')
             let target = new Connector('target')
