@@ -4,5 +4,5 @@ export interface OutputState {
     name: string,
     type: OutputTypes,
     value: any,
-    connections: number[]
+    connections: number[] //TODO: create connection interface
 }

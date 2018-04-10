@@ -5,5 +5,6 @@ export interface EmulatorState {
     sleepTime: number,
     changed: boolean,
     nodes: NodeState[],
+    updated: boolean[]
     messages: string[]
 }
