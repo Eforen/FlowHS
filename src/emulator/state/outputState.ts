@@ -1,8 +1,9 @@
 import { OutputTypes } from './outputTypes';
+import { ConnectionState } from './ConnectionState';
 
 export interface OutputState {
     name: string,
     type: OutputTypes,
     value: any,
-    connections: number[] //TODO: create connection interface
+    connections: ConnectionState[]
 }
