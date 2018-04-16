@@ -22,21 +22,56 @@ export class Node extends React.Component<INodeProps, INodeState>{
     }
 
     public render() {
-        let connectorList = []
-        connectorList.push(this.props.logic.InputConnectors.map((input: Connector) => {
-                return (<li>{input.name}</li>)
-            })
-        )
-        connectorList.push(this.props.logic.OutputConnectors.map((output: Connector) => {
-                return (<li>{output.name}</li>)
-            })
+        let connectorListInputs = []
+        let connectorListOutputs = []
+        connectorListInputs.push(this.props.logic.InputConnectors.map((input: Connector) => {
+            return (
+                <li style={{height: '1em'}}>
+                    <span className='logicnode-connector'></span>
+                    <span className='logicnode-connector-label'>{input.name}</span>
+                </li>
+            )
+        }))
+
+        let inputList = (
+            <div className='logicnode-inputs'>
+                <ul className='connectorlist'>
+                    {connectorListInputs}
+                </ul>
+            </div>
         )
 
-        let connectors = (<div className='connectors'>{connectorList}</div>)
+        connectorListOutputs.push(this.props.logic.OutputConnectors.map((output: Connector) => {
+            return (
+                <li style={{ height: '1em' }}>
+                    <span className='logicnode-connector'></span>
+                    <span className='logicnode-connector-label'>{output.name}</span>
+                </li>
+            )
+            })
+        )
+        let outputList = (
+            <div className='logicnode-outputs'>
+                <ul className='connectorlist'>
+                    {connectorListOutputs}
+                </ul>
+            </div>
+        )
+
+        let connectors = (
+            <div className='connectors' 
+                style={{ 
+                    height: this.props.logic.InputConnectors.length > this.props.logic.OutputConnectors.length ? 
+                    (this.props.logic.InputConnectors.length + '.2em') : 
+                    (this.props.logic.OutputConnectors.length + '.2em')
+                }}>
+                {inputList}
+                {outputList}
+            </div>)
 
         return (
             <div>
-                <section className={'logicNode logicNode-' + this.props.logic.name}>
+                <section className={'logicnode logicnode-' + this.props.logic.name}>
                     <header className='logicnode-header'>
                         <span className='logicnode-title'>{this.props.logic.name}</span>
                     </header>

@@ -86,8 +86,8 @@ describe('Node Gates', () => {
                             userName: 'who cares',
                             type: testType,
                             inputs: [
-                                { name: 'A', value: table[0] == 1, acceptsConnectionFrom: [OutputTypes.BIT] },
-                                { name: 'B', value: table[1] == 1, acceptsConnectionFrom: [OutputTypes.BIT] }
+                                { name: 'A', value: table[0] == 1, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined },
+                                { name: 'B', value: table[1] == 1, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined }
                             ],
                             outputs: [{
                                 name: 'Out',
