@@ -10,7 +10,8 @@
     "make": "electron-forge make",
     "publish": "electron-forge publish",
     "lint": "tslint --project tsconfig.json --type-check --force",
-    "test": "ts-mocha -p . src/**/*.spec.ts"
+    "test": "ts-mocha -p . src/**/*.spec.ts",
+    "testDebug": "ts-mocha node-inspector -p . src/**/*.spec.ts"
   },
   "keywords": [],
   "author": "Eforen",

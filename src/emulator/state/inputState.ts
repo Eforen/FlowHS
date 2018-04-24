@@ -7,3 +7,10 @@ export interface InputState {
     acceptsConnectionFrom: OutputTypes[]
     connection: ConnectionState | undefined
 }
+
+export const InputStateDefault: InputState = {
+    name: 'In',
+    value: false,
+    acceptsConnectionFrom: [],
+    connection: undefined
+}

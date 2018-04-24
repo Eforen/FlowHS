@@ -11,3 +11,13 @@ export interface NodeState {
     inputs: InputState[]
     outputs: OutputState[]
 }
+
+export const NodeStateDefault: NodeState = {
+    ID: -1,
+    name: 'Error',
+    userName: 'Error',
+    type: NodeTypes.BIT_AND,
+    changed: false,
+    inputs: [],
+    outputs: []
+}

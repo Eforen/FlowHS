@@ -7,3 +7,10 @@ export interface OutputState {
     value: any,
     connections: ConnectionState[]
 }
+
+export const OutputStateDefault: OutputState = {
+    name: 'Out',
+    type: OutputTypes.BIT,
+    value: false,
+    connections: []
+}

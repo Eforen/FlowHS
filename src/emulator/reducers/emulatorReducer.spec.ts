@@ -6,7 +6,7 @@ import { NodeState } from '../state/nodeState';
 import { OutputState } from '../state/outputState';
 import { OutputTypes } from '../state/outputTypes';
 import { EmulatorReducer } from './emultatorReducer';
-import { actionTypes } from '../actions/actionTypes';
+import { emulatorActionTypes } from '../actions/actionTypes';
 
 
 describe('Emulator Reducer', () => {
@@ -128,7 +128,7 @@ describe('Emulator Reducer', () => {
             }
             //target.updated[1] = true
 
-            let result = EmulatorReducer(test, { type: actionTypes.SIM_STEP_LOGIC })
+            let result = EmulatorReducer(test, { type: emulatorActionTypes.SIM_STEP_LOGIC })
             expect(result).to.deep.equal(target)
         })
     })
@@ -241,7 +241,7 @@ describe('Emulator Reducer', () => {
             }
             target.updated[1] = true
 
-            let result = EmulatorReducer(test, {type: actionTypes.SIM_STEP_WIRES})
+            let result = EmulatorReducer(test, {type: emulatorActionTypes.SIM_STEP_WIRES})
             expect(result).to.deep.equal(target)
         })
     })

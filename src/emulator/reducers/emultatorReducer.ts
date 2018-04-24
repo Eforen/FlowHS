@@ -1,11 +1,11 @@
 import { Reducer } from 'redux';
 import { EmulatorState } from '../state/emulatorState';
-import { actionTypes } from '../actions/actionTypes';
+import { emulatorActionTypes } from '../actions/actionTypes';
 import { nodeProcesser } from './nodeProcesser';
 
 export const EmulatorReducer: Reducer<EmulatorState> = (state, action) => {
     switch (action.type) {
-        case actionTypes.SIM_STEP_LOGIC:
+        case emulatorActionTypes.SIM_STEP_LOGIC:
             if (state.changed){
                 let changed = false
                 let changes: boolean[] = []
@@ -21,7 +21,7 @@ export const EmulatorReducer: Reducer<EmulatorState> = (state, action) => {
                 }
             }
             return state
-        case actionTypes.SIM_STEP_WIRES:
+        case emulatorActionTypes.SIM_STEP_WIRES:
             if (state.updated.length > 0){
                 /*let states: any[][]
 

@@ -8,3 +8,12 @@ export interface EmulatorState {
     updated: boolean[]
     messages: string[]
 }
+
+export const EmulatorStateDefault: EmulatorState = {
+    step: 0,
+    sleepTime: 0,
+    changed: false,
+    nodes: [],
+    updated: [],
+    messages: []
+}
