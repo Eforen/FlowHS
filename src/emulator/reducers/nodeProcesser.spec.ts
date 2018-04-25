@@ -96,7 +96,6 @@ describe('Node Gates', () => {
                                 connections: []
                             }],
                             changed: true
-
                         }
                         let test = nodeProcesser(node)
 

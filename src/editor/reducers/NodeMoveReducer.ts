@@ -51,8 +51,8 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                 nodes: state.nodeMoving.dragging == true ? state.nodes.map((value, index, arr) => {
                     if (index == state.nodeMoving.nodeID){
                         return {
-                            x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, 
-                            y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY
+                            x: state.nodeMoving.posStartX + state.nodeMoving.posOffsetX, 
+                            y: state.nodeMoving.posStartY + state.nodeMoving.posOffsetY
                         }
                     }
                     return value
@@ -70,8 +70,8 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                 nodes: state.nodeMoving.type == MoveType.Node ? state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
                     if (index == state.nodeMoving.nodeID){
                         return {
-                            x: action.pos[0] - state.nodeMoving.posOffsetX,
-                            y: action.pos[1] - state.nodeMoving.posOffsetY
+                            x: action.pos[0] + state.nodeMoving.posOffsetX,
+                            y: action.pos[1] + state.nodeMoving.posOffsetY
                         } as EditorNodeState
                     }
                     return value
@@ -94,11 +94,11 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     input: -1
                 },
                 nodes: state.nodeMoving.type == MoveType.Node ? state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
-                    if (index != state.nodeMoving.nodeID) {
+                    if (index == state.nodeMoving.nodeID) {
                         if (action.success) {
                             return {
-                                x: (action.x as number) + state.nodeMoving.posOffsetX,
-                                y: (action.y as number) + state.nodeMoving.posOffsetY
+                                x: (action.pos[0] as number) + state.nodeMoving.posOffsetX,
+                                y: (action.pos[1] as number) + state.nodeMoving.posOffsetY
                             } as EditorNodeState
                         }
                         return {
