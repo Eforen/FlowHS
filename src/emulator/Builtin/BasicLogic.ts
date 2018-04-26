@@ -1,10 +1,10 @@
-import { NodeTypes } from '../state/nodeTypes';
+import { LogicTypes } from '../state/nodeTypes';
 import { NodeState } from '../state/nodeState';
 import { OutputTypes } from '../state/outputTypes';
 
-export const createBasic: (type: NodeTypes) => NodeState = (type) => {
+export const createBasic: (type: LogicTypes) => NodeState = (type) => {
     switch (type) {
-        case NodeTypes.BIT_AND:
+        case LogicTypes.BIT_AND:
             return {
                 ID: -1,
                 name: 'AND Gate',
@@ -22,7 +22,7 @@ export const createBasic: (type: NodeTypes) => NodeState = (type) => {
                 }],
                 changed: true
             }
-        case NodeTypes.BIT_NAND:
+        case LogicTypes.BIT_NAND:
             return {
                 ID: -1,
                 name: 'NAND Gate',
@@ -40,7 +40,7 @@ export const createBasic: (type: NodeTypes) => NodeState = (type) => {
                 }],
                 changed: true
             }
-        case NodeTypes.BIT_OR:
+        case LogicTypes.BIT_OR:
             return {
                 ID: -1,
                 name: 'OR Gate',
@@ -58,7 +58,7 @@ export const createBasic: (type: NodeTypes) => NodeState = (type) => {
                 }],
                 changed: true
             }
-        case NodeTypes.BIT_NOR:
+        case LogicTypes.BIT_NOR:
             return {
                 ID: -1,
                 name: 'NOR Gate',
@@ -76,7 +76,7 @@ export const createBasic: (type: NodeTypes) => NodeState = (type) => {
                 }],
                 changed: true
             }
-        case NodeTypes.BIT_XOR:
+        case LogicTypes.BIT_XOR:
             return {
                 ID: -1,
                 name: 'XOR Gate',
@@ -94,7 +94,7 @@ export const createBasic: (type: NodeTypes) => NodeState = (type) => {
                 }],
                 changed: true
             }
-        case NodeTypes.BIT_XNOR:
+        case LogicTypes.BIT_XNOR:
             return {
                 ID: -1,
                 name: 'XNOR Gate',

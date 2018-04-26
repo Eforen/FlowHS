@@ -1,16 +1,49 @@
 import * as React from 'react';
 import Gate from './emulator/Gate';
-import GateAND from './emulator/Builtin/GateAND';
 import { Editor } from './editor/Editor'
+import { createStore } from 'redux';
+import { EditorState } from './editor/state/editorState';
+import { EditorReducer } from './editor/reducers/EditorReducer';
+import { nodeCreate, IActionNodeCreate } from './editor/actions/nodeCreate';
+import { LogicTypes } from './emulator/state/nodeTypes';
+import { Store } from 'react-redux';
+import { applyMiddleware } from 'redux';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
 
-export class App extends React.Component<undefined, undefined> {
+export interface Props {
+}
+
+export interface State {
+
+}
+
+declare global {
+  interface Window {
+    store: Store<EditorState>
+    makeAction: {
+      create: (type: LogicTypes, x: number, y: number) => IActionNodeCreate
+    }
+   }
+}
+
+//const store = createStore<EditorState>(EditorReducer);
+const store: Store<EditorState> = createStore(EditorReducer, applyMiddleware(thunk, logger))
+
+window.store = store
+window.makeAction = {
+  create: nodeCreate
+}
+
+store.dispatch(nodeCreate(LogicTypes.BIT_AND, 30, 40))
+
+export class App extends React.Component<Props, State> {
   render() {
-    let gate: Gate = new GateAND()
     return (
-      <div>
-        <h2>Welcome to React with Typescript!</h2>
-        <Editor />
-      </div>
+        <div>
+          <h2>Welcome to React with Typescript!</h2>
+          <Editor store={store}/>
+        </div>
     );
   }
 }

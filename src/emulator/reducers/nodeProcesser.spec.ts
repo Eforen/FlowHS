@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { describe } from 'mocha';
 import { nodeProcesser } from './nodeProcesser';
 import { NodeState } from '../state/nodeState';
-import { NodeTypes } from '../state/nodeTypes';
+import { LogicTypes } from '../state/nodeTypes';
 import { OutputTypes } from '../state/outputTypes';
 
 
@@ -12,7 +12,7 @@ describe('Node Gates', () => {
         {
             skip: false,
             desc: 'AND',
-            type: NodeTypes.BIT_AND,
+            type: LogicTypes.BIT_AND,
             table: [
                 [0, 0, 0],
                 [0, 1, 0],
@@ -22,7 +22,7 @@ describe('Node Gates', () => {
         }, {
             skip: false,
             desc: 'NAND',
-            type: NodeTypes.BIT_NAND,
+            type: LogicTypes.BIT_NAND,
             table: [
                 [0, 0, 1],
                 [0, 1, 1],
@@ -32,7 +32,7 @@ describe('Node Gates', () => {
         }, {
             skip: false,
             desc: 'OR',
-            type: NodeTypes.BIT_OR,
+            type: LogicTypes.BIT_OR,
             table: [
                 [0, 0, 0],
                 [0, 1, 1],
@@ -42,7 +42,7 @@ describe('Node Gates', () => {
         }, {
             skip: false,
             desc: 'NOR',
-            type: NodeTypes.BIT_NOR,
+            type: LogicTypes.BIT_NOR,
             table: [
                 [0, 0, 1],
                 [0, 1, 0],
@@ -52,7 +52,7 @@ describe('Node Gates', () => {
         }, {
             skip: false,
             desc: 'XOR',
-            type: NodeTypes.BIT_XOR,
+            type: LogicTypes.BIT_XOR,
             table: [
                 [0, 0, 0],
                 [0, 1, 1],
@@ -62,7 +62,7 @@ describe('Node Gates', () => {
         }, {
             skip: false,
             desc: 'XNOR',
-            type: NodeTypes.BIT_XNOR,
+            type: LogicTypes.BIT_XNOR,
             table: [
                 [0, 0, 1],
                 [0, 1, 0],

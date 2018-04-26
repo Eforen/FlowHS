@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import { describe } from 'mocha';
 import { EmulatorState } from '../state/emulatorState';
-import { NodeTypes } from '../state/nodeTypes';
+import { LogicTypes } from '../state/nodeTypes';
 import { NodeState } from '../state/nodeState';
 import { OutputState } from '../state/outputState';
 import { OutputTypes } from '../state/outputTypes';
@@ -19,7 +19,7 @@ describe('Emulator Reducer', () => {
                 nodes: [
                     {
                         ID: 0,
-                        type: NodeTypes.BIT_AND,
+                        type: LogicTypes.BIT_AND,
                         name: 'test1',
                         userName: 'test1u',
                         changed: true,
@@ -47,7 +47,7 @@ describe('Emulator Reducer', () => {
                         } as OutputState]
                     } as NodeState, {
                         ID: 0,
-                        type: NodeTypes.BIT_INPUT,
+                        type: LogicTypes.BIT_INPUT,
                         name: 'Input1',
                         userName: 'Input1u',
                         changed: false,
@@ -77,7 +77,7 @@ describe('Emulator Reducer', () => {
                 nodes: [
                     {
                         ID: 0,
-                        type: NodeTypes.BIT_AND,
+                        type: LogicTypes.BIT_AND,
                         name: 'test1',
                         userName: 'test1u',
                         changed: true,
@@ -105,7 +105,7 @@ describe('Emulator Reducer', () => {
                         } as OutputState]
                     } as NodeState, {
                         ID: 0,
-                        type: NodeTypes.BIT_INPUT,
+                        type: LogicTypes.BIT_INPUT,
                         name: 'Input1',
                         userName: 'Input1u',
                         changed: false,
@@ -142,7 +142,7 @@ describe('Emulator Reducer', () => {
                 nodes: [
                     {
                         ID: 0,
-                        type: NodeTypes.BIT_AND,
+                        type: LogicTypes.BIT_AND,
                         name: 'test1',
                         userName: 'test1u',
                         changed: false,
@@ -165,7 +165,7 @@ describe('Emulator Reducer', () => {
                         outputs: []
                     } as NodeState, {
                         ID: 0,
-                        type: NodeTypes.BIT_INPUT,
+                        type: LogicTypes.BIT_INPUT,
                         name: 'Input1',
                         userName: 'Input1u',
                         changed: true,
@@ -195,7 +195,7 @@ describe('Emulator Reducer', () => {
                 nodes: [
                     {
                         ID: 0,
-                        type: NodeTypes.BIT_AND,
+                        type: LogicTypes.BIT_AND,
                         name: 'test1',
                         userName: 'test1u',
                         changed: true,
@@ -218,7 +218,7 @@ describe('Emulator Reducer', () => {
                         outputs: []
                     } as NodeState, {
                         ID: 0,
-                        type: NodeTypes.BIT_INPUT,
+                        type: LogicTypes.BIT_INPUT,
                         name: 'Input1',
                         userName: 'Input1u',
                         changed: true,

@@ -1,9 +1,13 @@
 import * as React from 'react';
 import Gate from '../emulator/Gate';
 import Connector from '../emulator/Connector';
+import { NodeState } from '../emulator/state/nodeState';
+import { InputState } from '../emulator/state/inputState';
+import { OutputState } from '../emulator/state/outputState';
 
 export interface INodeProps{
-    logic: Gate
+    id: number
+    nodeData: NodeState
     pos: {
         x: number,
         y: number
@@ -11,20 +15,20 @@ export interface INodeProps{
 }
 
 export interface INodeState {
-    gate: Gate
+    nodeData: NodeState
 }
 
 export class Node extends React.Component<INodeProps, INodeState>{
     constructor(props: any){
         super(props)
 
-        this.state = { gate: this.props.logic }
+        this.state = { nodeData: this.props.nodeData }
     }
 
     public render() {
         let connectorListInputs = []
         let connectorListOutputs = []
-        connectorListInputs.push(this.props.logic.InputConnectors.map((input: Connector) => {
+        connectorListInputs.push(this.props.nodeData.inputs.map((input: InputState) => {
             return (
                 <li style={{height: '1em'}}>
                     <span className='logicnode-connector'></span>
@@ -41,7 +45,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
             </div>
         )
 
-        connectorListOutputs.push(this.props.logic.OutputConnectors.map((output: Connector) => {
+        connectorListOutputs.push(this.props.nodeData.outputs.map((output: OutputState) => {
             return (
                 <li style={{ height: '1em' }}>
                     <span className='logicnode-connector'></span>
@@ -61,9 +65,9 @@ export class Node extends React.Component<INodeProps, INodeState>{
         let connectors = (
             <div className='connectors' 
                 style={{ 
-                    height: this.props.logic.InputConnectors.length > this.props.logic.OutputConnectors.length ? 
-                    (this.props.logic.InputConnectors.length + '.2em') : 
-                    (this.props.logic.OutputConnectors.length + '.2em')
+                    height: this.props.nodeData.inputs.length > this.props.nodeData.outputs.length ? 
+                        (this.props.nodeData.inputs.length + '.2em') : 
+                    (this.props.nodeData.outputs.length + '.2em')
                 }}>
                 {inputList}
                 {outputList}
@@ -71,9 +75,9 @@ export class Node extends React.Component<INodeProps, INodeState>{
 
         return (
             <div>
-                <section className={'logicnode logicnode-' + this.props.logic.name}>
+                <section className={'logicnode logicnode-' + this.props.nodeData.name}>
                     <header className='logicnode-header'>
-                        <span className='logicnode-title'>{this.props.logic.name}</span>
+                        <span className='logicnode-title'>{this.props.nodeData.name}</span>
                     </header>
                     {connectors}
                 </section>

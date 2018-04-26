@@ -1,35 +1,12 @@
 import { Reducer } from 'redux';
-import { EditorState } from '../state/editorState';
+import { EditorState, EditorStateDefault } from '../state/editorState';
 import { editorActionTypes } from '../actions/actionTypes';
 import { EmulatorState } from '../../emulator/state/emulatorState';
 import { MoveType } from '../state/MoveState';
 import { EditorNodeState } from '../state/EditorNodeState';
 
 export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
-    if (state == undefined) state = {
-        nodeMoving: {
-            dragging: false,
-            type: MoveType.Node,
-            posStartX: 0,
-            posStartY: 0,
-            posOffsetX: 0,
-            posOffsetY: 0,
-            posCurrentX: 0,
-            posCurrentY: 0,
-            nodeID: -1,
-            output: -1,
-            input: -1
-        },
-        nodes: [],
-        emulator: {
-            step: 0,
-            sleepTime: 0,
-            changed: false,
-            nodes: [],
-            updated: [],
-            messages: []
-        }
-    }
+    if (state == undefined) state = EditorStateDefault
 
     switch (action.type) {
         case editorActionTypes.DRAG_NODE_START:

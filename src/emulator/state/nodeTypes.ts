@@ -1,4 +1,4 @@
-export enum NodeTypes {
+export enum LogicTypes {
     BIT_AND,
     BIT_NAND,
     BIT_NOR,

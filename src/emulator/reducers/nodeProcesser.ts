@@ -1,5 +1,5 @@
 import { NodeState} from '../state/nodeState';
-import { NodeTypes } from '../state/nodeTypes';
+import { LogicTypes } from '../state/nodeTypes';
 
 export const nodeProcesser: (node: NodeState) => NodeState = (node) => {
     if (node.changed == false){
@@ -7,22 +7,22 @@ export const nodeProcesser: (node: NodeState) => NodeState = (node) => {
     }
     let val: boolean = false;
     switch (node.type) {
-        case NodeTypes.BIT_AND:
+        case LogicTypes.BIT_AND:
             val = (node.inputs[0].value as boolean) && (node.inputs[1].value as boolean)
             break;
-        case NodeTypes.BIT_NAND:
+        case LogicTypes.BIT_NAND:
             val = ((node.inputs[0].value as boolean) && (node.inputs[1].value as boolean)) == false
             break;
-        case NodeTypes.BIT_OR:
+        case LogicTypes.BIT_OR:
             val = (node.inputs[0].value as boolean) || (node.inputs[1].value as boolean)
             break;
-        case NodeTypes.BIT_NOR:
+        case LogicTypes.BIT_NOR:
             val = ((node.inputs[0].value as boolean) || (node.inputs[1].value as boolean)) == false
             break;
-        case NodeTypes.BIT_XOR:
+        case LogicTypes.BIT_XOR:
             val = (node.inputs[0].value as boolean) != (node.inputs[1].value as boolean)
             break;
-        case NodeTypes.BIT_XNOR:
+        case LogicTypes.BIT_XNOR:
             val = (node.inputs[0].value as boolean) == (node.inputs[1].value as boolean)
             break;
         default:

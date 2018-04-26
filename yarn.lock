@@ -69,21 +69,15 @@
   version "8.10.0"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-8.10.0.tgz#f5d649cc49af8ed6507d15dc6e9b43fe8b927540"
 
-"@types/react-dnd-html5-backend@^2.1.9":
-  version "2.1.9"
-  resolved "https://registry.yarnpkg.com/@types/react-dnd-html5-backend/-/react-dnd-html5-backend-2.1.9.tgz#dfc9efe2a68bd12407815a2d61ddfd18bb8686fb"
-  dependencies:
-    "@types/react-dnd" "*"
-
-"@types/react-dnd@*", "@types/react-dnd@^2.0.36":
-  version "2.0.36"
-  resolved "https://registry.yarnpkg.com/@types/react-dnd/-/react-dnd-2.0.36.tgz#67e08a3608f112a3af27201d1fb6f79334d43214"
-  dependencies:
-    "@types/react" "*"
-
 "@types/react-dom@0.14.20":
   version "0.14.20"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-0.14.20.tgz#6e30d66148e78b29ef593fa91ba30d0175190604"
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-hot-loader@^3.0.6":
+  version "3.0.6"
+  resolved "https://registry.yarnpkg.com/@types/react-hot-loader/-/react-hot-loader-3.0.6.tgz#23b1875a327c32cbab705fbf660d8f207ede4d69"
   dependencies:
     "@types/react" "*"
 
