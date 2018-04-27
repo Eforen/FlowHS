@@ -4,11 +4,18 @@ import Connector from '../emulator/Connector';
 import { NodeState } from '../emulator/state/nodeState';
 import { InputState } from '../emulator/state/inputState';
 import { OutputState } from '../emulator/state/outputState';
+import { Store } from 'redux';
+import { EditorState } from './state/editorState';
 
 export interface INodeProps{
+    store: Store<EditorState>
     id: number
     nodeData: NodeState
     pos: {
+        x: number,
+        y: number
+    }
+    editorRootOffset: {
         x: number,
         y: number
     }
@@ -73,15 +80,30 @@ export class Node extends React.Component<INodeProps, INodeState>{
                 {outputList}
             </div>)
 
+        let style = {
+            posistion: 'absolute',
+            left: this.props.pos.x,
+            top: this.props.pos.y
+        }
+
+        let onMouseDown = (event: any) => {
+            console.log('MouseDown')
+            console.log({ x: this.props.editorRootOffset.x, y: this.props.editorRootOffset.y })
+            console.log({ x: event.clientX, y: event.clientY })
+            console.log({ x: event.clientX - this.props.editorRootOffset.x, y: event.clientY - this.props.editorRootOffset.y })
+            console.log({ x: event.pageX, y: event.pageY })
+            console.log({ x: event.pageX - this.props.editorRootOffset.x, y: event.pageY - this.props.editorRootOffset.y })
+            console.log({ x: event.screenX, y: event.screenY })
+            console.log({ x: event.screenX - this.props.editorRootOffset.x, y: event.screenY - this.props.editorRootOffset.y })
+        }
+
         return (
-            <div>
-                <section className={'logicnode logicnode-' + this.props.nodeData.name}>
-                    <header className='logicnode-header'>
-                        <span className='logicnode-title'>{this.props.nodeData.name}</span>
-                    </header>
-                    {connectors}
-                </section>
-            </div>
+            <section style={style} className={'logicnode logicnode-' + this.props.nodeData.name} onMouseDown={onMouseDown}>
+                <header className='logicnode-header'>
+                    <span className='logicnode-title'>{this.props.nodeData.name}</span>
+                </header>
+                {connectors}
+            </section>
         )
     }
     /*

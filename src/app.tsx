@@ -10,6 +10,7 @@ import { Store } from 'react-redux';
 import { applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
+import { Dispatch } from 'redux';
 
 export interface Props {
 }
@@ -24,6 +25,7 @@ declare global {
     makeAction: {
       create: (type: LogicTypes, x: number, y: number) => IActionNodeCreate
     }
+    dispatch: Dispatch<EditorState>
    }
 }
 
@@ -34,6 +36,7 @@ window.store = store
 window.makeAction = {
   create: nodeCreate
 }
+window.dispatch = store.dispatch
 
 store.dispatch(nodeCreate(LogicTypes.BIT_AND, 30, 40))
 
