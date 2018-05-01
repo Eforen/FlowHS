@@ -13,6 +13,7 @@ export interface Props {
 export interface State {
     x: number
     y: number
+    change: number
 }
 
 export class Editor extends React.Component<Props, State> {
@@ -22,14 +23,15 @@ export class Editor extends React.Component<Props, State> {
 
         this.state = {
             x: 0,
-            y: 0
+            y: 0,
+            change: 0
         }
     }
     
     render() {
         //let gate: Gate = new GateAND()
         let state = this.props.store.getState()
-        
+
         console.log(state)
         let nodes = state.nodes.map((value, index, arr) => {
             return (
@@ -56,6 +58,12 @@ export class Editor extends React.Component<Props, State> {
         let editorBase = findDOMNode(this.refs['EditorNodeFrame'])
         let editorPos = editorBase.getBoundingClientRect()
         console.log(editorPos)
-        this.setState({ x: editorPos.left, y: editorPos.top})
+
+        this.setState({ x: editorPos.left, y: editorPos.top, change: 0})
+        this.props.store.subscribe(() => {
+            let editorBase = findDOMNode(this.refs['EditorNodeFrame'])
+            let editorPos = editorBase.getBoundingClientRect()
+            this.setState({ x: editorPos.left, y: editorPos.top, change: this.state.change + 1 })
+        })
     }
 }
