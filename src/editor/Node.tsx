@@ -7,30 +7,61 @@ import { OutputState } from '../emulator/state/outputState';
 import { Store } from 'redux';
 import { EditorState } from './state/editorState';
 import { makeActionDragNodeStart, makeActionDragMove, makeActionDragStop } from './actions/dragActions';
+import { findDOMNode } from 'react-dom';
 
 export interface INodeProps{
     store: Store<EditorState>
     id: number
     nodeData: NodeState
     pos: {
-        x: number,
+        x: number
         y: number
     }
     editorRootOffset: {
-        x: number,
+        x: number
         y: number
     }
 }
 
 export interface INodeState {
     nodeData: NodeState
+    sizes: {
+        connectors: {
+            width: number
+            height: number
+        }
+        inputs: {
+            width: number
+            height: number
+        }
+        outputs: {
+            width: number
+            height: number
+        }
+    }
 }
 
 export class Node extends React.Component<INodeProps, INodeState>{
     constructor(props: any){
         super(props)
 
-        this.state = { nodeData: this.props.nodeData }
+        this.state = {
+            nodeData: this.props.nodeData,
+            sizes: {
+                connectors: {
+                    width: 0,
+                    height: 0
+                },
+                inputs: {
+                    width: 0,
+                    height: 0
+                },
+                outputs: {
+                    width: 0,
+                    height: 0
+                }
+            }
+        }
     }
 
     public render() {
@@ -46,7 +77,13 @@ export class Node extends React.Component<INodeProps, INodeState>{
         }))
 
         let inputList = (
-            <div className='logicnode-inputs'>
+            <div className='logicnode-inputs'
+                ref={'node' + this.props.id + 'inputs'}
+                style={{
+                    position: 'absolute',
+                    left: 0,
+                    top: 0
+                }}>
                 <ul className='connectorlist'>
                     {connectorListInputs}
                 </ul>
@@ -63,7 +100,13 @@ export class Node extends React.Component<INodeProps, INodeState>{
             })
         )
         let outputList = (
-            <div className='logicnode-outputs'>
+            <div className='logicnode-outputs'
+                 ref={'node' + this.props.id + 'outputs'}
+                style={{
+                    position: 'absolute',
+                    right: 0,
+                    top: 0
+                 }}>
                 <ul className='connectorlist'>
                     {connectorListOutputs}
                 </ul>
@@ -72,17 +115,17 @@ export class Node extends React.Component<INodeProps, INodeState>{
 
         let connectors = (
             <div className='connectors' 
-                style={{ 
-                    height: this.props.nodeData.inputs.length > this.props.nodeData.outputs.length ? 
-                        (this.props.nodeData.inputs.length + '.2em') : 
-                    (this.props.nodeData.outputs.length + '.2em')
+                style={{
+                    minWidth: this.state.sizes.connectors.width,
+                    minHeight: this.state.sizes.connectors.height,
+                    position: 'relative'
                 }}>
                 {inputList}
                 {outputList}
             </div>)
 
         let style = {
-            posistion: 'absolute',
+            position: 'absolute',
             left: this.props.pos.x,
             top: this.props.pos.y
         }
@@ -97,6 +140,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
             this.props.store.dispatch(makeActionDragStop(event.clientX, event.clientY, true))
             this.setState(
                 { 
+                    ...this.state,
                     nodeData: this.props.store.getState().emulator.nodes[this.props.id]
                 }
             )
@@ -131,12 +175,78 @@ export class Node extends React.Component<INodeProps, INodeState>{
 
         return (
             <section style={style} className={'logicnode logicnode-' + this.props.nodeData.name} onMouseDown={onMouseDown}>
-                <header className='logicnode-header'>
+                <header className='logicnode-header' ref={'node' + this.props.id + 'header'}>
                     <span className='logicnode-title'>{this.props.nodeData.name}</span>
                 </header>
                 {connectors}
             </section>
         )
+    }
+
+    componentDidMount() {
+        /*
+        this.setState()
+        sizes: {
+            connectors: {
+                width: number
+                height: number
+            }
+            inputs: {
+                width: number
+                height: number
+            }
+            outputs: {
+                width: number
+                height: number
+            }
+        }
+        */
+        let calc = {
+            connectors: {
+                width: 0,
+                height: 0
+            },
+            inputs: {
+                width: 0,
+                height: 0
+            },
+            outputs: {
+                width: 0,
+                height: 0
+            }
+        }
+        let inputs = findDOMNode(this.refs['node' + this.props.id + 'inputs']);
+        calc.inputs.width = inputs.getBoundingClientRect().width
+        calc.inputs.height = inputs.getBoundingClientRect().height
+
+        let outputs = findDOMNode(this.refs['node' + this.props.id + 'outputs']);
+        calc.outputs.width = outputs.getBoundingClientRect().width
+        calc.outputs.height = outputs.getBoundingClientRect().height
+
+        //let headers = findDOMNode(this.refs['node' + this.props.id + 'header']);
+        //calc.headers.width = headers.getBoundingClientRect().width
+        //calc.headers.height = headers.getBoundingClientRect().height
+
+        calc.connectors.width = calc.inputs.width + calc.outputs.width
+        calc.connectors.height = calc.inputs.height + calc.outputs.height
+
+        this.setState({
+            ...this.state,
+            sizes: calc
+        })
+        //if (
+        //    this.state.sizes.connectors.height != calc.connectors.height
+        //)
+        console.log(calc)
+
+        /*
+        this.setState({ x: editorPos.left, y: editorPos.top, change: 0 })
+        this.props.store.subscribe(() => {
+            let editorBase = findDOMNode(this.refs['EditorNodeFrame'])
+            let editorPos = editorBase.getBoundingClientRect()
+            this.setState({ x: editorPos.left, y: editorPos.top, change: this.state.change + 1 })
+        })
+        */
     }
     /*
     render() {
