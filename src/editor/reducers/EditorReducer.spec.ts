@@ -166,7 +166,7 @@ describe('Editor Reducer', () => {
 
                 let mx = (Math.random() - 0.5) * 400
                 let my = (Math.random() - 0.5) * 400
-                
+
                 it('should test ' + (i + 1), () => {
                     let test = {
                         nodeMoving: {
@@ -215,6 +215,78 @@ describe('Editor Reducer', () => {
                             { x: 7, y: 151 },
                         ],
                         emulator: EmulatorStateDefault
+                    }
+                    let action = {
+                        type: editorActionTypes.DRAG_NODE_MOVE,
+                        pos: [mx, my]
+                    }
+
+                    let result = EditorReducer(test, action)
+                    expect(result).to.deep.equal(target)
+                })
+            }
+
+            for (let i = 0; i < 10; i++) {
+                let ox = (Math.random() - 0.5) * 400
+                let oy = (Math.random() - 0.5) * 400
+                let sx = (Math.random() - 0.5) * 400
+                let sy = (Math.random() - 0.5) * 400
+
+                let mx = (Math.random() - 0.5) * 400
+                let my = (Math.random() - 0.5) * 400
+
+                let input = Math.random() >= 0.5
+
+                let connector = Math.trunc((Math.random()) * 400)
+
+                it('should not move node if draging connector ' + (i + 1), () => {
+                    let test = {
+                        nodeMoving: {
+                            dragging: true,
+                            type: MoveType.Node,
+                            posStartX: sx,
+                            posStartY: sy,
+                            posOffsetX: ox,
+                            posOffsetY: oy,
+                            posCurrentX: sx,
+                            posCurrentY: sy,
+                            nodeID: 2,
+                            output: input == false ? connector : -1,
+                            input: input ? connector : -1,
+                        },
+                        nextNodeID: 0,
+                        nodes: [
+                            { x: 1, y: 0 },
+                            { x: 24, y: 53 },
+                            { x: 165, y: 12 },
+                            { x: 23, y: 53 },
+                            { x: 7, y: 151 },
+                        ],
+                        emulator: EmulatorStateDefault
+                    }
+                    let target = {
+                        nodeMoving: {
+                            dragging: true,
+                            type: MoveType.Node,
+                            posStartX: sx,
+                            posStartY: sy,
+                            posOffsetX: ox,
+                            posOffsetY: oy,
+                            posCurrentX: mx,
+                            posCurrentY: my,
+                            nodeID: 2,
+                            output: -1,
+                            input: -1,
+                        } as MoveState,
+                        nextNodeID: 0,
+                        nodes: [
+                            { x: 1, y: 0 },
+                            { x: 24, y: 53 },
+                            { x: 165, y: 12 },
+                            { x: 23, y: 53 },
+                            { x: 7, y: 151 },
+                        ],
+                        emulator: EmulatorStateDefault //TODO: Should change the node connection state
                     }
                     let action = {
                         type: editorActionTypes.DRAG_NODE_MOVE,
@@ -318,6 +390,9 @@ describe('Editor Reducer', () => {
 
                 let result = EditorReducer(test, action)
                 expect(result).to.deep.equal(target)
+            })
+            it('should connect nodes when end is successful and input or output is set', () => {
+                expect(false).to.be.true
             })
         })
     })

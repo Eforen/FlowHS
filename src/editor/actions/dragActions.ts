@@ -28,6 +28,38 @@ export const makeActionDragNodeStart: (
     }
 }
 
+export interface IActionDragStart extends IAction {
+    type: editorActionTypes
+    node: number
+    start: [ number, number ]
+    offset: [ number, number ]
+    targetType: MoveType
+}
+
+export const makeActionDragConnectorStart: (
+        node: number, 
+        start: [number, number],
+        offset: [number, number],
+        input: boolean,
+        connectorNumber: number
+    ) => IActionDragStart = (
+        node: number,
+        start: [number, number],
+        offset: [number, number],
+        input: boolean,
+        connectorNumber: number
+    ) => {
+    return {
+        type: editorActionTypes.DRAG_NODE_START,
+        node: node,
+        start: start,
+        offset: offset,
+        targetType: MoveType.Node,
+        output: input ? connectorNumber : -1,
+        input: input == false ? connectorNumber : -1
+    }
+}
+
 export interface IActionDragMove extends IAction {
     type: editorActionTypes
     pos: [number, number]

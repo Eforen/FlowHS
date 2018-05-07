@@ -6,8 +6,9 @@ import { InputState } from '../emulator/state/inputState';
 import { OutputState } from '../emulator/state/outputState';
 import { Store } from 'redux';
 import { EditorState } from './state/editorState';
-import { makeActionDragNodeStart, makeActionDragMove, makeActionDragStop } from './actions/dragActions';
+import { makeActionDragNodeStart, makeActionDragMove, makeActionDragStop, makeActionDragConnectorStart } from './actions/dragActions';
 import { findDOMNode } from 'react-dom';
+import { NodeConnector } from './NodeConnector';
 
 export interface INodeProps{
     store: Store<EditorState>
@@ -63,19 +64,17 @@ export class Node extends React.Component<INodeProps, INodeState>{
             }
         }
     }
-
+    
     public render() {
         let connectorListInputs = []
         let connectorListOutputs = []
-        connectorListInputs.push(this.props.nodeData.inputs.map((input: InputState) => {
+        let classes = 'logicnode logicnode-' + this.props.nodeData.name
+        connectorListInputs.push(this.props.nodeData.inputs.map((input: InputState, index: number) => {
             return (
-                <li style={{height: '1em'}}>
-                    <span className='logicnode-connector'></span>
-                    <span className='logicnode-connector-label'>{input.name}</span>
-                </li>
+                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={true} />
             )
         }))
-
+        
         let inputList = (
             <div className='logicnode-inputs'
                 ref={'node' + this.props.id + 'inputs'}
@@ -89,24 +88,21 @@ export class Node extends React.Component<INodeProps, INodeState>{
                 </ul>
             </div>
         )
-
-        connectorListOutputs.push(this.props.nodeData.outputs.map((output: OutputState) => {
+        
+        connectorListOutputs.push(this.props.nodeData.outputs.map((output: OutputState, index: number) => {
             return (
-                <li style={{ height: '1em' }}>
-                    <span className='logicnode-connector'></span>
-                    <span className='logicnode-connector-label'>{output.name}</span>
-                </li>
+                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={false} />
             )
-            })
-        )
-        let outputList = (
-            <div className='logicnode-outputs'
-                 ref={'node' + this.props.id + 'outputs'}
+        })
+    )
+    let outputList = (
+        <div className='logicnode-outputs'
+                ref={'node' + this.props.id + 'outputs'}
                 style={{
                     position: 'absolute',
                     right: 0,
                     top: 0
-                 }}>
+                    }}>
                 <ul className='connectorlist'>
                     {connectorListOutputs}
                 </ul>
@@ -164,18 +160,24 @@ export class Node extends React.Component<INodeProps, INodeState>{
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
             this.props.store.dispatch(makeActionDragNodeStart(
-                this.props.id, 
-                [event.clientX, event.clientY], 
+                this.props.id,
+                [event.clientX, event.clientY],
                 [
-                    (this.props.pos.x) - event.clientX, 
+                    (this.props.pos.x) - event.clientX,
                     (this.props.pos.y) - event.clientY //Little embaresed by this but not sure why I don'y need to add the editor offset...
                 ]
             ))
         }
 
+        if (this.props.store.getState().nodeMoving.nodeID == this.props.id &&
+            this.props.store.getState().nodeMoving.input == -1 &&
+            this.props.store.getState().nodeMoving.output == -1){
+            classes += ' dragging'
+        }
+
         return (
-            <section style={style} className={'logicnode logicnode-' + this.props.nodeData.name} onMouseDown={onMouseDown}>
-                <header className='logicnode-header' ref={'node' + this.props.id + 'header'}>
+            <section style={style} className={classes}>
+                <header className='logicnode-header' ref={'node' + this.props.id + 'header'} onMouseDown={onMouseDown}>
                     <span className='logicnode-title'>{this.props.nodeData.name}</span>
                 </header>
                 {connectors}
@@ -228,7 +230,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
         //calc.headers.height = headers.getBoundingClientRect().height
 
         calc.connectors.width = calc.inputs.width + calc.outputs.width
-        calc.connectors.height = calc.inputs.height + calc.outputs.height
+        calc.connectors.height = Math.max( calc.inputs.height, calc.outputs.height)
 
         this.setState({
             ...this.state,

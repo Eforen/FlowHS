@@ -17,16 +17,26 @@
     color: white;
 }
 
+.logicnode .connectors {
+    margin-top: 5px;
+}
+
+.logicnode.dragging {
+    border-color: rgba(0,120,200,1);
+    box-shadow: 6px 6px 28px -2px rgba(94,163,235,0.4);
+    margin-top: -6px;
+    margin-left: -6px;
+    transition: border-color 0.25s, box-shadow 0.25s, margin-top 0.25s, margin-left 0.25s;
+}
+
 .logicnode-active {
     border: 1px solid #015c80;
 }
 
 .logicnode .logicnode-header {
-    cursor: all-scroll;
+    cursor: -webkit-grab;
     background: rgba(46, 179, 255, 0.541);
     color: rgba(8, 18, 21, 1);
-
-	cursor: all-scroll;
 	
 	padding-left: 10px;
     text-transform: uppercase;
@@ -45,6 +55,10 @@
 
 	color:white;
 	/*font-weight: 600;*/
+}
+
+.logicnode.dragging .logicnode-header {
+    cursor: -webkit-grabbing;
 }
 
 .logicnode header.logicnode-header .logicnode-title{
@@ -76,6 +90,7 @@
 
 .logicnode .connectorlist > li  {
     position: relative;
+    cursor: crosshair;
 }
 
 .logicnode .logicnode-inputs .connectorlist > li  {
