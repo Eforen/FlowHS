@@ -15,6 +15,10 @@ export interface INodeConnectorProps {
     id: number
     nodeData: NodeState
     input: boolean
+    editorRootOffset: {
+        x: number
+        y: number
+    }
 }
 
 export interface INodeConnectorState {
@@ -87,8 +91,8 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
                 this.props.id,
                 [event.clientX, event.clientY],
                 [
-                    event.clientX,
-                    event.clientY
+                    this.props.editorRootOffset.x,
+                    this.props.editorRootOffset.y
                 ],
                 this.props.input,
                 this.props.id
@@ -103,7 +107,7 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
 
         return (
             <li style= {{ height: '1em' }} onMouseDown={onMouseDown}>
-                <span className='logicnode-connector' > </span>
+                <span className='logicnode-connector' ref={'node' + this.props.nodeId + (this.props.input ? 'input' : 'output') + this.props.id + 'connector'}> </span>
                 <span className='logicnode-connector-label' > {
                     this.props.input ?
                     this.props.nodeData.inputs[this.props.id].name :

@@ -22,10 +22,13 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     posCurrentX: action.start[0],
                     posCurrentY: action.start[1],
                     nodeID: action.node,
-                    output: action.targetType == MoveType.ConnectorOutput ? action.connector : -1,
-                    input: action.targetType == MoveType.ConnectorInput ? action.connector : -1
+                    output: action.connector,
+                    input: action.input
                 },
-                nodes: state.nodeMoving.dragging == true ? state.nodes.map((value, index, arr) => {
+                nodes: 
+                    (action.type == MoveType.ConnectorInput || action.type == MoveType.ConnectorOutput) ?
+                        state.nodes :
+                        state.nodeMoving.dragging == true ? state.nodes.map((value, index, arr) => {
                     if (index == state.nodeMoving.nodeID){
                         return {
                             x: state.nodeMoving.posStartX + state.nodeMoving.posOffsetX, 
@@ -44,7 +47,10 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     posCurrentX: action.pos[0],
                     posCurrentY: action.pos[1]
                 },
-                nodes: state.nodeMoving.type == MoveType.Node ? state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
+                nodes: (state.nodeMoving.input > -1 || state.nodeMoving.output > -1) ?
+                        state.nodes :
+                        state.nodeMoving.type == MoveType.Node ? 
+                        state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
                     if (index == state.nodeMoving.nodeID){
                         return {
                             x: action.pos[0] + state.nodeMoving.posOffsetX,

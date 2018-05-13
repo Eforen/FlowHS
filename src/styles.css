@@ -142,3 +142,31 @@
 .logicnode .logicnode-outputs .connectorlist > li:hover > .logicnode-connector {
     right: -6px;
 }
+
+.ChipEditorGrid .connector {
+	fill:none;
+	stroke:#dadada; 
+	stroke-width:2;
+	-webkit-box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	-moz-box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	    -webkit-filter: drop-shadow( -5px -5px 5px #000 );
+            filter: drop-shadow( -5px -5px 5px #000 );
+}
+
+.ChipEditorGrid .connector-click-area {
+	cursor: pointer;
+	fill:none;
+	stroke:transparent;
+	stroke-width:15;
+}
+
+.ChipEditorGrid .connector-click-area:hover + .connector,
+.ChipEditorGrid .connector:hover {
+	cursor: pointer;
+	stroke-width: 4;
+}
+
+.ChipEditorGrid .connector.selected {
+	stroke: #337ab7;
+}

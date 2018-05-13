@@ -10,6 +10,7 @@ import { EditorStateDefault } from '../state/editorState';
 import { LogicTypes } from '../../emulator/state/nodeTypes';
 import { OutputTypes } from '../../emulator/state/outputTypes';
 import { nodeCreate } from '../actions/nodeCreate';
+import { makeActionDragConnectorStart } from '../actions/dragActions';
 
 
 describe('Editor Reducer', () => {
@@ -93,6 +94,78 @@ describe('Editor Reducer', () => {
                 let result = EditorReducer(test, action)
                 expect(result).to.deep.equal(target)
             })
+
+
+            for (let i = 0; i < 10; i++) {
+                let ox = (Math.random() - 0.5) * 400
+                let oy = (Math.random() - 0.5) * 400
+                let sx = (Math.random() - 0.5) * 400
+                let sy = (Math.random() - 0.5) * 400
+
+                let mx = (Math.random() - 0.5) * 400
+                let my = (Math.random() - 0.5) * 400
+
+                let input = Math.random() >= 0.5
+
+                let node = Math.trunc((Math.random()) * 400)
+                let connector = Math.trunc((Math.random()) * 400)
+
+                it('should setup connector drag #' + (i + 1), () => {
+                    let test = {
+                        nodeMoving: MoveStateDefault,
+                        nextNodeID: 0,
+                        nodes: [
+                            { x: 1, y: 0 },
+                            { x: 24, y: 53 },
+                            { x: 165, y: 12 },
+                            { x: 23, y: 53 },
+                            { x: 7, y: 151 },
+                        ],
+                        emulator: EmulatorStateDefault
+                    }
+                    let target = {
+                        nodeMoving: {
+                            dragging: true,
+                            type: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
+                            posStartX: sx,
+                            posStartY: sy,
+                            posOffsetX: ox,
+                            posOffsetY: oy,
+                            posCurrentX: mx,
+                            posCurrentY: my,
+                            nodeID: node,
+                            output: input == false ? connector : -1,
+                            input: input ? connector : -1,
+                        } as MoveState,
+                        nextNodeID: 0,
+                        nodes: [
+                            { x: 1, y: 0 },
+                            { x: 24, y: 53 },
+                            { x: 165, y: 12 },
+                            { x: 23, y: 53 },
+                            { x: 7, y: 151 },
+                        ],
+                        emulator: EmulatorStateDefault
+                    }
+                    let action = makeActionDragConnectorStart(
+                        node,
+                        [sx, sy],
+                        [ox, oy],
+                        input,
+                        connector)
+
+                    console.log('omg1')
+                    console.log(action)
+                    console.log('omg2')
+
+                    let result = EditorReducer(test, action)
+                    expect(result).to.deep.equal(target)
+                })
+            }
+
+            it('Fresh Drag Already in clean state', () => {
+            })
+
             it.skip('Fresh Drag clean state', () => {
                 expect(false).to.equal(true, 'No Tests Writen Yet')
             })
@@ -226,6 +299,15 @@ describe('Editor Reducer', () => {
                 })
             }
 
+            /*
+                        node: node,
+                        start: [sx, sy],
+                        offset: [ox, oy],
+                        targetType: MoveType.Node,
+                        output: input == false ? connector : -1,
+                        input: input ? connector : -1
+                        */
+
             for (let i = 0; i < 10; i++) {
                 let ox = (Math.random() - 0.5) * 400
                 let oy = (Math.random() - 0.5) * 400
@@ -237,6 +319,7 @@ describe('Editor Reducer', () => {
 
                 let input = Math.random() >= 0.5
 
+                let node = Math.trunc((Math.random()) * 400)
                 let connector = Math.trunc((Math.random()) * 400)
 
                 it('should not move node if draging connector ' + (i + 1), () => {
@@ -250,7 +333,7 @@ describe('Editor Reducer', () => {
                             posOffsetY: oy,
                             posCurrentX: sx,
                             posCurrentY: sy,
-                            nodeID: 2,
+                            nodeID: node,
                             output: input == false ? connector : -1,
                             input: input ? connector : -1,
                         },
@@ -274,9 +357,9 @@ describe('Editor Reducer', () => {
                             posOffsetY: oy,
                             posCurrentX: mx,
                             posCurrentY: my,
-                            nodeID: 2,
-                            output: -1,
-                            input: -1,
+                            nodeID: node,
+                            output: input == false ? connector : -1,
+                            input: input ? connector : -1,
                         } as MoveState,
                         nextNodeID: 0,
                         nodes: [

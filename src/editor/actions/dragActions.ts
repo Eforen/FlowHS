@@ -1,6 +1,7 @@
 import { IAction, editorActionTypes } from './actionTypes';
 import { LogicTypes } from '../../emulator/state/nodeTypes';
 import { MoveType } from '../state/MoveState';
+import Connector from '../../emulator/Connector';
 
 export interface IActionDragStart extends IAction {
     type: editorActionTypes
@@ -54,7 +55,7 @@ export const makeActionDragConnectorStart: (
         node: node,
         start: start,
         offset: offset,
-        targetType: MoveType.Node,
+        targetType: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
         output: input ? connectorNumber : -1,
         input: input == false ? connectorNumber : -1
     }

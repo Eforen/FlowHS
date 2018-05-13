@@ -5,6 +5,8 @@ import { Node } from './Node'
 import DragTypes from './DragTypes';
 import { Store } from 'react-redux';
 import { EditorState } from './state/editorState';
+import { SVGComponent } from './SVGComponent';
+import { SVGSpline } from './SVGSpline';
 
 export interface Props {
     store: Store<EditorState>
@@ -46,10 +48,30 @@ export class Editor extends React.Component<Props, State> {
             )
         })
         console.log(nodes)
-        
+
+        let dragging = undefined
+        if (state.nodeMoving.dragging && state.nodeMoving.input > -1) {
+            dragging = <SVGSpline 
+                start={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY}}
+                end={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }} 
+            />
+        }
+
+        if (state.nodeMoving.dragging && state.nodeMoving.output > -1) {
+            dragging = <SVGSpline 
+                start={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }}
+                end={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY }} 
+            />
+        }
+
         return (
             <div className='ChipEditorGrid' ref='EditorNodeFrame'>
+                <span style={{zIndex: 11}}>
                 {nodes}
+                </span>
+                <SVGComponent height='100%' width='100%' ref='svgComponent' style={{ zIndex: 10 }}>
+                    {dragging}
+                </SVGComponent>
             </div>
         );
     }

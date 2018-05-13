@@ -71,7 +71,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
         let classes = 'logicnode logicnode-' + this.props.nodeData.name
         connectorListInputs.push(this.props.nodeData.inputs.map((input: InputState, index: number) => {
             return (
-                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={true} />
+                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={true} editorRootOffset={this.props.editorRootOffset} />
             )
         }))
         
@@ -91,7 +91,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
         
         connectorListOutputs.push(this.props.nodeData.outputs.map((output: OutputState, index: number) => {
             return (
-                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={false} />
+                <NodeConnector store={this.props.store} id={index} nodeId={this.props.id} nodeData={this.props.nodeData} input={false} editorRootOffset={this.props.editorRootOffset} />
             )
         })
     )
