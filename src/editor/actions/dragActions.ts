@@ -29,14 +29,6 @@ export const makeActionDragNodeStart: (
     }
 }
 
-export interface IActionDragStart extends IAction {
-    type: editorActionTypes
-    node: number
-    start: [ number, number ]
-    offset: [ number, number ]
-    targetType: MoveType
-}
-
 export const makeActionDragConnectorStart: (
         node: number, 
         start: [number, number],
@@ -50,14 +42,15 @@ export const makeActionDragConnectorStart: (
         input: boolean,
         connectorNumber: number
     ) => {
+        console.log('WTF! connectorNumber:' + connectorNumber)
     return {
         type: editorActionTypes.DRAG_NODE_START,
         node: node,
         start: start,
         offset: offset,
         targetType: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
-        output: input ? connectorNumber : -1,
-        input: input == false ? connectorNumber : -1
+        output: (input ? connectorNumber : -1),
+        input: (input == false ? connectorNumber : -1)
     }
 }
 

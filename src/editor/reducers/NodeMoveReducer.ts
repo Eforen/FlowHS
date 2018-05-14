@@ -4,6 +4,7 @@ import { editorActionTypes } from '../actions/actionTypes';
 import { EmulatorState } from '../../emulator/state/emulatorState';
 import { MoveType } from '../state/MoveState';
 import { EditorNodeState } from '../state/EditorNodeState';
+import { IActionDragStart } from '../actions/dragActions';
 
 export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
     if (state == undefined) state = EditorStateDefault
@@ -22,7 +23,7 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     posCurrentX: action.start[0],
                     posCurrentY: action.start[1],
                     nodeID: action.node,
-                    output: action.connector,
+                    output: action.output,
                     input: action.input
                 },
                 nodes: 
