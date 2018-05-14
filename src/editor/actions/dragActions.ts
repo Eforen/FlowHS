@@ -8,7 +8,9 @@ export interface IActionDragStart extends IAction {
     node: number
     start: [ number, number ]
     offset: [ number, number ]
-    targetType: MoveType
+    targetType: MoveType,
+    input: number,
+    output: number
 }
 
 export const makeActionDragNodeStart: (
@@ -25,7 +27,9 @@ export const makeActionDragNodeStart: (
         node: node,
         start: start,
         offset: offset,
-        targetType: MoveType.Node
+        targetType: MoveType.Node,
+        input: -1,
+        output: -1
     }
 }
 
@@ -49,8 +53,8 @@ export const makeActionDragConnectorStart: (
         start: start,
         offset: offset,
         targetType: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
-        output: (input ? connectorNumber : -1),
-        input: (input == false ? connectorNumber : -1)
+        input: (input ? connectorNumber : -1),
+        output: (input == false ? connectorNumber : -1)
     }
 }
 

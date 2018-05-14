@@ -4,13 +4,14 @@ import { editorActionTypes } from '../actions/actionTypes';
 import { EmulatorState } from '../../emulator/state/emulatorState';
 import { MoveType } from '../state/MoveState';
 import { EditorNodeState } from '../state/EditorNodeState';
-import { IActionDragStart } from '../actions/dragActions';
+import { IActionDragStart, IActionDragMove, IActionDragStop } from '../actions/dragActions';
 
-export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
+export const NodeMoveReducer: Reducer<EditorState> = (state, action: IActionDragStart | IActionDragMove | IActionDragStop) => {
     if (state == undefined) state = EditorStateDefault
 
     switch (action.type) {
         case editorActionTypes.DRAG_NODE_START:
+        action = action as IActionDragStart
             return { ...state, 
                 nodeMoving: {
                     ...state.nodeMoving,
@@ -27,7 +28,7 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     input: action.input
                 },
                 nodes: 
-                    (action.type == MoveType.ConnectorInput || action.type == MoveType.ConnectorOutput) ?
+                    (action.targetType == MoveType.ConnectorInput || action.targetType == MoveType.ConnectorOutput) ?
                         state.nodes :
                         state.nodeMoving.dragging == true ? state.nodes.map((value, index, arr) => {
                     if (index == state.nodeMoving.nodeID){
@@ -40,6 +41,7 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                 }) : state.nodes
             }
         case editorActionTypes.DRAG_NODE_MOVE:
+            action = action as IActionDragMove
             if (state.nodeMoving.dragging == false) return state;
             return {
                 ...state,
@@ -52,16 +54,18 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                         state.nodes :
                         state.nodeMoving.type == MoveType.Node ? 
                         state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
-                    if (index == state.nodeMoving.nodeID){
-                        return {
-                            x: action.pos[0] + state.nodeMoving.posOffsetX,
-                            y: action.pos[1] + state.nodeMoving.posOffsetY
-                        } as EditorNodeState
-                    }
-                    return value
+                            if (index == state.nodeMoving.nodeID) {
+                                action = action as IActionDragMove
+                                return {
+                                    x: action.pos[0] + state.nodeMoving.posOffsetX,
+                                    y: action.pos[1] + state.nodeMoving.posOffsetY
+                                } as EditorNodeState
+                            }
+                            return value
                 }) : state.nodes 
             }
         case editorActionTypes.DRAG_NODE_STOP:
+            action = action as IActionDragStop
             return {
                 ...state,
                 nodeMoving: {
@@ -78,8 +82,9 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action) => {
                     input: -1
                 },
                 nodes: state.nodeMoving.type == MoveType.Node ? state.nodes.map((value: EditorNodeState, index: number, array: EditorNodeState[]) => {
+                    action = action as IActionDragStop
                     if (index == state.nodeMoving.nodeID) {
-                        if (action.success) {
+                        if ((action as IActionDragStop).success) {
                             return {
                                 x: (action.pos[0] as number) + state.nodeMoving.posOffsetX,
                                 y: (action.pos[1] as number) + state.nodeMoving.posOffsetY

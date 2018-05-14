@@ -38,13 +38,17 @@ window.makeAction = {
 }
 window.dispatch = store.dispatch
 
-store.dispatch(nodeCreate(LogicTypes.BIT_AND, 30, 40))
+store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 40))
+store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 140))
+store.dispatch(nodeCreate(LogicTypes.BIT_AND, 180, 60))
+store.dispatch(nodeCreate(LogicTypes.BIT_OR, 360, 60))
+store.dispatch(nodeCreate(LogicTypes.BIT_OUTPUT, 540, 60))
 
 export class App extends React.Component<Props, State> {
   render() {
     return (
         <div>
-          <h2>Welcome to React with Typescript!</h2>
+          <h2>Welcome FlowHS!</h2>
           <Editor store={store}/>
         </div>
     );
