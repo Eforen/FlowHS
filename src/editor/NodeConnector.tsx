@@ -83,14 +83,19 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
             this.props.store.dispatch(makeActionDragMove(event.clientX, event.clientY))
         }
 
-        let onMouseDown = (event: any) => {
-            console.log('MouseDown')
+        let onMouseDown = (event: React.MouseEvent<HTMLElement>) => {
+            let boundingBox = event.currentTarget.getBoundingClientRect()
+            //console.log('MouseDown Start')
+            //console.log({ w: this.props.editorRootOffset.x + boundingBox.right, h: this.props.editorRootOffset.y + boundingBox.bottom})
+            //console.log('MouseDown Done')
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
             this.props.store.dispatch(makeActionDragConnectorStart(
                 this.props.id,
-                [event.clientX, event.clientY],
+                [(this.props.input ? boundingBox.left : boundingBox.right), boundingBox.top + ((boundingBox.bottom - boundingBox.top) / 2)],
                 [
+                    //this.props.editorRootOffset.x,
+                    //this.props.editorRootOffset.y
                     this.props.editorRootOffset.x,
                     this.props.editorRootOffset.y
                 ],
