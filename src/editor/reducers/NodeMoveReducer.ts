@@ -24,8 +24,8 @@ export const NodeMoveReducer: Reducer<EditorState> = (state, action: IActionDrag
                     posCurrentX: action.start[0],
                     posCurrentY: action.start[1],
                     nodeID: action.node,
-                    output: action.output ? action.output : -1,
-                    input: action.input ? action.input : -1
+                    output: action.output,
+                    input: action.input
                 },
                 nodes: 
                     (action.targetType == MoveType.ConnectorInput || action.targetType == MoveType.ConnectorOutput) ?

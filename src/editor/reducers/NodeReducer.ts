@@ -19,7 +19,7 @@ export const NodeReducer: Reducer<EditorState> = (state, action: IActionNodeCrea
                     ...state.emulator,
                     nodes: [
                         ...state.emulator.nodes.slice(0, state.nextNodeID), 
-                        createBasic(action.logic), 
+                        createBasic(state.nextNodeID, action.logic), 
                         ...state.emulator.nodes.slice(state.nextNodeID)
                     ],
                     updated: [

@@ -5,7 +5,8 @@ import { EmulatorState, EmulatorStateDefault } from '../../emulator/state/emulat
 import { editorActionTypes } from '../actions/actionTypes';
 import { EditorReducer } from './EditorReducer';
 import { makeActionDragConnectorStart } from '../actions/dragActions';
-import { EditorStateDefault } from '../state/editorState';
+import { EditorStateDefault, EditorState } from '../state/editorState';
+import { HoverStateDefault } from '../state/HoverState';
 
 describe('Editor Move Reducer', () => {
     describe('DRAG_NODE_START', () => {
@@ -77,7 +78,6 @@ describe('Editor Move Reducer', () => {
 
             it('should setup connector drag #' + (i + 1), () => {
                 let test = {
-                    ...EditorStateDefault,
                     nodeMoving: MoveStateDefault,
                     nextNodeID: 0,
                     nodes: [
@@ -87,10 +87,10 @@ describe('Editor Move Reducer', () => {
                         { x: 23, y: 53 },
                         { x: 7, y: 151 },
                     ],
-                    emulator: EmulatorStateDefault
+                    emulator: EmulatorStateDefault,
+                    hover: HoverStateDefault
                 }
                 let target = {
-                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
@@ -112,7 +112,8 @@ describe('Editor Move Reducer', () => {
                         { x: 23, y: 53 },
                         { x: 7, y: 151 },
                     ],
-                    emulator: EmulatorStateDefault
+                    emulator: EmulatorStateDefault,
+                    hover: HoverStateDefault
                 }
                 let action = makeActionDragConnectorStart(
                     node,
@@ -130,7 +131,7 @@ describe('Editor Move Reducer', () => {
             })
         }
 
-        it('Fresh Drag Already in clean state', () => {
+        it.skip('Fresh Drag Already in clean state', () => {
         })
 
         it.skip('Fresh Drag clean state', () => {
@@ -295,7 +296,6 @@ describe('Editor Move Reducer', () => {
 
             it('should not move node if draging connector ' + (i + 1), () => {
                 let test = {
-                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -318,9 +318,8 @@ describe('Editor Move Reducer', () => {
                         { x: 7, y: 151 },
                     ],
                     emulator: EmulatorStateDefault
-                }
+                } as EditorState
                 let target = {
-                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -343,7 +342,7 @@ describe('Editor Move Reducer', () => {
                         { x: 7, y: 151 },
                     ],
                     emulator: EmulatorStateDefault //TODO: Should change the node connection state
-                }
+                } as EditorState
                 let action = {
                     type: editorActionTypes.DRAG_NODE_MOVE,
                     pos: [mx, my]

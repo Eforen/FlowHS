@@ -35,6 +35,7 @@ describe('NodesReducers', () => {
         gates.forEach(gate => {
             it('Should add single ' + gate.name + ' and mark for update', () => {
                 let pos = [(Math.random() - 0.5) * 200, (Math.random() - 0.5) * 200]
+                let ID = Math.random() * 200
 
                 let target = {
                     ...EditorStateDefault,
@@ -51,7 +52,7 @@ describe('NodesReducers', () => {
                         output: -1,
                         input: -1
                     },
-                    nextNodeID: 1,
+                    nextNodeID: ID + 1,
                     nodes: [{
                         x: pos[0], y: pos[1]
                     }],
@@ -60,7 +61,7 @@ describe('NodesReducers', () => {
                         sleepTime: 0,
                         changed: false,
                         nodes: [{
-                            ID: -1,
+                            ID: ID,
                             name: gate.name,
                             userName: '',
                             type: gate.type,
@@ -81,7 +82,7 @@ describe('NodesReducers', () => {
                     }
                 } as EditorState
 
-                let result = EditorReducer(EditorStateDefault, nodeCreate(gate.type, pos[0], pos[1]))
+                let result = EditorReducer({ ...EditorStateDefault, nextNodeID: ID}, nodeCreate(gate.type, pos[0], pos[1]))
                 expect(result).to.deep.equal(target)
             })
         });
