@@ -8,6 +8,7 @@ import { Store } from 'redux';
 import { EditorState } from './state/editorState';
 import { makeActionDragNodeStart, makeActionDragMove, makeActionDragStop, makeActionDragConnectorStart } from './actions/dragActions';
 import { findDOMNode } from 'react-dom';
+import { makeActionHoverStart, makeActionHoverEnd } from './actions/hoverActions';
 
 export interface INodeConnectorProps {
     store: Store<EditorState>
@@ -37,6 +38,7 @@ export interface INodeConnectorState {
             height: number
         }
     }
+    hovering: boolean
 }
 
 export class NodeConnector extends React.Component<INodeConnectorProps, INodeConnectorState>{
@@ -58,8 +60,19 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
                     width: 0,
                     height: 0
                 }
-            }
+            },
+            hovering: this.getThisHovering()
         }
+    }
+
+    public getThisHovering(): boolean{
+        return this.props.store.getState().hover.hovering.reduce<boolean>((last, hover) => {
+            if (last === true) {
+                return true
+            }
+            console.log('((' + hover.input.toString() + ' == ' + this.props.input.toString() + ')==' + (hover.input == this.props.input).toString() + ' && (' + hover.node.toString() + ' == ' + this.props.nodeId.toString() + ')==' + (hover.node == this.props.nodeId).toString() + ' && (' + hover.connector.toString() + ' == ' + this.props.id.toString() + ')==' + (hover.connector == this.props.id).toString() + ')==' + (hover.input == this.props.input && hover.node == this.props.nodeId && hover.connector == this.props.id).toString())
+            return hover.input == this.props.input && hover.node == this.props.nodeId && hover.connector == this.props.id
+        }, false)
     }
 
     public render() {
@@ -104,19 +117,50 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
             ))
         }
 
+        let onMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+            this.props.store.dispatch(makeActionHoverStart(
+                this.props.nodeId,
+                this.props.input,
+                this.props.id
+            ))
+        }
+
+        let onMouseLeave = (event: React.MouseEvent<HTMLElement>) => {
+            this.props.store.dispatch(makeActionHoverEnd(
+                this.props.nodeId,
+                this.props.input,
+                this.props.id
+            ))
+        }
+
         if (this.props.store.getState().nodeMoving.nodeID == this.props.id &&
             this.props.store.getState().nodeMoving.input == -1 &&
             this.props.store.getState().nodeMoving.output == -1) {
             //classes += ' dragging'
         }
 
+        let classN = this.state.hovering ? 'hover' : 'normal'
+
+        console.log('Really what the actual fuck!')
         return (
-            <li style= {{ height: '1em' }} onMouseDown={onMouseDown}>
+            <li style= {{ height: '1em' }} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classN}>
                 <span className='logicnode-connector' ref={'node' + this.props.nodeId + (this.props.input ? 'input' : 'output') + this.props.id + 'connector'}> </span>
                 <span className='logicnode-connector-label' > {
                     this.props.input ?
                     this.props.nodeData.inputs[this.props.id].name :
                     this.props.nodeData.outputs[this.props.id].name } </span>
             </li>)
+    }
+
+    componentDidMount() {
+        this.props.store.subscribe(() => {
+            let hovering = this.getThisHovering()
+            if (this.state.hovering != hovering) {
+                this.setState({
+                    ...this.state,
+                    hovering: hovering
+                })
+            }
+        })
     }
 }

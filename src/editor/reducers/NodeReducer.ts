@@ -7,7 +7,7 @@ import { EditorNodeState } from '../state/EditorNodeState';
 import { IActionNodeCreate } from '../actions/nodeCreate';
 import { createBasic } from '../../emulator/Builtin/BasicLogic';
 
-export const NodeCreateReducer: Reducer<EditorState> = (state, action: IActionNodeCreate) => {
+export const NodeReducer: Reducer<EditorState> = (state, action: IActionNodeCreate) => {
     if (state == undefined) state = EditorStateDefault
 
     switch (action.type) {

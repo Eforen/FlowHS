@@ -124,22 +124,22 @@
     left: inherit;
 }
 
-.logicnode .logicnode-inputs .connectorlist > li:hover, 
-.logicnode .logicnode-outputs .connectorlist > li:hover {
+.logicnode .logicnode-inputs .connectorlist > li.hover, 
+.logicnode .logicnode-outputs .connectorlist > li.hover {
     color: aquamarine;
 }
 
-.logicnode .logicnode-inputs .connectorlist > li:hover > .logicnode-connector, 
-.logicnode .logicnode-outputs .connectorlist > li:hover > .logicnode-connector {
+.logicnode .logicnode-inputs .connectorlist > li.hover > .logicnode-connector, 
+.logicnode .logicnode-outputs .connectorlist > li.hover > .logicnode-connector {
     height: 10px;
     width: 10px;
 }
 
-.logicnode .logicnode-inputs .connectorlist > li:hover > .logicnode-connector {
+.logicnode .logicnode-inputs .connectorlist > li.hover > .logicnode-connector {
     left: -6px;
 }
 
-.logicnode .logicnode-outputs .connectorlist > li:hover > .logicnode-connector {
+.logicnode .logicnode-outputs .connectorlist > li.hover > .logicnode-connector {
     right: -6px;
 }
 
@@ -161,8 +161,8 @@
 	stroke-width:15;
 }
 
-.ChipEditorGrid .connector-click-area:hover + .connector,
-.ChipEditorGrid .connector:hover {
+.ChipEditorGrid .connector-click-area.hover + .connector,
+.ChipEditorGrid .connector.hover {
 	cursor: pointer;
 	stroke-width: 4;
 }

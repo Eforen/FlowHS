@@ -40,6 +40,7 @@ export interface INodeState {
             height: number
         }
     }
+    hover: boolean
 }
 
 export class Node extends React.Component<INodeProps, INodeState>{
@@ -61,7 +62,8 @@ export class Node extends React.Component<INodeProps, INodeState>{
                     width: 0,
                     height: 0
                 }
-            }
+            },
+            hover: false
         }
     }
     
@@ -185,6 +187,15 @@ export class Node extends React.Component<INodeProps, INodeState>{
         )
     }
 
+    public getThisHovering(): boolean {
+        return this.props.store.getState().hover.hovering.reduce<boolean>((last, hover) => {
+            if (last === true) {
+                return true
+            }
+            return hover.node == this.props.id
+        }, false)
+    }
+
     componentDidMount() {
         /*
         this.setState()
@@ -242,13 +253,15 @@ export class Node extends React.Component<INodeProps, INodeState>{
         console.log(calc)
 
         /*
-        this.setState({ x: editorPos.left, y: editorPos.top, change: 0 })
         this.props.store.subscribe(() => {
             let editorBase = findDOMNode(this.refs['EditorNodeFrame'])
             let editorPos = editorBase.getBoundingClientRect()
             this.setState({ x: editorPos.left, y: editorPos.top, change: this.state.change + 1 })
         })
         */
+        this.props.store.subscribe(() => {
+            //this.setState({ ...this.state, hover: })
+        })
     }
     /*
     render() {

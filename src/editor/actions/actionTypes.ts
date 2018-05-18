@@ -11,5 +11,7 @@ export enum editorActionTypes {
     NODE_CREATE,
     NODE_DELETE,
     NODE_RENAME,
-    NODE_CONNECT
+    NODE_CONNECT,
+    HOVER_ENTER,
+    HOVER_LEAVE,
 }

@@ -4,7 +4,8 @@ import { editorActionTypes } from '../actions/actionTypes';
 import { EmulatorState } from '../../emulator/state/emulatorState';
 import { MoveType } from '../state/MoveState';
 import { NodeMoveReducer } from './NodeMoveReducer';
-import { NodeCreateReducer } from './NodeCreateReducer';
+import { NodeReducer } from './NodeReducer';
+import { HoverReducer } from './HoverReducer';
 
 export const EditorReducer: Reducer<EditorState> = (state: EditorState = EditorStateDefault, action: any) => {
     switch (action.type) {
@@ -14,10 +15,14 @@ export const EditorReducer: Reducer<EditorState> = (state: EditorState = EditorS
             return NodeMoveReducer(state as EditorState, action);
 
         case editorActionTypes.NODE_CREATE:
-            return NodeCreateReducer(state as EditorState, action);
+            return NodeReducer(state as EditorState, action);
 
         case editorActionTypes.UPDATESTATE:
             break;
+
+        case editorActionTypes.HOVER_ENTER:
+        case editorActionTypes.HOVER_LEAVE:
+            return HoverReducer(state as EditorState, action);
 
         default:
             break;

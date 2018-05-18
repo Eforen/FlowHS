@@ -46,7 +46,7 @@ export const makeActionDragConnectorStart: (
         input: boolean,
         connectorNumber: number
     ) => {
-        console.log('WTF! connectorNumber:' + connectorNumber)
+        //console.log('WTF! connectorNumber:' + connectorNumber)
     return {
         type: editorActionTypes.DRAG_NODE_START,
         node: node,

@@ -3,19 +3,15 @@ import { describe } from 'mocha';
 import { MoveState, MoveType, MoveStateDefault } from '../state/MoveState';
 import { EmulatorState, EmulatorStateDefault } from '../../emulator/state/emulatorState';
 import { editorActionTypes } from '../actions/actionTypes';
-import { NodeMoveReducer } from './NodeMoveReducer';
-import { EditorNodeStateDefault } from '../state/EditorNodeState';
 import { EditorReducer } from './EditorReducer';
-import { EditorStateDefault } from '../state/editorState';
-import { LogicTypes } from '../../emulator/state/nodeTypes';
-import { OutputTypes } from '../../emulator/state/outputTypes';
-import { nodeCreate } from '../actions/nodeCreate';
 import { makeActionDragConnectorStart } from '../actions/dragActions';
+import { EditorStateDefault } from '../state/editorState';
 
 describe('Editor Move Reducer', () => {
     describe('DRAG_NODE_START', () => {
         it('Fresh Drag Already in clean state', () => {
             let test = {
+                ...EditorStateDefault,
                 nodeMoving: MoveStateDefault,
                 nextNodeID: 0,
                 nodes: [
@@ -28,6 +24,7 @@ describe('Editor Move Reducer', () => {
                 emulator: EmulatorStateDefault
             }
             let target = {
+                ...EditorStateDefault,
                 nodeMoving: {
                     dragging: true,
                     type: MoveType.Node,
@@ -80,6 +77,7 @@ describe('Editor Move Reducer', () => {
 
             it('should setup connector drag #' + (i + 1), () => {
                 let test = {
+                    ...EditorStateDefault,
                     nodeMoving: MoveStateDefault,
                     nextNodeID: 0,
                     nodes: [
@@ -92,6 +90,7 @@ describe('Editor Move Reducer', () => {
                     emulator: EmulatorStateDefault
                 }
                 let target = {
+                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: input ? MoveType.ConnectorInput : MoveType.ConnectorOutput,
@@ -122,9 +121,9 @@ describe('Editor Move Reducer', () => {
                     input,
                     connector)
 
-                console.log('omg1')
-                console.log(action)
-                console.log('omg2')
+                //console.log('omg1')
+                //console.log(action)
+                //console.log('omg2')
 
                 let result = EditorReducer(test, action)
                 expect(result).to.deep.equal(target)
@@ -139,6 +138,7 @@ describe('Editor Move Reducer', () => {
         })
         it('Already in drag', () => {
             let test = {
+                ...EditorStateDefault,
                 nodeMoving: {
                     dragging: true,
                     type: MoveType.Node,
@@ -163,6 +163,7 @@ describe('Editor Move Reducer', () => {
                 emulator: EmulatorStateDefault
             }
             let target = {
+                ...EditorStateDefault,
                 nodeMoving: {
                     dragging: true,
                     type: MoveType.Node,
@@ -210,6 +211,7 @@ describe('Editor Move Reducer', () => {
 
             it('should test ' + (i + 1), () => {
                 let test = {
+                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -234,6 +236,7 @@ describe('Editor Move Reducer', () => {
                     emulator: EmulatorStateDefault
                 }
                 let target = {
+                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -292,6 +295,7 @@ describe('Editor Move Reducer', () => {
 
             it('should not move node if draging connector ' + (i + 1), () => {
                 let test = {
+                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -316,6 +320,7 @@ describe('Editor Move Reducer', () => {
                     emulator: EmulatorStateDefault
                 }
                 let target = {
+                    ...EditorStateDefault,
                     nodeMoving: {
                         dragging: true,
                         type: MoveType.Node,
@@ -352,6 +357,7 @@ describe('Editor Move Reducer', () => {
     describe('DRAG_NODE_STOP', () => {
         it('should move node on Success', () => {
             let test = {
+                ...EditorStateDefault,
                 nodeMoving: {
                     dragging: true,
                     type: MoveType.Node,
@@ -376,6 +382,7 @@ describe('Editor Move Reducer', () => {
                 emulator: EmulatorStateDefault
             }
             let target = {
+                ...EditorStateDefault,
                 nodeMoving: MoveStateDefault,
                 nextNodeID: 0,
                 nodes: [
@@ -398,6 +405,7 @@ describe('Editor Move Reducer', () => {
         })
         it('should return node on Failed', () => {
             let test = {
+                ...EditorStateDefault,
                 nodeMoving: {
                     dragging: true,
                     type: MoveType.Node,
@@ -422,6 +430,7 @@ describe('Editor Move Reducer', () => {
                 emulator: EmulatorStateDefault
             }
             let target = {
+                ...EditorStateDefault,
                 nodeMoving: MoveStateDefault,
                 nextNodeID: 0,
                 nodes: [
@@ -442,7 +451,7 @@ describe('Editor Move Reducer', () => {
             let result = EditorReducer(test, action)
             expect(result).to.deep.equal(target)
         })
-        it('should connect nodes when end is successful and input or output is set', () => {
+        it.skip('should connect nodes when end is successful and input or output is set', () => {
             expect(false).to.be.true
         })
     })
