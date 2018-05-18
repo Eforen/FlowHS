@@ -2,11 +2,11 @@ import { LogicTypes } from '../state/nodeTypes';
 import { NodeState } from '../state/nodeState';
 import { OutputTypes } from '../state/outputTypes';
 
-export const createBasic: (type: LogicTypes) => NodeState = (type) => {
+export const createBasic: (id: number, type: LogicTypes) => NodeState = (id, type) => {
     switch (type) {
         case LogicTypes.BIT_AND:
             return {
-                ID: -1,
+                ID: id,
                 name: 'AND Gate',
                 userName: '',
                 type: type,
@@ -24,7 +24,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         case LogicTypes.BIT_NAND:
             return {
-                ID: -1,
+                ID: id,
                 name: 'NAND Gate',
                 userName: '',
                 type: type,
@@ -42,7 +42,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         case LogicTypes.BIT_OR:
             return {
-                ID: -1,
+                ID: id,
                 name: 'OR Gate',
                 userName: '',
                 type: type,
@@ -60,7 +60,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         case LogicTypes.BIT_NOR:
             return {
-                ID: -1,
+                ID: id,
                 name: 'NOR Gate',
                 userName: '',
                 type: type,
@@ -78,7 +78,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         case LogicTypes.BIT_XOR:
             return {
-                ID: -1,
+                ID: id,
                 name: 'XOR Gate',
                 userName: '',
                 type: type,
@@ -96,7 +96,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         case LogicTypes.BIT_XNOR:
             return {
-                ID: -1,
+                ID: id,
                 name: 'XNOR Gate',
                 userName: '',
                 type: type,
@@ -114,7 +114,7 @@ export const createBasic: (type: LogicTypes) => NodeState = (type) => {
             }
         default:
             return {
-                ID: -1,
+                ID: id,
                 name: 'Error',
                 userName: '',
                 type: type,

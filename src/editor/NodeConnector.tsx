@@ -70,15 +70,15 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
             if (last === true) {
                 return true
             }
-            console.log('((' + hover.input.toString() + ' == ' + this.props.input.toString() + ')==' + (hover.input == this.props.input).toString() + ' && (' + hover.node.toString() + ' == ' + this.props.nodeId.toString() + ')==' + (hover.node == this.props.nodeId).toString() + ' && (' + hover.connector.toString() + ' == ' + this.props.id.toString() + ')==' + (hover.connector == this.props.id).toString() + ')==' + (hover.input == this.props.input && hover.node == this.props.nodeId && hover.connector == this.props.id).toString())
+            //console.log('((' + hover.input.toString() + ' == ' + this.props.input.toString() + ')==' + (hover.input == this.props.input).toString() + ' && (' + hover.node.toString() + ' == ' + this.props.nodeId.toString() + ')==' + (hover.node == this.props.nodeId).toString() + ' && (' + hover.connector.toString() + ' == ' + this.props.id.toString() + ')==' + (hover.connector == this.props.id).toString() + ')==' + (hover.input == this.props.input && hover.node == this.props.nodeId && hover.connector == this.props.id).toString())
             return hover.input == this.props.input && hover.node == this.props.nodeId && hover.connector == this.props.id
         }, false)
     }
 
     public render() {
         let onMouseUp = (event: any) => {
-            console.log('onMouseUp')
-            console.log(event)
+            console.log('onMouseUp Correct')
+            //console.log(event)
             document.removeEventListener('mousemove', onMouseMove);
             document.removeEventListener('mouseup', onMouseUp);
             this.props.store.dispatch(makeActionDragStop(event.clientX, event.clientY, true))
@@ -91,8 +91,8 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
         }
 
         let onMouseMove = (event: any) => {
-            console.log('onMouseMove')
-            console.log(event)
+            console.log('onMouseMove Correct')
+            //console.log(event)
             this.props.store.dispatch(makeActionDragMove(event.clientX, event.clientY))
         }
 
@@ -104,7 +104,7 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
             document.addEventListener('mousemove', onMouseMove);
             document.addEventListener('mouseup', onMouseUp);
             this.props.store.dispatch(makeActionDragConnectorStart(
-                this.props.id,
+                this.props.nodeId,
                 [(this.props.input ? boundingBox.left : boundingBox.right), boundingBox.top + ((boundingBox.bottom - boundingBox.top) / 2)],
                 [
                     //this.props.editorRootOffset.x,
@@ -141,7 +141,7 @@ export class NodeConnector extends React.Component<INodeConnectorProps, INodeCon
 
         let classN = this.state.hovering ? 'hover' : 'normal'
 
-        console.log('Really what the actual fuck!')
+        //console.log('Really what the actual fuck!')
         return (
             <li style= {{ height: '1em' }} onMouseDown={onMouseDown} onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} className={classN}>
                 <span className='logicnode-connector' ref={'node' + this.props.nodeId + (this.props.input ? 'input' : 'output') + this.props.id + 'connector'}> </span>

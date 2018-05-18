@@ -38,11 +38,11 @@ window.makeAction = {
 }
 window.dispatch = store.dispatch
 
-store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 40))
-store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 140))
+//store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 40))
+//store.dispatch(nodeCreate(LogicTypes.BIT_INPUT, 30, 140)) //Not implimented
 store.dispatch(nodeCreate(LogicTypes.BIT_AND, 180, 60))
 store.dispatch(nodeCreate(LogicTypes.BIT_OR, 360, 60))
-store.dispatch(nodeCreate(LogicTypes.BIT_OUTPUT, 540, 60))
+//store.dispatch(nodeCreate(LogicTypes.BIT_OUTPUT, 540, 60))
 
 export class App extends React.Component<Props, State> {
   render() {

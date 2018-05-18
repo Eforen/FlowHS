@@ -40,7 +40,6 @@ export interface INodeState {
             height: number
         }
     }
-    hover: boolean
 }
 
 export class Node extends React.Component<INodeProps, INodeState>{
@@ -62,8 +61,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
                     width: 0,
                     height: 0
                 }
-            },
-            hover: false
+            }
         }
     }
     
@@ -187,15 +185,6 @@ export class Node extends React.Component<INodeProps, INodeState>{
         )
     }
 
-    public getThisHovering(): boolean {
-        return this.props.store.getState().hover.hovering.reduce<boolean>((last, hover) => {
-            if (last === true) {
-                return true
-            }
-            return hover.node == this.props.id
-        }, false)
-    }
-
     componentDidMount() {
         /*
         this.setState()
@@ -250,7 +239,7 @@ export class Node extends React.Component<INodeProps, INodeState>{
         //if (
         //    this.state.sizes.connectors.height != calc.connectors.height
         //)
-        console.log(calc)
+        //console.log(calc)
 
         /*
         this.props.store.subscribe(() => {
@@ -259,9 +248,9 @@ export class Node extends React.Component<INodeProps, INodeState>{
             this.setState({ x: editorPos.left, y: editorPos.top, change: this.state.change + 1 })
         })
         */
-        this.props.store.subscribe(() => {
+        //this.props.store.subscribe(() => {
             //this.setState({ ...this.state, hover: })
-        })
+        //})
     }
     /*
     render() {

@@ -52,15 +52,15 @@ export class Editor extends React.Component<Props, State> {
         let dragging = undefined
         if (state.nodeMoving.dragging && state.nodeMoving.input > -1) {
             dragging = <SVGSpline 
-                start={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY}}
-                end={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }} 
+                start={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }} 
+                end={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY}}
             />
         }
 
         if (state.nodeMoving.dragging && state.nodeMoving.output > -1) {
             dragging = <SVGSpline 
-                start={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }}
-                end={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY }} 
+                start={{ x: state.nodeMoving.posStartX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posStartY - state.nodeMoving.posOffsetY }} 
+                end={{ x: state.nodeMoving.posCurrentX - state.nodeMoving.posOffsetX, y: state.nodeMoving.posCurrentY - state.nodeMoving.posOffsetY }}
             />
         }
 
