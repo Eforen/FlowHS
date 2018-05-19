@@ -4,7 +4,7 @@ import { MoveState, MoveType, MoveStateDefault } from '../state/MoveState';
 import { EmulatorState, EmulatorStateDefault } from '../../emulator/state/emulatorState';
 import { editorActionTypes } from '../actions/actionTypes';
 import { EditorReducer } from './EditorReducer';
-import { makeActionDragConnectorStart } from '../actions/dragActions';
+import { makeActionDragConnectorStart, makeActionDragNodeStart, makeActionDragMove } from '../actions/dragActions';
 import { EditorStateDefault, EditorState } from '../state/editorState';
 import { HoverStateDefault } from '../state/HoverState';
 
@@ -49,13 +49,7 @@ describe('Editor Move Reducer', () => {
                 ],
                 emulator: EmulatorStateDefault
             }
-            let action = {
-                type: editorActionTypes.DRAG_NODE_START,
-                node: 2,
-                start: [5, 7],
-                offset: [8, 9],
-                targetType: MoveType.Node
-            }
+            let action = makeActionDragNodeStart(2, [5, 7], [8, 9])
 
             let result = EditorReducer(test, action)
             expect(result).to.deep.equal(target)
@@ -188,13 +182,7 @@ describe('Editor Move Reducer', () => {
                 ],
                 emulator: EmulatorStateDefault
             }
-            let action = {
-                type: editorActionTypes.DRAG_NODE_START,
-                node: 2,
-                start: [5, 7],
-                offset: [8, 9],
-                targetType: MoveType.Node
-            }
+            let action = makeActionDragNodeStart(2, [5, 7], [8, 9])
 
             let result = EditorReducer(test, action)
             expect(result).to.deep.equal(target)
@@ -261,10 +249,7 @@ describe('Editor Move Reducer', () => {
                     ],
                     emulator: EmulatorStateDefault
                 }
-                let action = {
-                    type: editorActionTypes.DRAG_NODE_MOVE,
-                    pos: [mx, my]
-                }
+                let action = makeActionDragMove(mx, my);
 
                 let result = EditorReducer(test, action)
                 expect(result).to.deep.equal(target)
@@ -343,10 +328,7 @@ describe('Editor Move Reducer', () => {
                     ],
                     emulator: EmulatorStateDefault //TODO: Should change the node connection state
                 } as EditorState
-                let action = {
-                    type: editorActionTypes.DRAG_NODE_MOVE,
-                    pos: [mx, my]
-                }
+                let action = makeActionDragMove(mx, my);
 
                 let result = EditorReducer(test, action)
                 expect(result).to.deep.equal(target)

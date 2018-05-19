@@ -7,6 +7,8 @@ import { EditorStateDefault, EditorState } from '../state/editorState';
 import { LogicTypes } from '../../emulator/state/nodeTypes';
 import { OutputTypes } from '../../emulator/state/outputTypes';
 import { nodeCreate } from '../actions/nodeCreate';
+import { NodeReducer } from './NodeReducer';
+import { makeActionNodeConnect } from '../actions/nodeConnect';
 
 describe('NodesReducers', () => {
     describe('AddNode', () => {
@@ -93,7 +95,113 @@ describe('NodesReducers', () => {
     it.skip('RenameNode', () => {
 
     })
-    it.skip('ConnectNode', () => {
+    it('ConnectNode ', () => {
+        let test: EditorState = {
+            ...EditorStateDefault,
+            nodes: [{
+                x: 25, y: 785
+            }, {
+                x: 60, y: 785
+            }],
+            emulator: {
+                step: 0,
+                sleepTime: 0,
+                changed: false,
+                nodes: [{
+                    ID: 0,
+                    name: 'AND Gate',
+                    userName: '',
+                    type: LogicTypes.BIT_AND,
+                    inputs: [
+                        { name: 'A', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined },
+                        { name: 'B', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined }
+                    ],
+                    outputs: [{
+                        name: 'Out',
+                        type: OutputTypes.BIT,
+                        value: 0,
+                        connections: []
+                    }],
+                    changed: false
+                }, {
+                    ID: 2,
+                    name: 'AND Gate',
+                    userName: '',
+                    type: LogicTypes.BIT_AND,
+                    inputs: [
+                        { name: 'A', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined },
+                        { name: 'B', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined }
+                    ],
+                    outputs: [{
+                        name: 'Out',
+                        type: OutputTypes.BIT,
+                        value: 0,
+                        connections: []
+                    }],
+                    changed: false
+                }],
+                updated: [],
+                messages: []
+            }
+        }
+        let target: EditorState = {
+            ...EditorStateDefault,
+            nodes: [{
+                x: 25, y: 785
+            }, {
+                x: 60, y: 785
+            }],
+            emulator: {
+                step: 0,
+                sleepTime: 0,
+                changed: false,
+                nodes: [{
+                    ID: 0,
+                    name: 'AND Gate',
+                    userName: '',
+                    type: LogicTypes.BIT_AND,
+                    inputs: [
+                        { name: 'A', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined },
+                        { name: 'B', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined }
+                    ],
+                    outputs: [{
+                        name: 'Out',
+                        type: OutputTypes.BIT,
+                        value: 0,
+                        connections: [{
+                            NodeID: 2,
+                            Pin: 1
+                        }]
+                    }],
+                    changed: true
+                }, {
+                    ID: 2,
+                    name: 'AND Gate',
+                    userName: '',
+                    type: LogicTypes.BIT_AND,
+                    inputs: [
+                        { name: 'A', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: undefined },
+                        {
+                            name: 'B', value: 0, acceptsConnectionFrom: [OutputTypes.BIT], connection: {
+                                NodeID: 0,
+                                Pin: 0
+                            }}
+                    ],
+                    outputs: [{
+                        name: 'Out',
+                        type: OutputTypes.BIT,
+                        value: 0,
+                        connections: []
+                    }],
+                    changed: true
+                }],
+                updated: [true, true],
+                messages: []
+            }
+        }
 
+        let action = makeActionNodeConnect(0, 0, 2, 1)
+
+        expect(NodeReducer(test, action)).to.deep.equal(target);
     })
 })

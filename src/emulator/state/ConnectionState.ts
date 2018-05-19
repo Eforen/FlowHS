@@ -1,9 +1,9 @@
-export interface ConnectionState {
+export interface IConnectionState {
     NodeID: number
     Pin: number
 }
 
-export const ConnectionStateDefault: ConnectionState = {
+export const ConnectionStateDefault: IConnectionState = {
     NodeID: 0,
     Pin: 0
 }

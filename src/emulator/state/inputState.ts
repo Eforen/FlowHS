@@ -1,11 +1,11 @@
 import { OutputTypes } from './outputTypes';
-import { ConnectionState } from './ConnectionState';
+import { IConnectionState } from './ConnectionState';
 
 export interface InputState {
     name: string,
     value: any,
     acceptsConnectionFrom: OutputTypes[]
-    connection: ConnectionState | undefined
+    connection: IConnectionState | undefined
 }
 
 export const InputStateDefault: InputState = {
