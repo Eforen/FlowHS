@@ -38,6 +38,7 @@
     "sass-loader": "^8.0.0",
     "typescript": "~3.5.3",
     "vue-cli-plugin-electron-builder": "^1.4.0",
+    "vue-cli-plugin-vuetify": "^2.0.2",
     "vue-template-compiler": "^2.6.10"
   }
 }
