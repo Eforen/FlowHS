@@ -1,0 +1,172 @@
+.ChipEditorGrid {
+    background-image: url('imgs/gridtile.png');
+    background-repeat: repeat;
+    width: 100%;
+    height: 400px;
+    position: relative;
+}
+
+.logicnode {
+    position: absolute;
+    font-family: monospace;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,.7);
+    user-select: none;
+    color: white;
+}
+
+.logicnode .connectors {
+    margin-top: 5px;
+}
+
+.logicnode.dragging {
+    border-color: rgba(0,120,200,1);
+    box-shadow: 6px 6px 28px -2px rgba(94,163,235,0.4);
+    margin-top: -6px;
+    margin-left: -6px;
+    transition: border-color 0.25s, box-shadow 0.25s, margin-top 0.25s, margin-left 0.25s;
+}
+
+.logicnode-active {
+    border: 1px solid #015c80;
+}
+
+.logicnode .logicnode-header {
+    cursor: -webkit-grab;
+    background: rgba(46, 179, 255, 0.541);
+    color: rgba(8, 18, 21, 1);
+	
+	padding-left: 10px;
+    text-transform: uppercase;
+
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+
+	border-bottom: 1px solid #015c80;
+
+    padding: 1em;
+    padding-bottom: 0;
+    height: 23px;
+
+    font-size: 13px;
+    letter-spacing: 1px;
+
+	color:white;
+	/*font-weight: 600;*/
+}
+
+.logicnode.dragging .logicnode-header {
+    cursor: -webkit-grabbing;
+}
+
+.logicnode header.logicnode-header .logicnode-title{
+    /*font-size: 10px;*/
+}
+
+.logicnode-GateAND{
+    width: 120px;
+}
+
+.logicnode-inputs {
+    padding-right: 5px;
+    /* width: 65%;
+    float: left;
+    margin-left: -15px; */
+}
+
+.logicnode-outputs {
+    padding-left: 5px;
+}
+
+.logicnode .connectorlist {
+    position: relative;
+    list-style: none;
+    padding: 0;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.logicnode .connectorlist > li  {
+    position: relative;
+    cursor: crosshair;
+}
+
+.logicnode .logicnode-inputs .connectorlist > li  {
+    text-align: left;
+    padding-left: 10px;
+}
+
+.logicnode .logicnode-outputs .connectorlist > li {
+    text-align: right;
+    padding-right: 10px;
+}
+
+.logicnode .logicnode-inputs .connectorlist > li > .logicnode-connector, 
+.logicnode .logicnode-outputs .connectorlist > li > .logicnode-connector {
+    height: 6px;
+    width: 6px;
+    border: solid 1px #00AAAA;
+    position: absolute;
+    left: -4px;
+    top: 0;
+    bottom: 0;
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 10px;
+}
+ 
+.logicnode .logicnode-outputs .connectorlist > li > .logicnode-connector {
+    right: -4px;
+    top: 0;
+    bottom: 0;
+    left: inherit;
+}
+
+.logicnode .logicnode-inputs .connectorlist > li.hover, 
+.logicnode .logicnode-outputs .connectorlist > li.hover {
+    color: aquamarine;
+}
+
+.logicnode .logicnode-inputs .connectorlist > li.hover > .logicnode-connector, 
+.logicnode .logicnode-outputs .connectorlist > li.hover > .logicnode-connector {
+    height: 10px;
+    width: 10px;
+}
+
+.logicnode .logicnode-inputs .connectorlist > li.hover > .logicnode-connector {
+    left: -6px;
+}
+
+.logicnode .logicnode-outputs .connectorlist > li.hover > .logicnode-connector {
+    right: -6px;
+}
+
+.ChipEditorGrid .connector {
+	fill:none;
+	stroke:#dadada; 
+	stroke-width:2;
+	-webkit-box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	-moz-box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	box-shadow: 6px 6px 28px -2px rgba(0,0,0,0.75);
+	    -webkit-filter: drop-shadow( -5px -5px 5px #000 );
+            filter: drop-shadow( -5px -5px 5px #000 );
+}
+
+.ChipEditorGrid .connector-click-area {
+	cursor: pointer;
+	fill:none;
+	stroke:transparent;
+	stroke-width:15;
+}
+
+.ChipEditorGrid .connector-click-area.hover + .connector,
+.ChipEditorGrid .connector.hover {
+	cursor: pointer;
+	stroke-width: 4;
+}
+
+.ChipEditorGrid .connector.selected {
+	stroke: #337ab7;
+}
