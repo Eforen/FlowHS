@@ -1,6 +1,6 @@
 'use strict'
 
-import { app, protocol, BrowserWindow } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain } from 'electron'
 import {
   createProtocol,
   installVueDevtools
@@ -9,29 +9,29 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
-let win: BrowserWindow | null
+let mainWindow: BrowserWindow | null
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
 
 function createWindow () {
   // Create the browser window.
-  win = new BrowserWindow({ width: 800, height: 600, webPreferences: {
+  mainWindow = new BrowserWindow({ width: 800, height: 600, frame:false, webPreferences: {
     nodeIntegration: true
   } })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    win.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
-    if (!process.env.IS_TEST) win.webContents.openDevTools()
+    mainWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
+    if (!process.env.IS_TEST) mainWindow.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    win.loadURL('app://./index.html')
+    mainWindow.loadURL('app://./index.html')
   }
 
-  win.on('closed', () => {
-    win = null
+  mainWindow.on('closed', () => {
+    mainWindow = null
   })
 }
 
@@ -47,7 +47,7 @@ app.on('window-all-closed', () => {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (win === null) {
+  if (mainWindow === null) {
     createWindow()
   }
 })
@@ -71,6 +71,34 @@ app.on('ready', async () => {
 
   }
   createWindow()
+})
+
+ipcMain.on("closeWindow", (event, arg) => {
+  event.returnValue = '';
+  switch (arg) {
+    case "main":
+      app.quit()
+      break
+    case "editor":
+      //editorWindow.hide()
+      break
+    default:
+      break
+  }
+})
+
+ipcMain.on("minWindow", (event, arg) => {
+  event.returnValue = '';
+  switch (arg) {
+    case "main":
+      if(mainWindow != null) mainWindow.minimize()
+      break
+    case "editor":
+      //editorWindow.minimize()
+      break
+    default:
+      break
+  }
 })
 
 // Exit cleanly on request from parent process in development mode.
