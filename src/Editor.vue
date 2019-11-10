@@ -16,6 +16,24 @@
     </div>
     <div class="workspace">
       <div class="workspace-tabs">
+        <v-btn
+        class="button"
+        target="_blank"
+        icon
+        small dark
+        v-on:click="AddNewNode"
+      >
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+        <v-btn
+        class="button"
+        target="_blank"
+        icon
+        small dark
+        v-on:click="AddNewFlow"
+      >
+        <v-icon>mdi-folder-plus-outline</v-icon>
+      </v-btn>
       </div>
       <!--
       workspace.size.height: 250,
@@ -37,7 +55,7 @@
             <g class="selector"></g>
             <g class="links"></g>
             <g class="nodes">
-              <RenderNode x=2 y=7 title="Pin in: Input" :error="false" :changed="false" :selected="false" :inputs="0" :outputs="0" icon='' :button="false"/>
+              <RenderNodeX v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id"/>
             </g>
           </g>
         </svg>
@@ -154,38 +172,68 @@
 <script lang="ts">
 import Vue from 'vue';
 //import HelloWorld from './components/HelloWorld.vue';
-import RenderNode from './components/RenderNode.vue';
-import {ipcRenderer} from 'electron'
+import { State, Action, Getter } from 'vuex-class';
+import { Component, Prop } from 'vue-property-decorator'
+import RenderNodeX from './components/RenderNodeX.vue';
+import { ipcRenderer } from 'electron'
+import { Node, Flow, FlowsState } from './store/flows/types';
+import uuid from 'uuid';
 
-export default Vue.extend({
-  name: 'Editor',
-
+@Component({
   components: {
-    RenderNode,
-  },
+     RenderNodeX,
+  } 
+})
+export default class Editor extends Vue {
 
-  data: () => ({
-    node_filter: '',
-    workspace:{
-      size: {
-        height: 250,
-        width: 250,
-      },
-      grid: {
-        height: 20,
-        width: 20,
-      },
+  @State('flows') flows!: FlowsState
+  @Action('createFlow', { namespace: 'flows' }) createFlow!: (flow: Flow) => void;
+  @Action('createNodeInFlow', { namespace: 'flows' }) createNodeInFlow!: (payload: {flowID: string, node: Node}) => void
+  @Getter('nodesInFlow', { namespace: 'flows' }) nodesInFlow!: (id: string)  => string[]
+
+  get nodesInFlowCalc(): string[] {
+    try {
+      console.log(this.selectedFlow)
+      console.log(this.loadedFlows[this.selectedFlow])
+      // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]])
+      // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes)
+      // console.log(this.flows)
+      // return this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes
+      return this.nodesInFlow(this.loadedFlows[this.selectedFlow])
+    } catch{
+      return []
     }
-  }),
+  }
 
-  methods: {
-    // closeWindow: () => {
+  node_filter: string = ''
+  workspace = {
+    size: {
+      height: 250,
+      width: 250,
+    },
+    grid: {
+      height: 20,
+      width: 20,
+    },
+  }
+  selectedFlow: number = 0
+  loadedFlows: string[] = ['root']
+
+  AddNewFlow() {
+    this.createFlow({guid:'root', title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})
+  }
+  AddNewNode() {
+    // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
+    //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
+    const node: Node = { guid: uuid.v4(), x: 2, y: 7, title: 'Pin in: A', error: false, changed: false, selected: false, button: false, inputs: 1, outputs: 2, icon: '', color: '#a6bbcf', inputState: [], outputState: []}
+    this.createNodeInFlow({flowID: 'root', node})
+  }
+    // closeWindow() {
     //   ipcRenderer.sendSync("closeWindow", "main")
     // },
 
-    // minWindow: () => {
+    // minWindow() {
     //   ipcRenderer.sendSync("minWindow", "main")
     // },
-  }
-});
+}
 </script>

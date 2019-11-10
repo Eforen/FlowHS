@@ -48,9 +48,12 @@
 * [Editor][Node] RenderNode Title
 * [Editor][Node] RenderNode Title Cause Resize width
 * [Editor][Node] RenderNode Icon Cause Resize width
+* [Editor][Node] RenderNode State Flip Button (left)
 
 ### Next Commit 2019-11-10
-* [Editor][Node] RenderNode State Flip Button (left)
+* [Editor] Convert Editor to Class Based Component
+* [Editor] Setup Store
+* [Editor][Node] RenderNodeX component that takes a GUID and renders a RenderNode based on that GUID in store
 
 ## Testing
 
@@ -59,7 +62,8 @@
 
 ## Backlog
 ### v0.1
-* [Editor] Setup Store
+* [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
+* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
 * [Editor][Node] RenderNode Click Drag to move via functions
 * [Editor][Node] RenderNode Property Inspector on double click

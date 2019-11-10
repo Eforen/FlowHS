@@ -153,15 +153,6 @@ export default class RenderNode extends Vue {
     @Prop({ default: 'Node'})
     title!: string
 
-    @Prop({ default: 0})
-    inputs!: number
-
-    @Prop({ default: 0})
-    outputs!: number
-
-    @Prop({ default: ''})
-    icon!: string
-
     @Prop({ default: false})
     error!: boolean
 
@@ -173,6 +164,15 @@ export default class RenderNode extends Vue {
 
     @Prop({ default: false})
     button!: boolean
+
+    @Prop({ default: 0})
+    inputs!: number
+
+    @Prop({ default: 0})
+    outputs!: number
+
+    @Prop({ default: ''})
+    icon!: string
 
     @Prop({ default: '#a6bbcf'})
     color!: string
