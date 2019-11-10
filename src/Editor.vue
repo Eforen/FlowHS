@@ -36,7 +36,7 @@
           <g class="selector"></g>
           <g class="links"></g>
           <g class="nodes">
-            <RenderNode x=100 y=120 title="Pin in: Input" :error="false" :changed="false" :outputs="2"/>
+            <RenderNode x=2 y=7 title="Pin in: Input" :error="false" :changed="false" :inputs="0" :outputs="4"/>
           </g>
         </svg>
       </div>

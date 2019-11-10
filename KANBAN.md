@@ -1,6 +1,7 @@
 - [FlowHS Kanban](#FlowHS-Kanban)
   - [Done](#Done)
     - [Done 2019-11-9](#Done-2019-11-9)
+    - [Done 2019-11-10](#Done-2019-11-10)
   - [Testing](#Testing)
   - [Doing](#Doing)
   - [Backlog](#Backlog)
@@ -34,11 +35,14 @@
 * [Main] Titlebar Close Window
 * [Editor] Show Editor Window
 * [Editor] Show Grid in background
+* [Editor][Node] RenderNode Color
+
+### Done 2019-11-10
+* [Editor][Node] RenderNode Out pins
+* [Editor][Node] RenderNode Pos based on grid tiles
 
 ## Testing
 * [Editor][Node] RenderNode Title
-* [Editor][Node] RenderNode Color
-* [Editor][Node] RenderNode Out pins
 * [Editor][Node] RenderNode State Flip Button (left)
 
 ## Doing

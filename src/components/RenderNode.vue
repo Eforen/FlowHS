@@ -1,16 +1,16 @@
 <template>
-    <g class="node node-group node-selected" id="b5537584.cdacc8" :transform="`translate(${x}, ${y})`">
+    <g class="node node-group node-selected" id="b5537584.cdacc8" :transform="`translate(${xPos}, ${yPos + yOffset})`">
         <g transform="translate(-25,2)" class="node-button" opacity="1">
             <rect class="node-button-background" rx="5" ry="5" width="32" height="26" fill-opacity="1"></rect>
             <rect class="node-button-pad" x="5" y="4" rx="4" ry="4" width="16" height="18" :fill="color" cursor="pointer" fill-opacity="1"></rect>
         </g>
-        <rect class="node" rx="5" ry="5" :fill="color" width="160" height="30"></rect>
+        <rect class="node" rx="5" ry="5" :fill="color" width="160" :height="totalHeight"></rect>
         <g v-show="icon!='none'" class="node-icon-group" x="0" y="0" transform="translate(0, 0)" style="pointer-events: none;">
-            <rect x="0" y="0" class="node-icon-shade" width="30" height="30"></rect>
-            <image xlink:href="icons/node-red/inject.svg" class="node-icon" x="0" width="30" height="30" y="0" style=""></image>
-            <path d="M 30 1 l 0 28" class="node-icon-shade-border"></path>
+            <rect x="0" y="0" class="node-icon-shade" width="30" :height="totalHeight"></rect>
+            <image xlink:href="icons/node-red/inject.svg" class="node-icon" x="0" width="30" :height="totalHeight" y="0" style=""></image>
+            <path :d="`M 30 1 l 0 ${28 + heightMod}`" class="node-icon-shade-border"></path>
         </g>
-        <text class="node-label node_label_italic" x="38" dy=".35em" text-anchor="start" y="14">{{title}}</text>
+        <text class="node-label node_label_italic" x="38" dy=".35em" text-anchor="start" :y="14 + yOffsetMod">{{title}}</text>
         <g class="node-status-group" style="display: none;">
             <rect class="node-status" x="6" y="1" width="9" height="9" rx="2" ry="2" stroke-width="3"></rect>
             <text class="node-status-label" x="20" y="10"></text></g>
@@ -20,6 +20,10 @@
             <g class="node-error" v-show="error" transform="translate(150, -2)">
                 <path d="M -5,4 l 10,0 -5,-8 z"></path>
             </g>
+        
+        <g v-for="n in inputs" v-bind:key="'input'+n" class="flow-port-input" :transform="`translate(-5,${13 * (n - 1) + firstInPinY})`">
+            <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
+        </g>
         <g v-for="n in outputs" v-bind:key="'output'+n" class="flow-port-output" :transform="`translate(155,${13 * (n - 1) + firstOutPinY})`">
             <rect class="flow-port" rx="3" ry="3" width="10" height="10">{{firstOutPinY}}</rect>
         </g>
@@ -81,12 +85,29 @@ import {ipcRenderer} from 'electron'
 @Component
 export default class RenderNode extends Vue {
 
+
+    @Prop({ default: 20 })
+    xGridSize!: number
+    
+    @Prop({ default: 20 })
+    yGridSize!: number
+
+    // @Prop({ default: 0 })
+    // xOffset!: number
+    
+    // @Prop({ default: 10 })
+    // yOffset!: number
+
+    get xPos() { return this.x * this.xGridSize }
+    get yPos() { return this.y * this.yGridSize }
     get maxPinCount() { return Math.max(0, this.outputs, this.inputs) }
     get heightMod() { return Math.max(0, ( this.maxPinCount - 2 )) * 15}
     get totalHeight() { return 30 + this.heightMod }
-    get yOffset() { return -7.5 * Math.max(0, ( this.maxPinCount - 2 )) }
+    get yOffsetMod() { return (7.5 * Math.max(0, ( this.maxPinCount - 2 ))) }
     get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 }
     get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 }
+    get yOffset() { return (( Math.ceil( this.totalHeight / this.yGridSize ) * this.yGridSize ) - this.totalHeight) / 2}
+    
   
     @Prop()
     x!: number
