@@ -36,12 +36,22 @@
 * [Editor] Show Grid in background
 
 ## Testing
+* [Editor][Node] RenderNode Title
+* [Editor][Node] RenderNode Color
+* [Editor][Node] RenderNode Out pins
+* [Editor][Node] RenderNode State Flip Button (left)
 
 ## Doing
 * [Editor] Show Pallet on the Left
 
 ## Backlog
 ### v0.1
+* [Editor][Node] RenderNode In pins
+* [Editor][Node] RenderNode State Indicator (right)
+* [Editor][Node] RenderNode Click Drag to move via functions
+* [Editor][Node] RenderNode Property Inspector on double click
+* [Editor][Node] RenderNode State Flip Button (left) functionality
+* [Editor][Node] RenderNode Use Vuex to store state
 * [Editor] Calapsable Inspecrtor on right
 * [Editor] Calapsable New Node List on left
 * [Main] Titlebar Drag Move Window

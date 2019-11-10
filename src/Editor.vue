@@ -35,7 +35,9 @@
           </g>
           <g class="selector"></g>
           <g class="links"></g>
-          <g class="nodes"></g>
+          <g class="nodes">
+            <RenderNode x=100 y=120 title="Pin in: Input" :error="false" :changed="false" :outputs="2"/>
+          </g>
         </svg>
       </div>
       <div class="workspace-tabs">
@@ -150,13 +152,14 @@
 <script lang="ts">
 import Vue from 'vue';
 //import HelloWorld from './components/HelloWorld.vue';
+import RenderNode from './components/RenderNode.vue';
 import {ipcRenderer} from 'electron'
 
 export default Vue.extend({
   name: 'Editor',
 
   components: {
-    //HelloWorld,
+    RenderNode,
   },
 
   data: () => ({
@@ -170,14 +173,7 @@ export default Vue.extend({
         height: 20,
         width: 20,
       },
-    },
-    drawer: true,
-    items: [
-      { title: 'Home', icon: 'mdi-home-city' },
-      { title: 'My Account', icon: 'mdi-account' },
-      { title: 'Users', icon: 'mdi-account-group-outline' },
-    ],
-    mini: true,
+    }
   }),
 
   methods: {
