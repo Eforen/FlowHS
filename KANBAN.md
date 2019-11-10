@@ -2,6 +2,7 @@
   - [Done](#Done)
     - [Done 2019-11-9](#Done-2019-11-9)
     - [Done 2019-11-10](#Done-2019-11-10)
+    - [Next Commit 2019-11-10](#Next-Commit-2019-11-10)
   - [Testing](#Testing)
   - [Doing](#Doing)
   - [Backlog](#Backlog)
@@ -40,6 +41,11 @@
 ### Done 2019-11-10
 * [Editor][Node] RenderNode Out pins
 * [Editor][Node] RenderNode Pos based on grid tiles
+
+### Next Commit 2019-11-10
+* [Editor][Node] RenderNode Hover
+* [Editor][Node] RenderNode Pin Hover
+* [Editor][Node] RenderNode Select
 
 ## Testing
 * [Editor][Node] RenderNode Title
