@@ -41,22 +41,24 @@
 ### Done 2019-11-10
 * [Editor][Node] RenderNode Out pins
 * [Editor][Node] RenderNode Pos based on grid tiles
-
-### Next Commit 2019-11-10
 * [Editor][Node] RenderNode Hover
 * [Editor][Node] RenderNode Pin Hover
 * [Editor][Node] RenderNode Select
+* [Editor][Node] RenderNode In pins
+
+### Next Commit 2019-11-10
+* [Editor][Node] RenderNode Title
+* [Editor][Node] RenderNode Title Cause Resize width
+* [Editor][Node] RenderNode Icon Cause Resize width
 
 ## Testing
-* [Editor][Node] RenderNode Title
-* [Editor][Node] RenderNode State Flip Button (left)
 
 ## Doing
 * [Editor] Show Pallet on the Left
+* [Editor][Node] RenderNode State Flip Button (left)
 
 ## Backlog
 ### v0.1
-* [Editor][Node] RenderNode In pins
 * [Editor][Node] RenderNode State Indicator (right)
 * [Editor][Node] RenderNode Click Drag to move via functions
 * [Editor][Node] RenderNode Property Inspector on double click

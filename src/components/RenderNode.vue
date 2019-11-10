@@ -4,13 +4,13 @@
             <rect class="node-button-background" rx="5" ry="5" width="32" height="26" fill-opacity="1"></rect>
             <rect class="node-button-pad" x="5" y="4" rx="4" ry="4" width="16" height="18" :fill="color" cursor="pointer" fill-opacity="1"></rect>
         </g>
-        <rect class="node" rx="5" ry="5" :fill="color" width="160" :height="totalHeight" @mouseover="hover.node = true;" @mouseleave="hover.node = false"></rect>
-        <g v-show="icon!='none'" class="node-icon-group" x="0" y="0" transform="translate(0, 0)" style="pointer-events: none;">
+        <rect class="node" rx="5" ry="5" :fill="color" :width="desiredWidth" :height="totalHeight" @mouseover="hover.node = true;" @mouseleave="hover.node = false"></rect>
+        <g v-show="icon!=''" class="node-icon-group" x="0" y="0" transform="translate(0, 0)" style="pointer-events: none;">
             <rect x="0" y="0" class="node-icon-shade" width="30" :height="totalHeight"></rect>
             <image xlink:href="icons/node-red/inject.svg" class="node-icon" x="0" width="30" :height="totalHeight" y="0" style=""></image>
             <path :d="`M 30 1 l 0 ${28 + heightMod}`" class="node-icon-shade-border"></path>
         </g>
-        <text class="node-label node-label-italic" x="38" dy=".35em" text-anchor="start" :y="14 + yOffsetMod">{{title}}</text>
+        <text class="node-label node-label-italic" :x="icon!='' ? 38 : 8" dy=".35em" text-anchor="start" :y="14 + yOffsetMod">{{title}}</text>
         <g class="node-status-group" style="display: none;">
             <rect class="node-status" x="6" y="1" width="9" height="9" rx="2" ry="2" stroke-width="3"></rect>
             <text class="node-status-label" x="20" y="10"></text></g>
@@ -24,7 +24,7 @@
         <g v-for="n in inputs" v-bind:key="'input'+n" :class="`port-input${hover.inputs == n? ' port-hover hover':''}`" :transform="`translate(-5,${13 * (n - 1) + firstInPinY})`">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="'output'+n" :class="`port-output${hover.outputs == n? ' port-hover hover':''}`" :transform="`translate(155,${13 * (n - 1) + firstOutPinY})`">
+        <g v-for="n in outputs" v-bind:key="'output'+n" :class="`port-output${hover.outputs == n? ' port-hover hover':''}`" :transform="`translate(${desiredWidth - 5},${13 * (n - 1) + firstOutPinY})`">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n;" @mouseleave="hover.outputs = 0">{{firstOutPinY}}</rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
@@ -42,6 +42,7 @@
 <style lang="css" scoped>
 .node {
     stroke: #434954;
+    font-family:'Courier New', Courier, monospace
 }
 .node .hide {
     display: none;
@@ -137,6 +138,9 @@ export default class RenderNode extends Vue {
     get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 }
     get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 }
     get yOffset() { return (( Math.ceil( this.totalHeight / this.yGridSize ) * this.yGridSize ) - this.totalHeight) / 2}
+    get textWidthEstimation() { return 14 * this.title.length * 0.6 }
+    get neededWidth() { return (this.icon!=''? 30 : 0) + 8 + this.textWidthEstimation + 8 } //30 8 text 8
+    get desiredWidth() { return ( Math.ceil( this.neededWidth / this.xGridSize ) * this.xGridSize ) }
     
   
     @Prop()
@@ -154,7 +158,7 @@ export default class RenderNode extends Vue {
     @Prop({ default: 0})
     outputs!: number
 
-    @Prop({ default: 'none'})
+    @Prop({ default: ''})
     icon!: string
 
     @Prop({ default: false})

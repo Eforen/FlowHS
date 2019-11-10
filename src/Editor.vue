@@ -24,19 +24,21 @@
       workspace.grid.width: 20,
       -->
       <div class="workspace-chart">
-        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" transform="scale(1)">
-          <g class="grid">
-            <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
-            <g class="workspace-chart-grid" style="visibility: visible;">
-              
-            <line class="workspace-chart-grid-h" v-for="n in workspace.size.height" v-bind:key="'wcgh'+n" x1="0" :x2="workspace.size.width * workspace.grid.width"  :y1="n*workspace.grid.height" :y2="n*workspace.grid.height"></line>
-            <line class="workspace-chart-grid-v" v-for="n in workspace.size.height" v-bind:key="'wcgv'+n" y1="0" :y2="workspace.size.width * workspace.grid.width"  :x1="n*workspace.grid.height" :x2="n*workspace.grid.height"></line>
+        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height">
+          <g transform="scale(1)">
+            <g class="grid">
+              <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
+              <g class="workspace-chart-grid" style="visibility: visible;">
+                
+              <line class="workspace-chart-grid-h" v-for="n in workspace.size.height" v-bind:key="'wcgh'+n" x1="0" :x2="workspace.size.width * workspace.grid.width"  :y1="n*workspace.grid.height" :y2="n*workspace.grid.height"></line>
+              <line class="workspace-chart-grid-v" v-for="n in workspace.size.height" v-bind:key="'wcgv'+n" y1="0" :y2="workspace.size.width * workspace.grid.width"  :x1="n*workspace.grid.height" :x2="n*workspace.grid.height"></line>
+              </g>
             </g>
-          </g>
-          <g class="selector"></g>
-          <g class="links"></g>
-          <g class="nodes">
-            <RenderNode x=2 y=7 title="Pin in: Input" :error="false" :changed="false" :selected="false" :inputs="0" :outputs="4"/>
+            <g class="selector"></g>
+            <g class="links"></g>
+            <g class="nodes">
+              <RenderNode x=2 y=7 title="Pin in: Input" :error="false" :changed="false" :selected="false" :inputs="0" :outputs="4" icon=''/>
+            </g>
           </g>
         </svg>
       </div>
