@@ -1,6 +1,6 @@
 <template>
     <g :class="`node node-group ${hover.node ? ' node-hover hover':''}${selected ? ' node-selected selected':''}`" id="b5537584.cdacc8" :transform="`translate(${xPos}, ${yPos + yOffset})`">
-        <g transform="translate(-25,2)" class="node-button" opacity="1">
+        <g v-show="button" transform="translate(-25,2)" class="node-button" opacity="1">
             <rect class="node-button-background" rx="5" ry="5" width="32" height="26" fill-opacity="1"></rect>
             <rect class="node-button-pad" x="5" y="4" rx="4" ry="4" width="16" height="18" :fill="color" cursor="pointer" fill-opacity="1"></rect>
         </g>
@@ -13,13 +13,14 @@
         <text class="node-label node-label-italic" :x="icon!='' ? 38 : 8" dy=".35em" text-anchor="start" :y="14 + yOffsetMod">{{title}}</text>
         <g class="node-status-group" style="display: none;">
             <rect class="node-status" x="6" y="1" width="9" height="9" rx="2" ry="2" stroke-width="3"></rect>
-            <text class="node-status-label" x="20" y="10"></text></g>
-            <g class="node-changed" v-show="changed" transform="translate(150, -2)">
-                <circle r="5"></circle>
-            </g>
-            <g class="node-error" v-show="error" transform="translate(150, -2)">
-                <path d="M -5,4 l 10,0 -5,-8 z"></path>
-            </g>
+            <text class="node-status-label" x="20" y="10">Test</text>
+        </g>
+        <g class="node-changed" v-show="changed" transform="translate(150, -2)">
+            <circle r="5"></circle>
+        </g>
+        <g class="node-error" v-show="error" transform="translate(150, -2)">
+            <path d="M -5,4 l 10,0 -5,-8 z"></path>
+        </g>
         
         <g v-for="n in inputs" v-bind:key="'input'+n" :class="`port-input${hover.inputs == n? ' port-hover hover':''}`" :transform="`translate(-5,${13 * (n - 1) + firstInPinY})`">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
@@ -169,6 +170,9 @@ export default class RenderNode extends Vue {
 
     @Prop({ default: false})
     selected!: boolean
+
+    @Prop({ default: false})
+    button!: boolean
 
     @Prop({ default: '#a6bbcf'})
     color!: string

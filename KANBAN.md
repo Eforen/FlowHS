@@ -45,21 +45,22 @@
 * [Editor][Node] RenderNode Pin Hover
 * [Editor][Node] RenderNode Select
 * [Editor][Node] RenderNode In pins
-
-### Next Commit 2019-11-10
 * [Editor][Node] RenderNode Title
 * [Editor][Node] RenderNode Title Cause Resize width
 * [Editor][Node] RenderNode Icon Cause Resize width
+
+### Next Commit 2019-11-10
+* [Editor][Node] RenderNode State Flip Button (left)
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
-* [Editor][Node] RenderNode State Flip Button (left)
 
 ## Backlog
 ### v0.1
-* [Editor][Node] RenderNode State Indicator (right)
+* [Editor] Setup Store
+* [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
 * [Editor][Node] RenderNode Click Drag to move via functions
 * [Editor][Node] RenderNode Property Inspector on double click
 * [Editor][Node] RenderNode State Flip Button (left) functionality
