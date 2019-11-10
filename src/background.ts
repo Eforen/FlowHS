@@ -10,6 +10,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null
+let editorWindow: BrowserWindow | null
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
@@ -33,6 +34,36 @@ function createWindow () {
   mainWindow.on('closed', () => {
     mainWindow = null
   })
+
+  
+  ///////////////////
+  // Editor Window //
+  ///////////////////
+  
+  /*
+  editorWindow = new BrowserWindow({
+    width: 800, height:600,
+    show: true,
+    frame:false
+  })
+
+  if (process.env.WEBPACK_DEV_SERVER_URL) {
+    // Load the url of the dev server if in development mode
+    editorWindow.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL as string}#editor`)
+    if (!process.env.IS_TEST) editorWindow.webContents.openDevTools()
+  } else {
+    createProtocol('app')
+    // Load the index.html when not in development
+    editorWindow.loadURL('app://./index.html#editor')
+  }
+
+  editorWindow.on('closed', function () {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    editorWindow = null
+  })
+  */
 }
 
 // Quit when all windows are closed.
@@ -80,7 +111,7 @@ ipcMain.on("closeWindow", (event, arg) => {
       app.quit()
       break
     case "editor":
-      //editorWindow.hide()
+      if(editorWindow != null) editorWindow.hide()
       break
     default:
       break
@@ -94,7 +125,7 @@ ipcMain.on("minWindow", (event, arg) => {
       if(mainWindow != null) mainWindow.minimize()
       break
     case "editor":
-      //editorWindow.minimize()
+      if(editorWindow != null) editorWindow.minimize()
       break
     default:
       break

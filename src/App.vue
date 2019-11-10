@@ -7,6 +7,7 @@
       dense
       class="titlebar"
     >
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
       <!--
       <div class="d-flex align-center">
         <v-img
@@ -19,7 +20,7 @@
         />
       </div>
       -->
-      FlowHS v0.2
+      FlowHS (Hardware Simulator)
 
       <v-spacer></v-spacer>
 
@@ -46,7 +47,7 @@
     </v-app-bar>
 
     <v-content>
-      <HelloWorld/>
+      <Editor/><!---->
     </v-content>
   </v-app>
 </template>
@@ -56,27 +57,37 @@
 .titlebar {
   -webkit-user-select: none !important;
   -webkit-app-region: drag !important;
+  /*position: static !important;*/
 }
 
 .titlebar .title {
 }
 
-.titlebar .button {
+.titlebar .v-btn {
   -webkit-app-region: no-drag !important;
 }
 
+.v-application > .v-application--wrap > .v-content {
+  height: calc(100vh - 48px)
+}
+body::-webkit-scrollbar {
+  display: none;
+  overflow: hidden;
+}
 </style>
 
 <script lang="ts">
 import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
+import Navigation from './components/Navigation.vue';
+import Editor from './Editor.vue';
 import {ipcRenderer} from 'electron'
 
 export default Vue.extend({
   name: 'App',
 
   components: {
-    HelloWorld,
+    Editor
   },
 
   data: () => ({
