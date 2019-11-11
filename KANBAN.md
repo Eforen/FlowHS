@@ -58,9 +58,10 @@
 * [Editor][Node] RenderNode Click Drag to move
 * [Editor][Node] Click grid unselects any selection
 * [BUG][Editor] All RenderNodes move when any are draged
+* [BUG][Editor] should switch select if drag source is not in selected
 
 ### Next Commit 2019-11-10
-* [BUG][Editor] should switch select if drag source is not in selected
+* [BUG][Editor] Allow shift select of multiple nodes
 
 ## Testing
 
@@ -69,7 +70,6 @@
 
 ## Backlog
 ### v0.1
-* [BUG][Editor] Allow shift select of multiple nodes
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
@@ -106,6 +106,7 @@
 
 ### v0.4
 * [Editor] Brute Force Chip Tester (Truth Table Builder)
+* [BUG][Editor] Sometimes when moving mouse around quickly and letting go of button the drag does not stop
 
 ### v0.5
 * Customizable Chip Tester (Truth Table Tester) {Only Test Select Pin Combinations}

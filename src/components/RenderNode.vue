@@ -118,6 +118,7 @@ import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected } from '..
 export default class RenderNode extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
     @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
+    @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
     @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
     @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('selection') selectionStore!: SelectionState;
@@ -203,7 +204,7 @@ export default class RenderNode extends Vue {
     doubleClickTimer: NodeJS.Timeout | null = null
     delay = 250
 
-    handleClick (e: any) {
+    handleClick (e: MouseEvent) {
       //e.preventDefault()
 
       this.clickCount++
@@ -212,22 +213,27 @@ export default class RenderNode extends Vue {
         this.doubleClickTimer = setTimeout(() => {
           this.clickCount = 0
           //this.$emit('single-click')
-          this.handleSingleClick()
+          this.handleSingleClick(e)
         }, this.delay)
       } else if (this.clickCount === 2) {
         if(this.doubleClickTimer != null) clearTimeout(this.doubleClickTimer)
         this.clickCount = 0
-        this.handleDoubleClick()
+        this.handleDoubleClick(e)
         //this.$emit('double-click')
       }
     }
 
-    handleSingleClick() {
+    handleSingleClick(e: MouseEvent) {
         console.log(`${this.guid}: Clicked`)
-        this.setSelected([this.guid])
+        if(e.shiftKey){
+            this.addSelected([this.guid])
+        } else{
+            this.setSelected([this.guid])
+        }
+
     }
 
-    handleDoubleClick() {
+    handleDoubleClick(e: MouseEvent) {
         console.log(`${this.guid}: Double Clicked`)
     }
 
@@ -244,6 +250,7 @@ export default class RenderNode extends Vue {
     }
 
     handleMouseDown(e: MouseEvent) {
+        e.preventDefault()
         this.watchingForDrag = true
         this.clickTimer = setTimeout(() => {
             if(this.clickTimer != null) {

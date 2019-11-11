@@ -6,6 +6,7 @@ import { FlowActionMoveNode } from '../flows/actions';
 import { FlowsState, Node } from '../flows/types';
 
 export type SelectionPayloadSetSelected = string[]
+export type SelectionPayloadAddSelected = string[]
 export interface ActionStartDrag {
     /** Starter's GUID */
     source: string
@@ -50,6 +51,10 @@ export const actions: ActionTree<SelectionState, RootState> = {
         commit('clearSelection')
         commit('clearDragging')
         commit('setSelection', selectedGUIDs)
+    },
+    addSelected({ commit, state }, selectedGUIDs: SelectionPayloadAddSelected) {
+        commit('clearDragging')
+        commit('setSelection', [...state.selectedNodes, ...selectedGUIDs])
     },
     startDrag({ commit, state }, {source, startX, startY}: ActionStartDrag) {
         commit('clearDragging')
