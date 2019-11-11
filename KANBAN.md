@@ -52,20 +52,21 @@
 * [Editor] Convert Editor to Class Based Component
 * [Editor] Setup Store
 * [Editor][Node] RenderNodeX component that takes a GUID and renders a RenderNode based on that GUID in store
-
-### Next Commit 2019-11-10
 * [Editor] merge RenderNodeX and RenderNode
 * [BUG][Editor] RenderNode Flashes when draged
 * [Editor] Move workspace settings from editor component to store
+
+### Next Commit 2019-11-10
+* [Editor][Node] RenderNode Click Drag to move
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
-* [Editor][Node] RenderNode Click Drag to move
 
 ## Backlog
 ### v0.1
+* [Editor][Node] Click grid unselects any selection
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)

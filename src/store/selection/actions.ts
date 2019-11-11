@@ -2,7 +2,10 @@
 import { ActionTree } from 'vuex';
 import { SelectionState } from './types';
 import { RootState } from '../types';
+import { FlowActionMoveNode } from '../flows/actions';
+import { FlowsState, Node } from '../flows/types';
 
+export type SelectionPayloadSetSelected = string[]
 export interface ActionStartDrag {
     /** Starter's GUID */
     source: string
@@ -43,7 +46,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
     //     commit('setNode', node)
     //     commit('addNodeToFlow', {flow: flowID, node: node.guid})
     // },
-    setSelected({ commit }, selectedGUIDs) {
+    setSelected({ commit }, selectedGUIDs: SelectionPayloadSetSelected) {
         commit('clearSelection')
         commit('clearDragging')
         commit('setSelection', selectedGUIDs)
@@ -51,16 +54,23 @@ export const actions: ActionTree<SelectionState, RootState> = {
     startDrag({ commit, state }, {source, startX, startY}: ActionStartDrag) {
         commit('clearDragging')
         if(state.selectedNodes.length == 0){
-            commit('setSelection', source)
+            commit('setSelection', [source])
         }
         commit('startDrag', {x: startX, y: startY})
     },
     updateDrag({ commit, state }, {gridX, gridY}: ActionUpdateDrag) {
+        console.log({x: gridX, y: gridY})
         commit('updateDrag', {x: gridX, y: gridY})
     },
-    stopDrag({ commit, state }, {commitMove, endX, endY}: ActionStopDrag) {
+    stopDrag({ dispatch, commit, state, rootState }, {commitMove, endX, endY}: ActionStopDrag) {
         if(commitMove){
-            commit('moveSelected')
+            //commit('moveSelected')
+            state.selectedNodes.forEach(node => {
+                const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
+                const x = nodeProps.x + state.dragOffsetGridX
+                const y = nodeProps.y + state.dragOffsetGridY
+                dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
+            })
         }
         commit('stopDrag', {x: endX, y: endX})
         commit('clearDragging')

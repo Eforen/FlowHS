@@ -254,7 +254,7 @@ export default class Editor extends Vue {
         console.log(`MouseUp`)
         
         if(this.selectionStore.dragging){
-          this.stopDrag({commitMove: false, endX: e.x, endY: e.y})
+          this.stopDrag({commitMove: true, endX: e.x, endY: e.y})
         }
     }
     handleMouseEnter(e: MouseEvent) {

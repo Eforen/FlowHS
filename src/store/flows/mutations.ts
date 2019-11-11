@@ -18,6 +18,9 @@ export const mutations: MutationTree<FlowsState> = {
     setNode(state, payload: Node){
         Vue.set(state.nodes, payload.guid, payload)
     },
+    setNodePos(state, {node, x, y}: {node:string, x: number, y:number}){
+        Vue.set(state.nodes, node, {...state.nodes[node], x, y})
+    },
     addNodeToFlow(state, payload: {flow: string, node: string}){
         if(state.flows[payload.flow].nodes.indexOf(payload.node) == -1){
             Vue.set(state.flows, payload.flow, 

@@ -112,12 +112,12 @@ import { Component, Prop } from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
 import { Node } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
-import { ActionStartDrag, ActionStopDrag } from '../store/selection/actions';
+import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected } from '../store/selection/actions';
 
 @Component
 export default class RenderNode extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
-    @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: string[]) => void;
+    @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
     @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
     @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('selection') selectionStore!: SelectionState;
@@ -256,6 +256,7 @@ export default class RenderNode extends Vue {
     }
 
     handleMouseUp(e: MouseEvent) {
+        e.preventDefault()
         console.log(`${this.guid}: MouseUp`)
         console.log(e)
         if(this.clickTimer != null) {

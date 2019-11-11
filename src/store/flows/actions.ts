@@ -3,6 +3,11 @@ import { ActionTree } from 'vuex';
 import { FlowsState, Node, Flow } from './types';
 import { RootState } from '../types';
 
+export interface FlowActionMoveNode{
+    node: string,
+    x: number,
+    y: number
+}
 
 export const actions: ActionTree<FlowsState, RootState> = {
     connectToEmulator({ commit }) {
@@ -20,6 +25,9 @@ export const actions: ActionTree<FlowsState, RootState> = {
     createNodeInFlow({ commit }, {flowID, node}: {flowID: string, node: Node}) {
         commit('setNode', node)
         commit('addNodeToFlow', {flow: flowID, node: node.guid})
+    },
+    moveNode({ commit }, {node, x, y}: FlowActionMoveNode) {
+        commit('setNodePos', {node, x, y})
     },
     // fetchData({ commit }): any {
     //     axios({
