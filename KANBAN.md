@@ -56,9 +56,10 @@
 * [BUG][Editor] RenderNode Flashes when draged
 * [Editor] Move workspace settings from editor component to store
 * [Editor][Node] RenderNode Click Drag to move
+* [Editor][Node] Click grid unselects any selection
 
 ### Next Commit 2019-11-10
-* [Editor][Node] Click grid unselects any selection
+* [BUG][Editor] All RenderNodes move when any are draged
 
 ## Testing
 
@@ -67,7 +68,7 @@
 
 ## Backlog
 ### v0.1
-* [BUG][Editor] All RenderNodes move when any are draged
+* [BUG][Editor] should switch select if drag source is not in selected
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)

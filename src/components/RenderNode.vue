@@ -169,7 +169,8 @@ export default class RenderNode extends Vue {
 
     get x(): number { 
         const node = this.nodeByID(this.guid)
-        const dragOffsetX = (this.selectionStore.dragging ? this.selectionStore.dragOffsetGridX : 0)
+        const dragOffsetX = (this.selectionStore.dragging && this.selectionStore.selectedNodes.includes(this.guid) ? 
+            this.selectionStore.dragOffsetGridX : 0)
         if(node) { 
             return (node.x || this.defaults.x) + dragOffsetX
         } else {
@@ -178,7 +179,8 @@ export default class RenderNode extends Vue {
     }
     get y(): number {
         const node = this.nodeByID(this.guid)
-        const dragOffsetY = (this.selectionStore.dragging ? this.selectionStore.dragOffsetGridY : 0)
+        const dragOffsetY = (this.selectionStore.dragging  && this.selectionStore.selectedNodes.includes(this.guid) ? 
+            this.selectionStore.dragOffsetGridY : 0)
         if(node) {
             return (node.y || this.defaults.y) + dragOffsetY
         } else {
