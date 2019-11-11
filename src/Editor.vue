@@ -42,9 +42,9 @@
       workspace.grid.width: 20,
       -->
       <div class="workspace-chart">
-        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseup="handleMouseUp" @mouseenter="handleMouseEnter">
+        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter">
           <g transform="scale(1)">
-            <g class="grid">
+            <g class="grid" @mouseup="handleMouseUp">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
               <g class="workspace-chart-grid" style="visibility: visible;">
                 
@@ -179,7 +179,7 @@ import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState } from './store/flows/types';
 import uuid from 'uuid';
 import { SelectionState } from './store/selection/types';
-import { ActionStopDrag, ActionUpdateDrag } from './store/selection/actions';
+import { ActionStopDrag, ActionUpdateDrag, SelectionPayloadSetSelected } from './store/selection/actions';
 import { WorkspaceState } from './store/workspace/types';
 
 @Component({
@@ -196,6 +196,7 @@ export default class Editor extends Vue {
   @State('selection') selectionStore!: SelectionState;
   @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
   @Action('updateDrag', { namespace: 'selection' }) updateDrag!: (payload: ActionUpdateDrag) => void;
+  @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
   @State('workspace') workspace!: WorkspaceState;
 
   get nodesInFlowCalc(): string[] {
@@ -240,10 +241,15 @@ export default class Editor extends Vue {
       if (this.workspace) {
         if(this.selectionStore.dragging){
           console.log(`MouseMove`)
-          const gridX = Math.round((e.x - this.selectionStore.mouseStartX) / this.workspace.grid.width)
-          const gridY = Math.round((e.y - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+          const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+          const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+          // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
+          // const gridY = Math.round(e.offsetY / this.workspace.grid.height)
+          // const gridX = Math.round((e.offsetX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+          // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
           if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
             this.updateDrag({ gridX, gridY })
+            console.log(e)
           }
         }
       } else {
@@ -254,7 +260,9 @@ export default class Editor extends Vue {
         console.log(`MouseUp`)
         
         if(this.selectionStore.dragging){
-          this.stopDrag({commitMove: true, endX: e.x, endY: e.y})
+          this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
+        } else{
+          this.setSelected([])
         }
     }
     handleMouseEnter(e: MouseEvent) {

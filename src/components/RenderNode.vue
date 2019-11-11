@@ -249,7 +249,7 @@ export default class RenderNode extends Vue {
                 this.clickTimer = null
             }
             this.$emit('startDrag', this.guid)
-            this.startDrag({source: this.guid, startX: e.x, startY: e.y})
+            this.startDrag({source: this.guid, startX: e.screenX, startY: e.screenY})
         }, this.delay)
         console.log(`${this.guid}: MouseDown`)
         console.log(e)
@@ -264,7 +264,7 @@ export default class RenderNode extends Vue {
             this.clickTimer = null
             this.handleClick(e)
         } else {
-            this.stopDrag({commitMove: true, endX: e.x, endY: e.y})
+            this.stopDrag({commitMove: true, endX: e.screenX, endY: e.screenY})
         }
     }
 
@@ -276,7 +276,7 @@ export default class RenderNode extends Vue {
             clearTimeout(this.clickTimer)
             this.clickTimer = null
             this.$emit('startDrag', this.guid)
-            this.startDrag({source: this.guid, startX: e.x, startY: e.y})
+            this.startDrag({source: this.guid, startX: e.screenX, startY: e.screenY})
         }
     }
 
