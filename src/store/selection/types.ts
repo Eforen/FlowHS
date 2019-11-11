@@ -5,6 +5,6 @@ export interface SelectionState {
     dragging: boolean
     dragOffsetGridX: number
     dragOffsetGridY: number
-    mouseOffsetX: number
-    mouseOffsetY: number
+    mouseStartX: number
+    mouseStartY: number
 }

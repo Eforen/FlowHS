@@ -54,19 +54,21 @@
 * [Editor][Node] RenderNodeX component that takes a GUID and renders a RenderNode based on that GUID in store
 
 ### Next Commit 2019-11-10
+* [Editor] merge RenderNodeX and RenderNode
+* [BUG][Editor] RenderNode Flashes when draged
+* [Editor] Move workspace settings from editor component to store
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
-* [Editor] merge RenderNodeX and RenderNode
+* [Editor][Node] RenderNode Click Drag to move
 
 ## Backlog
 ### v0.1
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
-* [Editor][Node] RenderNode Click Drag to move via functions
 * [Editor][Node] RenderNode Property Inspector on double click
 * [Editor][Node] RenderNode State Flip Button (left) functionality
 * [Editor][Node] RenderNode Use Vuex to store state

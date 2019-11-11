@@ -42,7 +42,7 @@
       workspace.grid.width: 20,
       -->
       <div class="workspace-chart">
-        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height">
+        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseup="handleMouseUp" @mouseenter="handleMouseEnter">
           <g transform="scale(1)">
             <g class="grid">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
@@ -55,7 +55,7 @@
             <g class="selector"></g>
             <g class="links"></g>
             <g class="nodes">
-              <RenderNodeX v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id"/>
+              <RenderNode v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id" @startMouseDown="handleStartMouseDown"/>
             </g>
           </g>
         </svg>
@@ -174,14 +174,17 @@ import Vue from 'vue';
 //import HelloWorld from './components/HelloWorld.vue';
 import { State, Action, Getter } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator'
-import RenderNodeX from './components/RenderNodeX.vue';
+import RenderNode from './components/RenderNode.vue';
 import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState } from './store/flows/types';
 import uuid from 'uuid';
+import { SelectionState } from './store/selection/types';
+import { ActionStopDrag, ActionUpdateDrag } from './store/selection/actions';
+import { WorkspaceState } from './store/workspace/types';
 
 @Component({
   components: {
-     RenderNodeX,
+     RenderNode,
   } 
 })
 export default class Editor extends Vue {
@@ -190,6 +193,10 @@ export default class Editor extends Vue {
   @Action('createFlow', { namespace: 'flows' }) createFlow!: (flow: Flow) => void;
   @Action('createNodeInFlow', { namespace: 'flows' }) createNodeInFlow!: (payload: {flowID: string, node: Node}) => void
   @Getter('nodesInFlow', { namespace: 'flows' }) nodesInFlow!: (id: string)  => string[]
+  @State('selection') selectionStore!: SelectionState;
+  @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
+  @Action('updateDrag', { namespace: 'selection' }) updateDrag!: (payload: ActionUpdateDrag) => void;
+  @State('workspace') workspace!: WorkspaceState;
 
   get nodesInFlowCalc(): string[] {
     try {
@@ -206,16 +213,6 @@ export default class Editor extends Vue {
   }
 
   node_filter: string = ''
-  workspace = {
-    size: {
-      height: 250,
-      width: 250,
-    },
-    grid: {
-      height: 20,
-      width: 20,
-    },
-  }
   selectedFlow: number = 0
   loadedFlows: string[] = ['root']
 
@@ -235,5 +232,37 @@ export default class Editor extends Vue {
     // minWindow() {
     //   ipcRenderer.sendSync("minWindow", "main")
     // },
+    
+    handleStartMouseDown(guid: string) {
+        console.log(`${guid}: Parent MouseDown`)
+    }
+    handleMouseMove(e: MouseEvent) {
+      if (this.workspace) {
+        if(this.selectionStore.dragging){
+          console.log(`MouseMove`)
+          const gridX = Math.round((e.x - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+          const gridY = Math.round((e.y - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+          if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
+            this.updateDrag({ gridX, gridY })
+          }
+        }
+      } else {
+        console.log('Workspace Not Ready')
+      }
+    }
+    handleMouseUp(e: MouseEvent) {
+        console.log(`MouseUp`)
+        
+        if(this.selectionStore.dragging){
+          this.stopDrag({commitMove: false, endX: e.x, endY: e.y})
+        }
+    }
+    handleMouseEnter(e: MouseEvent) {
+      // If entering with button down and drag is set consider drag still valid
+      // If endering with button up and drag is set consider drag invalid and end it imidiately with a fail set
+      // If drag not set then do nothing
+      console.log(`Mouse enter`)
+      console.log(e)
+    }
 }
 </script>

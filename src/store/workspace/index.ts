@@ -4,21 +4,23 @@ import { Module } from 'vuex';
 import { getters } from './getters';
 import { actions } from './actions';
 import { mutations } from './mutations';
-import { SelectionState } from './types';
+import { WorkspaceState } from './types';
 import { RootState } from '../types';
 
-export const state: SelectionState = {
-    selectedNodes: [],
-    dragging: false,
-    dragOffsetGridX: 0,
-    dragOffsetGridY: 0,
-    mouseStartX: 0,
-    mouseStartY: 0
-};
+export const state: WorkspaceState = {
+    size: {
+        height: 250,
+        width: 250,
+    },
+    grid: {
+        height: 20,
+        width: 20,
+    },
+}
 
 const namespaced: boolean = true;
 
-export const selection: Module<SelectionState, RootState> = {
+export const workspace: Module<WorkspaceState, RootState> = {
     namespaced,
     state,
     getters,

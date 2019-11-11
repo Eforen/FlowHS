@@ -1,7 +1,8 @@
 // profile/mutations.ts
 import Vue from 'vue';
 import { MutationTree } from 'vuex';
-import { SelectionState, Node, Flow } from './types';
+import { SelectionState } from './types';
+import { start } from 'repl';
 
 export const mutations: MutationTree<SelectionState> = {
     // setFlow(state, payload: Flow){
@@ -28,4 +29,31 @@ export const mutations: MutationTree<SelectionState> = {
     //         )
     //     }
     // }
+    setSelection(state, payload: string[]){
+        state.selectedNodes = payload
+    },
+    clearSelection(state){
+        state.selectedNodes = []
+    },
+    clearDragging(state){
+        state.dragging = false
+        state.dragOffsetGridX = 0
+        state.dragOffsetGridY = 0
+        state.mouseStartX = 0
+        state.mouseStartY = 0
+    },
+    startDrag(state, {x, y}: {x: number, y: number}){
+        state.dragging = true
+        state.mouseStartX = x
+        state.mouseStartY = y
+    },
+    updateDrag(state, {x, y}: {x: number, y: number}){
+        state.dragOffsetGridX = x
+        state.dragOffsetGridY = y
+    },
+    stopDrag(state, {x, y}: {x: number, y: number}){
+        state.dragging = false
+    },
+    moveSelected(state){
+    },
 };

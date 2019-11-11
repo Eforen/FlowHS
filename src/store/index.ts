@@ -4,6 +4,7 @@ import Vuex, { StoreOptions } from 'vuex';
 import { RootState } from './types';
 import { flows } from './flows/index';
 import { selection } from './selection/index';
+import { workspace } from './workspace/index';
 
 Vue.use(Vuex);
 
@@ -13,7 +14,8 @@ const store: StoreOptions<RootState> = {
     },
     modules: {
         flows,
-        selection
+        selection,
+        workspace
     }
 };
 
