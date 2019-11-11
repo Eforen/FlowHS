@@ -53,7 +53,8 @@ export const actions: ActionTree<SelectionState, RootState> = {
     },
     startDrag({ commit, state }, {source, startX, startY}: ActionStartDrag) {
         commit('clearDragging')
-        if(state.selectedNodes.length == 0){
+        if(state.selectedNodes.length == 0 || state.selectedNodes.includes(source) == false){
+            // if no selection or selection does not include drag source change selection to the source
             commit('setSelection', [source])
         }
         commit('startDrag', {x: startX, y: startY})
