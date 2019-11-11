@@ -17,6 +17,7 @@
     "@types/uuid": "^3.4.6",
     "chai-as-promised": "^7.1.1",
     "uuid": "^3.3.3",
+    "v-dragged": "0.0.5",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.3.0",

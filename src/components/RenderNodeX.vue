@@ -1,5 +1,5 @@
 <template>
-    <RenderNode :x="getNode.x" :y="getNode.y" :title="getNode.title" :error="getNode.error" :changed="getNode.changed" :selected="getNode.selected" :inputs="getNode.inputs" :outputs="getNode.outputs" :icon="getNode.icon" :button="getNode.button"/>
+    <RenderNode :guid="getNode.guid" :x="getNode.x" :y="getNode.y" :title="getNode.title" :error="getNode.error" :changed="getNode.changed" :selected="getNode.selected" :inputs="getNode.inputs" :outputs="getNode.outputs" :icon="getNode.icon" :button="getNode.button"/>
 </template>
 
 <style lang="css" scoped>

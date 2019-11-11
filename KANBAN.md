@@ -49,16 +49,17 @@
 * [Editor][Node] RenderNode Title Cause Resize width
 * [Editor][Node] RenderNode Icon Cause Resize width
 * [Editor][Node] RenderNode State Flip Button (left)
-
-### Next Commit 2019-11-10
 * [Editor] Convert Editor to Class Based Component
 * [Editor] Setup Store
 * [Editor][Node] RenderNodeX component that takes a GUID and renders a RenderNode based on that GUID in store
+
+### Next Commit 2019-11-10
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
+* [Editor] merge RenderNodeX and RenderNode
 
 ## Backlog
 ### v0.1
