@@ -1,58 +1,99 @@
 <template>
-    <g :class="`node node-group ${hover.node && selected == false ? ' node-hover hover':''}${selected ? ' node-selected selected':''}`" id="b5537584.cdacc8" :transform="`translate(${xPos}, ${yPos + yOffset})`">
-        <g v-show="button" transform="translate(-25,2)" class="node-button" opacity="1">
-            <rect class="node-button-background" rx="5" ry="5" width="32" height="26" fill-opacity="1"></rect>
-            <rect class="node-button-pad" x="5" y="4" rx="4" ry="4" width="16" height="18" :fill="color" cursor="pointer" fill-opacity="1"></rect>
-        </g>
-        <rect class="node" rx="5" ry="5" :fill="color" :width="desiredWidth" :height="totalHeight" @mouseover="hover.node = true;" @mouseleave="hover.node = false" @mousedown="handleMouseDown" @mouseup="handleMouseUp" @mouseout="handleMouseOut"></rect>
-        <g v-show="icon!=''" class="node-icon-group" x="0" y="0" transform="translate(0, 0)" style="pointer-events: none;">
-            <rect x="0" y="0" class="node-icon-shade" width="30" :height="totalHeight"></rect>
-            <image xlink:href="icons/node-red/inject.svg" class="node-icon" x="0" width="30" :height="totalHeight" y="0" style=""></image>
-            <path :d="`M 30 1 l 0 ${28 + heightMod}`" class="node-icon-shade-border"></path>
-        </g>
-        <text class="node-label node-label-italic" :x="icon!='' ? 38 : 8" dy=".35em" text-anchor="start" :y="14 + yOffsetMod">{{title}}</text>
-        <g class="node-status-group" style="display: none;">
-            <rect class="node-status" x="6" y="1" width="9" height="9" rx="2" ry="2" stroke-width="3"></rect>
-            <text class="node-status-label" x="20" y="10">Test</text>
-        </g>
-        <g class="node-changed" v-show="changed" transform="translate(150, -2)">
-            <circle r="5"></circle>
-        </g>
-        <g class="node-error" v-show="error" transform="translate(150, -2)">
-            <path d="M -5,4 l 10,0 -5,-8 z"></path>
-        </g>
-        
-        <g v-for="n in inputs" v-bind:key="'input'+n" :class="`port-input${hover.inputs == n? ' port-hover hover':''}`" :transform="`translate(-5,${13 * (n - 1) + firstInPinY})`">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
-        </g>
-        <g v-for="n in outputs" v-bind:key="'output'+n" :class="`port-output${hover.outputs == n? ' port-hover hover':''}`" :transform="`translate(${desiredWidth - 5},${13 * (n - 1) + firstOutPinY})`">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n;" @mouseleave="hover.outputs = 0">{{firstOutPinY}}</rect>
-        </g>
-        <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
-            <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
-        </g>
-        <g v-if="outputs == 2"  class="flow-port-output" transform="translate(155,3.5)">
-            <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
-        </g>
-        <g v-if="outputs == 2"  class="flow-port-output" transform="translate(155,16.5)">
-            <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
-        </g> -->
-    </g>
+    <div :class="`palette-node ${available? 'available':''}`" data-palette-type="inject" style="padding-left: -25px; margin-left: 30px; height: 28px;">
+        <div v-show="button"  class="palette-button">
+            <div class="palette-button-background"></div>
+            <div class="palette-button-pad" :style="{backgroundColor: color}"></div>
+        </div>
+        <div class="palette-body" style="background-color: rgb(166, 187, 207); height: 28px;"></div>
+        <div class="palette-label" dir="">{{title}}</div>
+        <div class="palette-icon-container">
+            <div class="palette-icon" style="background-image: url(&quot;/icons/subdirectory_arrow_right-24px.svg&quot;);"></div>
+        </div>
+        <div class="palette-port palette-port-output"
+            v-for="n in outputs"
+            :key="'output'+n"
+            :style="{top: `${13 * (n - 1) + firstOutPinY}px`}"></div>
+        <!--
+        <div class="draggable" draggable="true" @dragstart="handleDragStart">
+          <svg class="draggable" height="40">
+            <RenderNode :defaults="{
+              guid: 'Pallet',
+              x: 2, 
+              y: 0,
+              title: 'Pin Out: A', 
+              error: false, 
+              changed: false, 
+              selected: false, 
+              button: false, 
+              inputs: 1, 
+              outputs: 0, 
+              icon: '', 
+              color: '#a6bbcf',
+              inputState: [],
+              outputState: []
+            }"/>
+          </svg>
+        </div>
+        -->
+    </div>
 </template>
 
 <style lang="css" scoped>
-.node {
-    stroke: #434954;
-    font-family:'Courier New', Courier, monospace
+.palette-button {
+    position: absolute;
+    top: 1px;
+    left: -25px;
 }
-.node .hide {
+.palette-button-background {
+    border: 1px solid #434954;
+    border-radius: 5px;
+    width: 32px;
+    height: 26px;
+}
+.palette-button-pad {
+    position: absolute;
+    left: 5px;
+    top: 5px;
+    border: 1px solid #434954;
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+}
+.palette-node {
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+.palette-node.available .palette-body {
+    position: relative;
+    width: 100%;
+    border: 1px solid #434954;
+    border-radius: 5px !important;
+    border-color: #434954;
+    border-width: 1px;
+    font-family:'Courier New', Courier, monospace;
+    z-index: 10;
+    cursor: grab;
+}
+.palette-node .hide {
     display: none;
 }
-.port {
-    stroke: #999;
-    stroke-width: 1;
-    fill: #d9d9d9;
-    cursor: crosshair;
+.palette-port {
+    position: absolute;
+    box-sizing: border-box;
+    border: 1px solid #999;
+    background-color: #d9d9d9;
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+    z-index: 15;
+    /* cursor: grabbing; */
+}
+.palette-port-output {
+    right: -5px;
+}
+.palette-port-input {
+    left: -5px;
 }
 .node-changed {
     fill: #00bcff;
@@ -70,20 +111,27 @@
     stroke-linejoin: round;
     stroke-linecap: round;
 }
-.node-button-background {
-    fill: #eee;
+
+.palette-button{
+    position: absolute;
+    z-index: 5;
 }
-.node-button-pad:hover {
-    fill-opacity: 0.4
+.palette-button-background {
+    background-color: #eee;
 }
-.node-label {
-    stroke-width: 0;
-    fill: #333;
+.palette-label {
+    color: #333;
     font-size: 14px;
-    pointer-events: none;
+    border-width: 0;
     user-select: none;
+    line-height: 20px;
+    /* margin: 4px 0 4px 8px; */
+    position: absolute;
+    top: 4px;
+    left: 8px;
+    z-index: 15;
 }
-.node-label-italic {
+.palette-label-italic {
     font-style: italic;
 }
 g.node-selected .node {
@@ -115,7 +163,7 @@ import { SelectionState } from '../store/selection/types';
 import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
 
 @Component
-export default class RenderNode extends Vue {
+export default class RenderNodeSpawnProxy extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
     @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
     @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
@@ -156,8 +204,8 @@ export default class RenderNode extends Vue {
     get heightMod() { return Math.max(0, ( this.maxPinCount - 2 )) * 15}
     get totalHeight() { return 30 + this.heightMod }
     get yOffsetMod() { return (7.5 * Math.max(0, ( this.maxPinCount - 2 ))) }
-    get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 }
-    get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 }
+    get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 - 1 }
+    get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 - 1 }
     get yOffset() { return (( Math.ceil( this.totalHeight / this.yGridSize ) * this.yGridSize ) - this.totalHeight) / 2}
     get textWidthEstimation() { return 14 * this.title.length * 0.6 }
     get neededWidth() { return (this.icon!=''? 30 : 0) + 8 + this.textWidthEstimation + 8 } //30 8 text 8
@@ -169,38 +217,31 @@ export default class RenderNode extends Vue {
     yGridSize!: number
 
     get x(): number { 
-        const node = this.nodeByID(this.guid)
-        const dragOffsetX = (this.selectionStore.dragging && 
-            this.selectionStore.selectedNodes.includes(this.guid) && 
-            this.guid.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridX : 0)
-        if(node) { 
-            return (node.x || this.defaults.x) + dragOffsetX
-        } else {
-            return this.defaults.x + dragOffsetX;
-        }
+        return 0
     }
     get y(): number {
-        const node = this.nodeByID(this.guid)
-        const dragOffsetY = (this.selectionStore.dragging  && 
-            this.selectionStore.selectedNodes.includes(this.guid) && 
-            this.guid.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridY : 0)
-        if(node) {
-            return (node.y || this.defaults.y) + dragOffsetY
-        } else {
-        return this.defaults.y + dragOffsetY;
-        }
+        return 0
     }
-    get title(): string { const node = this.nodeByID(this.guid); if(node) { return node.title || this.defaults.title } else { return this.defaults.title; }}
-    get error(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.error || this.defaults.error } else { return this.defaults.error; }}
-    get changed(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.changed || this.defaults.changed } else { return this.defaults.changed; }}
-    get selected(): boolean { return this.selectionStore.selectedNodes.indexOf(this.guid) >= 0 }
-    get button(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.button || this.defaults.button } else { return this.defaults.button; }}
-    get inputs(): number { const node = this.nodeByID(this.guid); if(node) { return node.inputs || this.defaults.inputs } else { return this.defaults.inputs; }}
-    get outputs(): number { const node = this.nodeByID(this.guid); if(node) { return node.outputs || this.defaults.outputs } else { return this.defaults.outputs; }}
-    get icon(): string { const node = this.nodeByID(this.guid); if(node) { return node.icon || this.defaults.icon } else { return this.defaults.icon; }}
-    get color(): string { const node = this.nodeByID(this.guid); if(node) { return node.color || this.defaults.color } else { return this.defaults.color; }}
+    @Prop({default: true })
+    available!: boolean
+    @Prop({default: 'Node' })
+    title!: string
+    @Prop({default: false })
+    error!: boolean
+    @Prop({default: false })
+    changed!: boolean
+    @Prop({default: false })
+    selected!: boolean
+    @Prop({default: false })
+    button!: boolean
+    @Prop({default: 0 })
+    inputs!: number
+    @Prop({default: 0 })
+    outputs!: number
+    @Prop({default: '' })
+    icon!: string
+    @Prop({default: '#a6bbcf' })
+    color!: string
 
     clickCount = 0
     watchingForDrag = false

@@ -2,7 +2,7 @@
   - [Done](#Done)
     - [Done 2019-11-9](#Done-2019-11-9)
     - [Done 2019-11-10](#Done-2019-11-10)
-    - [Next Commit 2019-11-10](#Next-Commit-2019-11-10)
+    - [Next Commit 2019-11-11](#Next-Commit-2019-11-11)
   - [Testing](#Testing)
   - [Doing](#Doing)
   - [Backlog](#Backlog)
@@ -59,9 +59,9 @@
 * [Editor][Node] Click grid unselects any selection
 * [BUG][Editor] All RenderNodes move when any are draged
 * [BUG][Editor] should switch select if drag source is not in selected
-
-### Next Commit 2019-11-10
 * [BUG][Editor] Allow shift select of multiple nodes
+
+### Next Commit 2019-11-11
 
 ## Testing
 
@@ -76,6 +76,7 @@
 * [Editor][Node] RenderNode Property Inspector on double click
 * [Editor][Node] RenderNode State Flip Button (left) functionality
 * [Editor][Node] RenderNode Use Vuex to store state
+* [Editor][Node] Show loaded flows above the workspace in tabs
 * [Editor] Calapsable Inspecrtor on right
 * [Editor] Calapsable New Node List on left
 * [Main] Titlebar Drag Move Window

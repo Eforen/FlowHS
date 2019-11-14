@@ -10,6 +10,47 @@
         </div>
       </div>
       <div class="pallet-container">
+        <RenderNodeSpawnProxy title="Pin In: A" :button="true" :inputs="1" :outputs="2" draggable="true" @dragstart="handleDragStart"/>
+        <div class="draggable" draggable="true" @dragstart="handleDragStart">
+          <svg class="draggable" height="40">
+            <RenderNode :defaults="{
+              guid: 'Pallet',
+              x: 2, 
+              y: 0,
+              title: 'Pin In: A', 
+              error: false, 
+              changed: false, 
+              selected: false, 
+              button: true, 
+              inputs: 0, 
+              outputs: 1, 
+              icon: '', 
+              color: '#a6bbcf',
+              inputState: [],
+              outputState: []
+            }"/>
+          </svg>
+        </div>
+        <div class="draggable" draggable="true" @dragstart="handleDragStart">
+          <svg class="draggable" height="40">
+            <RenderNode :defaults="{
+              guid: 'Pallet',
+              x: 2, 
+              y: 0,
+              title: 'Pin Out: A', 
+              error: false, 
+              changed: false, 
+              selected: false, 
+              button: false, 
+              inputs: 1, 
+              outputs: 0, 
+              icon: '', 
+              color: '#a6bbcf',
+              inputState: [],
+              outputState: []
+            }"/>
+          </svg>
+        </div>
       </div>
       <div class="pallet-controlbar">
       </div>
@@ -42,7 +83,7 @@
       workspace.grid.width: 20,
       -->
       <div class="workspace-chart">
-        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter">
+        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter" @dragover="debugDrag" @drop="debugDragDrop">
           <g transform="scale(1)">
             <g class="grid" @mouseup="handleMouseUp">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
@@ -56,6 +97,14 @@
             <g class="links"></g>
             <g class="nodes">
               <RenderNode v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id" @startMouseDown="handleStartMouseDown"/>
+            </g>
+            <g v-show="debug != null">
+              <g v-show="debugMode == 'move'" class="drag-debug drag-debug-move" style=" fill: #ae00ff; stroke: #740291; cursor: default; stroke-width: 1px; stroke-linejoin: round; stroke-linecap: round;" :transform="`translate(${debug==null? 0 : debug.offsetX}, ${debug==null? 0 : debug.offsetY})`">
+                  <path d="M -5,4 l 10,0 -5,-8 z"></path>
+              </g>
+              <g v-show="debugMode == 'drop'" class="drag-debug drag-debug-drop" style=" fill: #00ff55; stroke: #1c8c34; cursor: default; stroke-width: 1px; stroke-linejoin: round; stroke-linecap: round;" :transform="`translate(${debug==null? 0 : debug.offsetX}, ${debug==null? 0 : debug.offsetY})`">
+                  <circle r="5"></circle>
+              </g>
             </g>
           </g>
         </svg>
@@ -167,6 +216,12 @@
     stroke: #383C45;
     stroke-width: 1px;
   }
+  svg.draggable {
+    pointer-events: none;
+  }
+  div.draggable {
+    cursor: grab;
+  }
 </style>
 
 <script lang="ts">
@@ -175,6 +230,7 @@ import Vue from 'vue';
 import { State, Action, Getter } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator'
 import RenderNode from './components/RenderNode.vue';
+import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState } from './store/flows/types';
 import uuid from 'uuid';
@@ -185,6 +241,7 @@ import { WorkspaceState } from './store/workspace/types';
 @Component({
   components: {
      RenderNode,
+     RenderNodeSpawnProxy
   } 
 })
 export default class Editor extends Vue {
@@ -226,51 +283,72 @@ export default class Editor extends Vue {
     const node: Node = { guid: uuid.v4(), x: 2, y: 7, title: 'Pin in: A', error: false, changed: false, selected: false, button: false, inputs: 1, outputs: 2, icon: '', color: '#a6bbcf', inputState: [], outputState: []}
     this.createNodeInFlow({flowID: 'root', node})
   }
-    // closeWindow() {
-    //   ipcRenderer.sendSync("closeWindow", "main")
-    // },
+  // closeWindow() {
+  //   ipcRenderer.sendSync("closeWindow", "main")
+  // },
 
-    // minWindow() {
-    //   ipcRenderer.sendSync("minWindow", "main")
-    // },
-    
-    handleStartMouseDown(guid: string) {
-        console.log(`${guid}: Parent MouseDown`)
-    }
-    handleMouseMove(e: MouseEvent) {
-      if (this.workspace) {
-        if(this.selectionStore.dragging){
-          console.log(`MouseMove`)
-          const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
-          const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
-          // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
-          // const gridY = Math.round(e.offsetY / this.workspace.grid.height)
-          // const gridX = Math.round((e.offsetX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
-          // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
-          if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
-            this.updateDrag({ gridX, gridY })
-            console.log(e)
-          }
+  // minWindow() {
+  //   ipcRenderer.sendSync("minWindow", "main")
+  // },
+  
+  handleStartMouseDown(guid: string) {
+      console.log(`${guid}: Parent MouseDown`)
+  }
+  handleMouseMove(e: MouseEvent) {
+    if (this.workspace) {
+      if(this.selectionStore.dragging){
+        console.log(`MouseMove`)
+        const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+        const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+        // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
+        // const gridY = Math.round(e.offsetY / this.workspace.grid.height)
+        // const gridX = Math.round((e.offsetX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+        // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+        if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
+          this.updateDrag({ gridX, gridY })
+          console.log(e)
         }
-      } else {
-        console.log('Workspace Not Ready')
       }
+    } else {
+      console.log('Workspace Not Ready')
     }
-    handleMouseUp(e: MouseEvent) {
-        console.log(`MouseUp`)
-        
-        if(this.selectionStore.dragging){
-          this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
-        } else{
-          this.setSelected([])
-        }
-    }
-    handleMouseEnter(e: MouseEvent) {
-      // If entering with button down and drag is set consider drag still valid
-      // If endering with button up and drag is set consider drag invalid and end it imidiately with a fail set
-      // If drag not set then do nothing
-      console.log(`Mouse enter`)
-      console.log(e)
-    }
+  }
+  handleMouseUp(e: MouseEvent) {
+      console.log(`MouseUp`)
+      
+      if(this.selectionStore.dragging){
+        this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
+      } else{
+        this.setSelected([])
+      }
+  }
+  handleMouseEnter(e: MouseEvent) {
+    // If entering with button down and drag is set consider drag still valid
+    // If endering with button up and drag is set consider drag invalid and end it imidiately with a fail set
+    // If drag not set then do nothing
+    console.log(`Mouse enter`)
+    console.log(e)
+  }
+
+  handleDragStart(e: MouseEvent) {
+    console.log(`DragStart`)
+    console.log(e)
+  }
+
+  debug: MouseEvent | null = null
+  debugMode: string = 'none'
+  debugDrag(e: MouseEvent) {
+    // console.log(`DragStart`)
+    // console.log(e)
+    this.debug = e
+    this.debugMode = 'move'
+  }
+
+  debugDragDrop(e: MouseEvent) {
+    console.log(`DragDrop`)
+    console.log(e)
+    this.debug = e
+    this.debugMode = 'drop'
+  }
 }
 </script>
