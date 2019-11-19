@@ -1,11 +1,11 @@
-- [FlowHS Kanban](#FlowHS-Kanban)
-  - [Done](#Done)
-    - [Done 2019-11-9](#Done-2019-11-9)
-    - [Done 2019-11-10](#Done-2019-11-10)
-    - [Next Commit 2019-11-11](#Next-Commit-2019-11-11)
-  - [Testing](#Testing)
-  - [Doing](#Doing)
-  - [Backlog](#Backlog)
+- [FlowHS Kanban](#flowhs-kanban)
+  - [Done](#done)
+    - [Done 2019-11-9](#done-2019-11-9)
+    - [Done 2019-11-10](#done-2019-11-10)
+    - [Next Commit 2019-11-19](#next-commit-2019-11-19)
+  - [Testing](#testing)
+  - [Doing](#doing)
+  - [Backlog](#backlog)
     - [v0.1](#v01)
     - [v0.2](#v02)
     - [v0.3](#v03)
@@ -61,7 +61,9 @@
 * [BUG][Editor] should switch select if drag source is not in selected
 * [BUG][Editor] Allow shift select of multiple nodes
 
-### Next Commit 2019-11-11
+### Next Commit 2019-11-19
+* [Editor][Node] make a node type class that stores all the configurations of the parameters and such
+* [Editor][Node] Make the node type class able to take a parameters object and supply a parameters object that defines what the parameters should be
 
 ## Testing
 
@@ -69,7 +71,17 @@
 * [Editor] Show Pallet on the Left
 
 ## Backlog
-### v0.1
+### v0.1 
+* [Editor][Node] Make a node element take a node type object and its parameters object
+* [Editor][CMD] Make a command store that stores every command run by the Run Command action
+* [Editor][CMD] Stelth Run Command action (does not store action just does it)
+* [Editor][CMD] Add History action (just adds a command to the history as if it was run)
+* [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
+* [Editor][Node] Make a node proxy element take a node type argument and its parameters as well as a command object that will be run on successful drop
+* [Editor][File Management] Add flow tabs functionality
+* [Editor][CMD] Add node command
+* [Editor][CMD] Delete node command
+* [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
@@ -106,6 +118,12 @@
 * [Main][No Project Loaded] Recent Files List
 
 ### v0.4
+* Scroll position of grid should be in store and should reflect the state of the store
+* On scroll the store should be updated
+* the scroll position being in the store should allow us to also put the width in the store
+* Have a timer that runs and action every so often. This action would take a mod position that is the opposite of everything in the case where we wanted to scroll left or up more than we could at that point in time. It uses this mod position to offset everything starting center point, all node positions, etc.
+* Fire an action on window resize that ensures that the current window area is within the bounds of the grid and makes the grid bigger if needed.
+* Middle or shift dragging the workspace scrolls the space by moving the center point as it exists in the store everything else about the grid size and true scroll  position are all handled by the store actions/mutations
 * [Editor] Brute Force Chip Tester (Truth Table Builder)
 * [BUG][Editor] Sometimes when moving mouse around quickly and letting go of button the drag does not stop
 
