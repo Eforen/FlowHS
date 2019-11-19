@@ -16,47 +16,6 @@
             <RenderNodeSpawnProxy v-for="(proxy, index) in group" v-bind:key="`pallet-group-${groupName}-${index}`" :type="proxy[0]" :args="proxy[1]" draggable="true" @dragstart="handleDragStart"/>
           </div>
         </div>
-        <!--
-        <div class="draggable" draggable="true" @dragstart="handleDragStart">
-          <svg class="draggable" height="40">
-            <RenderNode :defaults="{
-              guid: 'Pallet',
-              x: 2, 
-              y: 0,
-              error: false, 
-              changed: false, 
-              selected: false, 
-              button: true, 
-              title: 'Pin In: A', 
-              inputs: 0, 
-              outputs: 1, 
-              icon: '', 
-              color: '#a6bbcf',
-              inputState: [],
-              outputState: []
-            }"/>
-          </svg>
-        </div>
-        <div class="draggable" draggable="true" @dragstart="handleDragStart">
-          <svg class="draggable" height="40">
-            <RenderNode :defaults="{
-              guid: 'Pallet',
-              x: 2, 
-              y: 0,
-              title: 'Pin Out: A', 
-              error: false, 
-              changed: false, 
-              selected: false, 
-              button: false, 
-              inputs: 1, 
-              outputs: 0, 
-              icon: '', 
-              color: '#a6bbcf',
-              inputState: [],
-              outputState: []
-            }"/>
-          </svg>
-        </div>-->
       </div>
       <div class="pallet-controlbar">
       </div>
@@ -93,7 +52,7 @@
           <g transform="scale(1)">
             <g class="grid" @mouseup="handleMouseUp">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
-              <g class="workspace-chart-grid" style="visibility: visible;">
+              <g v-if="flowLoaded" class="workspace-chart-grid" style="visibility: visible;">
                 
               <line class="workspace-chart-grid-h" v-for="n in workspace.size.height" v-bind:key="'wcgh'+n" x1="0" :x2="workspace.size.width * workspace.grid.width"  :y1="n*workspace.grid.height" :y2="n*workspace.grid.height"></line>
               <line class="workspace-chart-grid-v" v-for="n in workspace.size.height" v-bind:key="'wcgv'+n" y1="0" :y2="workspace.size.width * workspace.grid.width"  :x1="n*workspace.grid.height" :x2="n*workspace.grid.height"></line>
@@ -228,6 +187,15 @@
   div.draggable {
     cursor: grab;
   }
+
+  .pallet-group header{
+    background-color: #00000050;
+    margin-bottom: .25em;
+    border-bottom: 1px solid #383C45;
+    border-top: 2px solid #383C45;
+    padding-left: 1em;
+    color: #ffffffCC;
+  }
 </style>
 
 <script lang="ts">
@@ -279,6 +247,10 @@ export default class Editor extends Vue {
     }
   }
 
+  get flowLoaded(): boolean {
+    return this.loadedFlows.length > 0
+  }
+
   palette: {[index: string]: [NodeType<any>, any][]} = {
     IO: [
       [NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
@@ -287,11 +259,13 @@ export default class Editor extends Vue {
   }
 
   node_filter: string = ''
-  selectedFlow: number = 0
-  loadedFlows: string[] = ['root']
+  selectedFlow: number = -1
+  loadedFlows: string[] = []
 
   AddNewFlow() {
     this.createFlow({guid:'root', title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})
+    this.loadedFlows.push('root')
+    this.selectedFlow = this.loadedFlows.length - 1
   }
   AddNewNode() {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"

@@ -1,5 +1,5 @@
 <template>
-    <div :class="`palette-node ${available? 'available':''}`" data-palette-type="inject" style="padding-left: -25px; margin-left: 30px; height: 28px;">
+    <div :class="`palette-node ${available? 'available':''}`" data-palette-type="inject" :style="{paddingLeft: button ? '-30px' : '0px', marginLeft: button ? '35px' : '10px', height: '28px'}">
         <div v-show="button"  class="palette-button">
             <div class="palette-button-background"></div>
             <div class="palette-button-pad" :style="{backgroundColor: color}"></div>
@@ -13,6 +13,10 @@
             v-for="n in outputs"
             :key="'output'+n"
             :style="{top: `${13 * (n - 1) + firstOutPinY}px`}"></div>
+        <div class="palette-port palette-port-input"
+            v-for="n in inputs"
+            :key="'input'+n"
+            :style="{top: `${13 * (n - 1) + firstInPinY}px`}"></div>
         <!--
         <div class="draggable" draggable="true" @dragstart="handleDragStart">
           <svg class="draggable" height="40">

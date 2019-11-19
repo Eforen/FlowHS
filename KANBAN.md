@@ -62,10 +62,13 @@
 * [BUG][Editor] Allow shift select of multiple nodes
 * [Editor][Node] make a node type class that stores all the configurations of the parameters and such
 * [Editor][Node] Make the node type class able to take a parameters object and supply a parameters object that defines what the parameters should be
-
-### Next Commit 2019-11-19
 * [Editor][Node] Make a node elemxent take a node type object and its parameters object
 * [Editor][Node] Make a node proxy element take a node type argument and its parameters
+
+### Next Commit 2019-11-19
+* [Editor][Workspace] Make workspace only show grid when there is a flow loaded
+* [Editor][Palette] Display headers properly
+* [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
 
 ## Testing
 
@@ -75,8 +78,6 @@
 
 ## Backlog
 ### v0.1 
-* [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
-* [Editor][Palette] Display headers properly
 * [Editor][Palette] Make catagories collapsable
 * [Editor][CMD] Make a command store that stores every command run by the Run Command action
 * [Editor][CMD] Stelth Run Command action (does not store action just does it)
