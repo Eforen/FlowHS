@@ -1,9 +1,9 @@
 // profile/getters.ts
 import { GetterTree } from 'vuex';
-import { SelectionState } from './types';
+import { WorkspaceState } from './types';
 import { RootState } from '../types';
 
-export const getters: GetterTree<SelectionState, RootState> = {
+export const getters: GetterTree<WorkspaceState, RootState> = {
     // nodeByID(state: FlowsState): (id: string) => Node | undefined {
     //     return (id) => state.nodes ? state.nodes[id] : undefined
     // },

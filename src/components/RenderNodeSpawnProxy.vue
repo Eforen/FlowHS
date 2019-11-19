@@ -161,12 +161,12 @@ import {ipcRenderer} from 'electron'
 import { Node } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
 import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
+import NodeType, { NodeTypeArgs } from '../nodes/NodeType';
+import NodeTypeDictionary from '../nodes/NodeTypeDictionary';
 
 @Component
 export default class RenderNodeSpawnProxy extends Vue {
-    @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
     @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
-    @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
     @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
     @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('selection') selectionStore!: SelectionState;
@@ -180,19 +180,23 @@ export default class RenderNodeSpawnProxy extends Vue {
     @Prop({default:''})
     guid!: string
 
+    @Prop({required: true})
+    type!: string | NodeType<any>
+
+    get typeObj() { if(typeof this.type == "string") return NodeTypeDictionary.getType(this.type); else return this.type }
+
+    @Prop({default: {}})
+    args!: NodeTypeArgs
+
     @Prop({default: ()=> ({
         guid: 'Not Set',
         x: 0, 
         y: 0,
-        title: 'Node', 
         error: false, 
         changed: false, 
         selected: false, 
-        button: false, 
-        inputs: 0, 
-        outputs: 0, 
-        icon: '', 
-        color: '#a6bbcf',
+        type: '',
+        args: {},
         inputState: [],
         outputState: []
     } as Node)})
@@ -224,24 +228,19 @@ export default class RenderNodeSpawnProxy extends Vue {
     }
     @Prop({default: true })
     available!: boolean
-    @Prop({default: 'Node' })
-    title!: string
     @Prop({default: false })
     error!: boolean
     @Prop({default: false })
     changed!: boolean
     @Prop({default: false })
     selected!: boolean
-    @Prop({default: false })
-    button!: boolean
-    @Prop({default: 0 })
-    inputs!: number
-    @Prop({default: 0 })
-    outputs!: number
-    @Prop({default: '' })
-    icon!: string
-    @Prop({default: '#a6bbcf' })
-    color!: string
+
+    get title() { return this.typeObj.getTitle(this.args) }
+    get button() { return this.typeObj.getButton(this.args) }
+    get inputs() { return this.typeObj.getInputs(this.args) }
+    get outputs() { return this.typeObj.getOutputs(this.args) }
+    get icon() { return this.typeObj.getIcon(this.args) }
+    get color() { return this.typeObj.getColor(this.args) }
 
     clickCount = 0
     watchingForDrag = false
@@ -269,17 +268,7 @@ export default class RenderNodeSpawnProxy extends Vue {
     }
 
     handleSingleClick(e: MouseEvent) {
-        if(this.guid.toLowerCase()=='pallet'){
-            // Do Pallet Click
-            return
-        }
-        console.log(`${this.guid}: Clicked`)
-        if(e.shiftKey){
-            this.addSelected([this.guid])
-        } else{
-            this.setSelected([this.guid])
-        }
-
+        
     }
 
     handleDoubleClick(e: MouseEvent) {

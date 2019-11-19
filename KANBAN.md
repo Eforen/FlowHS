@@ -60,24 +60,29 @@
 * [BUG][Editor] All RenderNodes move when any are draged
 * [BUG][Editor] should switch select if drag source is not in selected
 * [BUG][Editor] Allow shift select of multiple nodes
-
-### Next Commit 2019-11-19
 * [Editor][Node] make a node type class that stores all the configurations of the parameters and such
 * [Editor][Node] Make the node type class able to take a parameters object and supply a parameters object that defines what the parameters should be
+
+### Next Commit 2019-11-19
+* [Editor][Node] Make a node elemxent take a node type object and its parameters object
+* [Editor][Node] Make a node proxy element take a node type argument and its parameters
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
+* [Editor] Workspace Store
 
 ## Backlog
 ### v0.1 
-* [Editor][Node] Make a node element take a node type object and its parameters object
+* [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
+* [Editor][Palette] Display headers properly
+* [Editor][Palette] Make catagories collapsable
 * [Editor][CMD] Make a command store that stores every command run by the Run Command action
 * [Editor][CMD] Stelth Run Command action (does not store action just does it)
 * [Editor][CMD] Add History action (just adds a command to the history as if it was run)
 * [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
-* [Editor][Node] Make a node proxy element take a node type argument and its parameters as well as a command object that will be run on successful drop
+* [Editor][Node] node proxy component have a command object that will be run on successful drop
 * [Editor][File Management] Add flow tabs functionality
 * [Editor][CMD] Add node command
 * [Editor][CMD] Delete node command

@@ -1,17 +1,15 @@
+import { NodeTypeArgs } from '@/nodes/NodeType';
+
 // types.ts
 export interface Node {
     guid: string
     x: number
     y: number
-    title: string
     error: boolean
     changed: boolean
     selected: boolean
-    button: boolean
-    inputs: number
-    outputs: number
-    icon: string
-    color: string
+    type: string
+    args: NodeTypeArgs
     inputState: boolean[]
     outputState: boolean[]
 }

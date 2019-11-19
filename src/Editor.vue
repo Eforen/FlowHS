@@ -10,18 +10,24 @@
         </div>
       </div>
       <div class="pallet-container">
-        <RenderNodeSpawnProxy title="Pin In: A" :button="true" :inputs="1" :outputs="2" draggable="true" @dragstart="handleDragStart"/>
+        <div class="pallet-group" v-for="(group, groupName) in palette" :key="`pallet-group-${groupName}`">
+          <header>{{groupName}}</header>
+          <div class="pallet-group-children">
+            <RenderNodeSpawnProxy v-for="(proxy, index) in group" v-bind:key="`pallet-group-${groupName}-${index}`" :type="proxy[0]" :args="proxy[1]" draggable="true" @dragstart="handleDragStart"/>
+          </div>
+        </div>
+        <!--
         <div class="draggable" draggable="true" @dragstart="handleDragStart">
           <svg class="draggable" height="40">
             <RenderNode :defaults="{
               guid: 'Pallet',
               x: 2, 
               y: 0,
-              title: 'Pin In: A', 
               error: false, 
               changed: false, 
               selected: false, 
               button: true, 
+              title: 'Pin In: A', 
               inputs: 0, 
               outputs: 1, 
               icon: '', 
@@ -50,7 +56,7 @@
               outputState: []
             }"/>
           </svg>
-        </div>
+        </div>-->
       </div>
       <div class="pallet-controlbar">
       </div>
@@ -233,10 +239,13 @@ import RenderNode from './components/RenderNode.vue';
 import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState } from './store/flows/types';
+import NodeType, { NodeTypeArgs } from './nodes/NodeType';
+import { ntPinIn, ntPinOut, IPinArgs } from './nodes/types/Pins';
 import uuid from 'uuid';
 import { SelectionState } from './store/selection/types';
 import { ActionStopDrag, ActionUpdateDrag, SelectionPayloadSetSelected } from './store/selection/actions';
 import { WorkspaceState } from './store/workspace/types';
+import NodeTypeDictionary from './nodes/NodeTypeDictionary';
 
 @Component({
   components: {
@@ -270,6 +279,13 @@ export default class Editor extends Vue {
     }
   }
 
+  palette: {[index: string]: [NodeType<any>, any][]} = {
+    IO: [
+      [NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
+      [NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
+    ]
+  }
+
   node_filter: string = ''
   selectedFlow: number = 0
   loadedFlows: string[] = ['root']
@@ -280,7 +296,7 @@ export default class Editor extends Vue {
   AddNewNode() {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
     //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
-    const node: Node = { guid: uuid.v4(), x: 2, y: 7, title: 'Pin in: A', error: false, changed: false, selected: false, button: false, inputs: 1, outputs: 2, icon: '', color: '#a6bbcf', inputState: [], outputState: []}
+    const node: Node = { guid: uuid.v4(), x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.createNodeInFlow({flowID: 'root', node})
   }
   // closeWindow() {

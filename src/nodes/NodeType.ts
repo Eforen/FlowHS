@@ -18,7 +18,10 @@ export interface NodeTypeArgsDef {
     [index: string]: string
 }
 
-export default class NodeType<T> {
+export interface NodeTypeArgs {
+}
+
+export default class NodeType<T extends NodeTypeArgs> {
     static defaultOptions: NodeTypeOptionSet = {
         title: 'Node', 
         button: false, 

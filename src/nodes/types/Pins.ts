@@ -1,6 +1,7 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import { registerNodeType } from '../NodeTypeDictionary';
 
-export interface IPinArgs {
+export interface IPinArgs extends NodeTypeArgs {
     pinName: string
 }
 export const ntPinArgTypes: NodeTypeArgsDef = {
@@ -25,11 +26,13 @@ export class ntPin extends NodeType<IPinArgs> {
  ********************/
 // export interface IPinInArgs extends IPinArgs {
 // }
+@registerNodeType('PinIn')
 export class ntPinIn extends ntPin {
     constructor(overrides: NodeTypeOptions = {}){
         super({
             title: "Pin In",
             outputs: 1, 
+            button: true,
             ...overrides
         })
     }
@@ -44,6 +47,7 @@ export class ntPinIn extends ntPin {
 // export interface IPinOutArgs extends IPinArgs {
 // }
 
+@registerNodeType('PinOut')
 export class ntPinOut extends ntPin {
     constructor(overrides: NodeTypeOptions = {}){
         super({

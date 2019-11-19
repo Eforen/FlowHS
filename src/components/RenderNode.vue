@@ -113,6 +113,8 @@ import {ipcRenderer} from 'electron'
 import { Node } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
 import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
+import NodeTypeDictionary from '../nodes/NodeTypeDictionary';
+import NodeType, { NodeTypeArgs } from '../nodes/NodeType';
 
 @Component
 export default class RenderNode extends Vue {
@@ -132,19 +134,20 @@ export default class RenderNode extends Vue {
     @Prop({default:''})
     guid!: string
 
+    get typeObj() { const node = this.nodeByID(this.guid); if(node) { return NodeTypeDictionary.getType(node.type) } else { throw 'Could not get type' }}
+
+    @Prop({default: {}})
+    args!: NodeTypeArgs
+
     @Prop({default: ()=> ({
         guid: 'Not Set',
         x: 0, 
         y: 0,
-        title: 'Node', 
+        type: '',
+        args: {},
         error: false, 
         changed: false, 
         selected: false, 
-        button: false, 
-        inputs: 0, 
-        outputs: 0, 
-        icon: '', 
-        color: '#a6bbcf',
         inputState: [],
         outputState: []
     } as Node)})
@@ -192,15 +195,15 @@ export default class RenderNode extends Vue {
         return this.defaults.y + dragOffsetY;
         }
     }
-    get title(): string { const node = this.nodeByID(this.guid); if(node) { return node.title || this.defaults.title } else { return this.defaults.title; }}
+    get title(): string { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getTitle(node.args) } else { return 'ERROR'; }}
     get error(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.error || this.defaults.error } else { return this.defaults.error; }}
     get changed(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.changed || this.defaults.changed } else { return this.defaults.changed; }}
     get selected(): boolean { return this.selectionStore.selectedNodes.indexOf(this.guid) >= 0 }
-    get button(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.button || this.defaults.button } else { return this.defaults.button; }}
-    get inputs(): number { const node = this.nodeByID(this.guid); if(node) { return node.inputs || this.defaults.inputs } else { return this.defaults.inputs; }}
-    get outputs(): number { const node = this.nodeByID(this.guid); if(node) { return node.outputs || this.defaults.outputs } else { return this.defaults.outputs; }}
-    get icon(): string { const node = this.nodeByID(this.guid); if(node) { return node.icon || this.defaults.icon } else { return this.defaults.icon; }}
-    get color(): string { const node = this.nodeByID(this.guid); if(node) { return node.color || this.defaults.color } else { return this.defaults.color; }}
+    get button(): boolean { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getButton(node.args) } else { return false; }}
+    get inputs(): number { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getInputs(node.args) } else { return 0; }}
+    get outputs(): number { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getOutputs(node.args) } else { return 0; }}
+    get icon(): string { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getIcon(node.args) } else { return ''; }}
+    get color(): string { const node = this.nodeByID(this.guid); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getColor(node.args) } else { return ''; }}
 
     clickCount = 0
     watchingForDrag = false

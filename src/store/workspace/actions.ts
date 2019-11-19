@@ -1,6 +1,6 @@
 // profile/actions.ts
 import { ActionTree } from 'vuex';
-import { SelectionState } from './types';
+import { WorkspaceState } from './types';
 import { RootState } from '../types';
 
 // export interface ActionStartDrag {
@@ -26,5 +26,5 @@ import { RootState } from '../types';
 //     gridY: number
 // }
 
-export const actions: ActionTree<SelectionState, RootState> = {
+export const actions: ActionTree<WorkspaceState, RootState> = {
 };
