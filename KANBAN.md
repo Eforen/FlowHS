@@ -9,7 +9,7 @@
     - [v0.1](#v01)
     - [v0.2](#v02)
     - [v0.3](#v03)
-    - [v0.4](#v04)
+    - [v0.4 (Quality of Life upgrade)](#v04-quality-of-life-upgrade)
     - [v0.5](#v05)
     - [v0.6](#v06)
     - [v0.7](#v07)
@@ -64,13 +64,17 @@
 * [Editor][Node] Make the node type class able to take a parameters object and supply a parameters object that defines what the parameters should be
 * [Editor][Node] Make a node elemxent take a node type object and its parameters object
 * [Editor][Node] Make a node proxy element take a node type argument and its parameters
-
-### Next Commit 2019-11-19
 * [Editor][Workspace] Make workspace only show grid when there is a flow loaded
 * [Editor][Palette] Display headers properly
 * [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
 
+### Next Commit 2019-11-19
+* [Editor][CMD] Make a command store that stores every command run by the Run Command action
+* [Editor][CMD] Stelth Run Command action (does not store action just does it)
+* [Editor][CMD] Add History action (just adds a command to the history as if it was run)
+
 ## Testing
+* [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
 
 ## Doing
 * [Editor] Show Pallet on the Left
@@ -78,12 +82,9 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][Palette] Make catagories collapsable
-* [Editor][CMD] Make a command store that stores every command run by the Run Command action
-* [Editor][CMD] Stelth Run Command action (does not store action just does it)
-* [Editor][CMD] Add History action (just adds a command to the history as if it was run)
-* [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
+* [Editor][CMD] moveNode Action
+* [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor][File Management] Add flow tabs functionality
 * [Editor][CMD] Add node command
 * [Editor][CMD] Delete node command
@@ -109,7 +110,6 @@
 * [Editor] Node Connection Renderer
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
-* [Builtin Chips] 1 Bit Dip Switch / Constant
 
 ### v0.2
 * Chips Via Plugins
@@ -123,7 +123,9 @@
 * [Main][No Project Loaded] Recent Projects List
 * [Main][No Project Loaded] Recent Files List
 
-### v0.4
+### v0.4 (Quality of Life upgrade)
+* [Builtin Chips] 1 Bit Dip Switch / Constant
+* [Editor][Palette] Make catagories collapsable
 * Scroll position of grid should be in store and should reflect the state of the store
 * On scroll the store should be updated
 * the scroll position being in the store should allow us to also put the width in the store
@@ -131,7 +133,7 @@
 * Fire an action on window resize that ensures that the current window area is within the bounds of the grid and makes the grid bigger if needed.
 * Middle or shift dragging the workspace scrolls the space by moving the center point as it exists in the store everything else about the grid size and true scroll  position are all handled by the store actions/mutations
 * [Editor] Brute Force Chip Tester (Truth Table Builder)
-* [BUG][Editor] Sometimes when moving mouse around quickly and letting go of button the drag does not stop
+* [BUG][Editor] Sometimes when moving mouse around quickly and letting go of button the drag does not stop (This seems to be related to if the mouse is over a node when mouse up happens)
 
 ### v0.5
 * Customizable Chip Tester (Truth Table Tester) {Only Test Select Pin Combinations}

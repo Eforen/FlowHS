@@ -136,7 +136,7 @@ export default class RenderNode extends Vue {
 
     get typeObj() { const node = this.nodeByID(this.guid); if(node) { return NodeTypeDictionary.getType(node.type) } else { throw 'Could not get type' }}
 
-    @Prop({default: {}})
+    @Prop({default: ()=>({})})
     args!: NodeTypeArgs
 
     @Prop({default: ()=> ({

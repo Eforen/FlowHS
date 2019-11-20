@@ -214,6 +214,8 @@ import { SelectionState } from './store/selection/types';
 import { ActionStopDrag, ActionUpdateDrag, SelectionPayloadSetSelected } from './store/selection/actions';
 import { WorkspaceState } from './store/workspace/types';
 import NodeTypeDictionary from './nodes/NodeTypeDictionary';
+import Command from './store/commands/Command';
+import CMDAddNode from '@/store/commands/cmds/CMDAddNode';
 
 @Component({
   components: {
@@ -226,6 +228,8 @@ export default class Editor extends Vue {
   @State('flows') flows!: FlowsState
   @Action('createFlow', { namespace: 'flows' }) createFlow!: (flow: Flow) => void;
   @Action('createNodeInFlow', { namespace: 'flows' }) createNodeInFlow!: (payload: {flowID: string, node: Node}) => void
+  @Action('DoCMD', { namespace: 'commands' }) doCMD!: (cmd: Command) => void
+  @Action('UndoCMD', { namespace: 'commands' }) undoCMD!: () => void
   @Getter('nodesInFlow', { namespace: 'flows' }) nodesInFlow!: (id: string)  => string[]
   @State('selection') selectionStore!: SelectionState;
   @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
@@ -271,7 +275,8 @@ export default class Editor extends Vue {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
     //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
     const node: Node = { guid: uuid.v4(), x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    this.createNodeInFlow({flowID: 'root', node})
+    //this.createNodeInFlow({flowID: 'root', node})
+    this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
   }
   // closeWindow() {
   //   ipcRenderer.sendSync("closeWindow", "main")

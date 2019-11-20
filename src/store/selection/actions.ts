@@ -76,6 +76,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
                 const x = nodeProps.x + state.dragOffsetGridX
                 const y = nodeProps.y + state.dragOffsetGridY
                 dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
+                //console.log()
             })
         }
         commit('stopDrag', {x: endX, y: endX})

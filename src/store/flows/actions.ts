@@ -22,12 +22,24 @@ export const actions: ActionTree<FlowsState, RootState> = {
     createFlow({ commit }, flow: Flow) {
         commit('setFlow', flow)
     },
+    //TODO: need to make the createNodeInSelectedFlow
+    createNodeInSelectedFlow({ commit }, node: Node) {
+        //commit('setNode', node)
+        //commit('addNodeToFlow', {flow: flowID, node: node.guid})
+        throw new Error("Method not implemented.");
+    },
     createNodeInFlow({ commit }, {flowID, node}: {flowID: string, node: Node}) {
         commit('setNode', node)
         commit('addNodeToFlow', {flow: flowID, node: node.guid})
     },
     moveNode({ commit }, {node, x, y}: FlowActionMoveNode) {
         commit('setNodePos', {node, x, y})
+    },
+    //TODO: need to make the createNodeInSelectedFlow
+    deleteNode({ commit }, node: Node) {
+        //commit('setNode', node)
+        //commit('addNodeToFlow', {flow: flowID, node: node.guid})
+        throw new Error("Method not implemented.");
     },
     // fetchData({ commit }): any {
     //     axios({
