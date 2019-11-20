@@ -8,7 +8,7 @@ import { CommandsState } from './types';
 import { RootState } from '../types';
 
 export const state: CommandsState = {
-    historyCount: 0,
+    historyCount: 20,
     history: []
 }
 

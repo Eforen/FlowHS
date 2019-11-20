@@ -216,6 +216,7 @@ import { WorkspaceState } from './store/workspace/types';
 import NodeTypeDictionary from './nodes/NodeTypeDictionary';
 import Command from './store/commands/Command';
 import CMDAddNode from '@/store/commands/cmds/CMDAddNode';
+import { mount } from '@vue/test-utils';
 
 @Component({
   components: {
@@ -230,12 +231,57 @@ export default class Editor extends Vue {
   @Action('createNodeInFlow', { namespace: 'flows' }) createNodeInFlow!: (payload: {flowID: string, node: Node}) => void
   @Action('DoCMD', { namespace: 'commands' }) doCMD!: (cmd: Command) => void
   @Action('UndoCMD', { namespace: 'commands' }) undoCMD!: () => void
+  @Action('RedoCMD', { namespace: 'commands' }) redoCMD!: () => void
   @Getter('nodesInFlow', { namespace: 'flows' }) nodesInFlow!: (id: string)  => string[]
   @State('selection') selectionStore!: SelectionState;
   @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
   @Action('updateDrag', { namespace: 'selection' }) updateDrag!: (payload: ActionUpdateDrag) => void;
   @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
+  @Action('deleteNode', { namespace: 'flows' }) deleteNode!: (nodeID: string) => void;
   @State('workspace') workspace!: WorkspaceState;
+
+  created(){
+    window.addEventListener('keyup', this.keyup, true)
+  }
+
+  destroyed(){
+    window.removeEventListener('keyup', this.keyup, true)
+  }
+
+  keyup(ev: KeyboardEvent){
+    if(ev.ctrlKey){
+      if(ev.shiftKey){
+        if(ev.key == 'Z'){
+          console.log('Shortcut: Redo Action')
+          this.redoCMD()
+        }
+      } else {
+        if(ev.key == 'z'){
+          console.log('Shortcut: Undo Action')
+          this.undoCMD()
+        }
+        if(ev.key == 'y'){
+          console.log('Shortcut: Undo Action')
+          this.undoCMD()
+        }
+      }
+    } else {
+      if(ev.key == 'Delete'){
+        console.log('Shortcut: Delete Action')
+      } else if(ev.key == 'ArrowUp'){
+        console.log('Shortcut: Move Up Action')
+      } else if(ev.key == 'ArrowDown'){
+        console.log('Shortcut: Move Down Action')
+      } else if(ev.key == 'ArrowLeft'){
+        console.log('Shortcut: Move Left Action')
+      } else if(ev.key == 'ArrowRight'){
+        console.log('Shortcut: Move Right Action')
+      }
+    }
+    console.log('Keyboard Event')
+    console.log(this)
+    console.log(ev)
+  }
 
   get nodesInFlowCalc(): string[] {
     try {

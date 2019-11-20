@@ -67,14 +67,19 @@
 * [Editor][Workspace] Make workspace only show grid when there is a flow loaded
 * [Editor][Palette] Display headers properly
 * [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
-
-### Next Commit 2019-11-19
 * [Editor][CMD] Make a command store that stores every command run by the Run Command action
 * [Editor][CMD] Stelth Run Command action (does not store action just does it)
 * [Editor][CMD] Add History action (just adds a command to the history as if it was run)
+* [Editor][CMD] Add node command
+* [Editor][CMD] Delete node command
+
+### Next Commit 2019-11-19
+* [Editor][CMD] Editor register key shortcut and send command Undo
+* [Editor][CMD] Editor register key shortcut and send command Redo
+* [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
+* [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 
 ## Testing
-* [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
 
 ## Doing
 * [Editor] Show Pallet on the Left
@@ -82,14 +87,20 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][Node] node proxy component have a command object that will be run on successful drop
+* [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
+* Be redundent with data a little for speed by storing all flowIDs a node is in in the node
+* Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
+* Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection
 * [Editor][CMD] moveNode Action
+* [Editor][CMD] allow moveNode to combine
+* [Editor][CMD] Editor register key shortcut and send command Move Up
+* [Editor][CMD] Editor register key shortcut and send command Move Down
+* [Editor][CMD] Editor register key shortcut and send command Move Left
+* [Editor][CMD] Editor register key shortcut and send command Move Right
+* [Editor][Node] node proxy component have a command object that will be run on successful drop
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor][File Management] Add flow tabs functionality
-* [Editor][CMD] Add node command
-* [Editor][CMD] Delete node command
 * [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)
-* [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
 * [Editor][Node] RenderNode Property Inspector on double click

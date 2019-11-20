@@ -2,7 +2,7 @@ import Command from '@/store/commands/Command'
 import { Dispatch } from 'vuex';
 import { FullCombinedRootState } from '@/store/types';
 import { Node, Flow, Connection } from '@/store/flows/types';
-import { ForEachObject } from '@/util/ObjectDictionary';
+import { ObjectForEach } from '@/util/ObjectDictionary';
 
 export default class CMDRemoveNode extends Command {
     private wasInFlows: string[] = []
@@ -13,7 +13,7 @@ export default class CMDRemoveNode extends Command {
     }
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
-        ForEachObject(state.flows.flows, (key, flow: Flow) => {
+        ObjectForEach(state.flows.flows, (key, flow: Flow) => {
             if(flow.nodes.indexOf(this.node.guid) != -1){
                 if(this.wasInFlows.includes(flow.guid) == false) this.wasInFlows.push(flow.guid)
             }
