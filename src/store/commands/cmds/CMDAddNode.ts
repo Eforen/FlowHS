@@ -23,4 +23,12 @@ export default class CMDAddNode extends Command {
     clone(): CMDAddNode {
         return new CMDAddNode(this.node, this.flow)
     }
+
+    canMerge(other: CMDAddNode): boolean {
+        return false
+    }
+
+    merge(other: Command): Command {
+        throw new Error("This Method should not be called at any time.");
+    }
 }

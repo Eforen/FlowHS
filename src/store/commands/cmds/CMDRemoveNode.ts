@@ -32,4 +32,12 @@ export default class CMDRemoveNode extends Command {
     clone(): CMDRemoveNode {
         return new CMDRemoveNode(this.node, this.flow)
     }
+
+    canMerge(other: CMDRemoveNode): boolean {
+        return false
+    }
+
+    merge(other: Command): Command {
+        throw new Error("This Method should not be called at any time.");
+    }
 }

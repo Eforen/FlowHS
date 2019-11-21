@@ -76,15 +76,17 @@
 * [Editor][CMD] Editor register key shortcut and send command Redo
 * [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
-
-### Next Commit 2019-11-19
 * [Editor][CMD] moveNode Command
 * [Editor][CMD] Editor register key shortcut and send command Move Up
 * [Editor][CMD] Editor register key shortcut and send command Move Down
 * [Editor][CMD] Editor register key shortcut and send command Move Left
 * [Editor][CMD] Editor register key shortcut and send command Move Right
 
+### Next Commit 2019-11-19
+
 ## Testing
+* [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
+* [Editor][CMD] allow moveNode to combine
 
 ## Doing
 * [Editor] Show Pallet on the Left
@@ -92,8 +94,6 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
-* [Editor][CMD] allow moveNode to combine
 * [Editor][CMD] Editor register key shortcut to move nodes will move it 10x based on setting in workspace store when shift is pressed at the same time
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list

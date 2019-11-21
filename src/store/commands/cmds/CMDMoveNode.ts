@@ -38,4 +38,27 @@ export default class CMDMoveNode extends Command {
     clone(): CMDMoveNode {
         return new CMDMoveNode(this.nodeID, this.x, this.y, this.nudge)
     }
+
+    canMerge(that: CMDMoveNode): boolean {
+        if(that instanceof CMDMoveNode == false) return false
+        if(this.nudge){
+            if(this.nodeID != that.nodeID) return false
+            // if(
+            //     ((this.x > 0)==(that.x > 0) || this.x == 0 || that.x) && ((this.y > 0)==(that.y > 0) || this.y == 0 || that.y) //Both on the same side
+            //     ){
+            //         return true
+            // }
+            return true
+        } else {
+            return false
+        }
+        // return false
+    }
+
+    merge(that: CMDMoveNode): CMDMoveNode {
+        let newMove =  new CMDMoveNode(this.nodeID, this.x + that.x, this.y + that.y)
+        newMove.oldX = this.oldX
+        newMove.oldY = this.oldY
+        return newMove
+    }
 }

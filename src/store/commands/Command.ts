@@ -5,4 +5,6 @@ export default abstract class Command {
     abstract exe(dispatch: Dispatch, state: FullCombinedRootState): void
     abstract undo(dispatch: Dispatch, state: FullCombinedRootState): void
     abstract clone(): Command
+    abstract canMerge(that: Command): Boolean
+    abstract merge(that: Command): Command
 }

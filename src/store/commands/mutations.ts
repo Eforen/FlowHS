@@ -8,14 +8,19 @@ import Command from './Command';
 
 export const mutations: MutationTree<CommandsState> = {
     addCMD(state, payload: Command){
-        let clone = [...state.history]
-        clone.push(payload)
-        
-        if(clone.length > state.historyCount){
-            clone = clone.slice(clone.length - state.historyCount)
+        //Check if it can be merged and do so if it can
+        if(state.history.length > 0 && state.history[state.history.length - 1].canMerge(payload)){
+            Vue.set(state.history, state.history.length - 1,state.history[state.history.length - 1].merge(payload)) 
+        } else{
+            let clone = [...state.history]
+            clone.push(payload)
+            
+            if(clone.length > state.historyCount){
+                clone = clone.slice(clone.length - state.historyCount)
+            }
+            
+            state.history = clone
         }
-
-        state.history = clone
     },    
     popCMD(state){
         let clone = [...state.history]
