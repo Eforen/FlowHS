@@ -9,4 +9,7 @@ export interface WorkspaceState {
         height: number,
         width: number,
     },
+    prefrences: {
+        shiftMove: number
+    }
 }

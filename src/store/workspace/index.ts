@@ -16,6 +16,9 @@ export const state: WorkspaceState = {
         height: 20,
         width: 20,
     },
+    prefrences: {
+        shiftMove: 5
+    }
 }
 
 const namespaced: boolean = true;
