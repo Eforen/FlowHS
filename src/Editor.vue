@@ -217,6 +217,8 @@ import NodeTypeDictionary from './nodes/NodeTypeDictionary';
 import Command from './store/commands/Command';
 import CMDAddNode from '@/store/commands/cmds/CMDAddNode';
 import { mount } from '@vue/test-utils';
+import CMDMoveNode from './store/commands/cmds/CMDMoveNode';
+import CMDGroup from './store/commands/cmds/CMDGroup';
 
 @Component({
   components: {
@@ -241,14 +243,14 @@ export default class Editor extends Vue {
   @State('workspace') workspace!: WorkspaceState;
 
   created(){
-    window.addEventListener('keyup', this.keyup, true)
+    window.addEventListener('keydown', this.keydown, true)
   }
 
   destroyed(){
-    window.removeEventListener('keyup', this.keyup, true)
+    window.removeEventListener('keydown', this.keydown, true)
   }
 
-  keyup(ev: KeyboardEvent){
+  keydown(ev: KeyboardEvent){
     if(ev.ctrlKey){
       if(ev.shiftKey){
         if(ev.key == 'Z'){
@@ -269,13 +271,22 @@ export default class Editor extends Vue {
       if(ev.key == 'Delete'){
         console.log('Shortcut: Delete Action')
       } else if(ev.key == 'ArrowUp'){
+        ev.preventDefault()
         console.log('Shortcut: Move Up Action')
+        let cmds = this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, -1, true))
+        this.doCMD(new CMDGroup(cmds))
       } else if(ev.key == 'ArrowDown'){
+        ev.preventDefault()
         console.log('Shortcut: Move Down Action')
+        this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, 1, true))))
       } else if(ev.key == 'ArrowLeft'){
+        ev.preventDefault()
         console.log('Shortcut: Move Left Action')
+        this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, -1, 0, true))))
       } else if(ev.key == 'ArrowRight'){
+        ev.preventDefault()
         console.log('Shortcut: Move Right Action')
+        this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 1, 0, true))))
       }
     }
     console.log('Keyboard Event')

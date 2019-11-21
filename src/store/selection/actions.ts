@@ -4,6 +4,7 @@ import { SelectionState } from './types';
 import { RootState } from '../types';
 import { FlowActionMoveNode } from '../flows/actions';
 import { FlowsState, Node } from '../flows/types';
+import CMDMoveNode from '../commands/cmds/CMDMoveNode';
 
 export type SelectionPayloadSetSelected = string[]
 export type SelectionPayloadAddSelected = string[]
@@ -75,7 +76,8 @@ export const actions: ActionTree<SelectionState, RootState> = {
                 const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
                 const x = nodeProps.x + state.dragOffsetGridX
                 const y = nodeProps.y + state.dragOffsetGridY
-                dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
+                dispatch('commands/DoCMD', new CMDMoveNode(node, x, y, false), {root:true})
+                //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
                 //console.log()
             })
         }
