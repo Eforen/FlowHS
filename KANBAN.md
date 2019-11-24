@@ -84,8 +84,11 @@
 * [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
 * [Editor][CMD] allow moveNode to combine
 
-### Next Commit 2019-11-19
+### Done 2019-11-19
 * [Editor][CMD] Editor register key shortcut to move nodes will move it 10x based on setting in workspace store when shift is pressed at the same time
+
+### Next Commit 2019-11-24
+* [Editor][Node] node proxy component have a command object that will be run on successful drop
 
 ## Testing
 
@@ -95,7 +98,6 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][Node] node proxy component have a command object that will be run on successful drop
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor][File Management] Add flow tabs functionality
 * [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)

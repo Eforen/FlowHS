@@ -13,7 +13,7 @@
         <div class="pallet-group" v-for="(group, groupName) in palette" :key="`pallet-group-${groupName}`">
           <header>{{groupName}}</header>
           <div class="pallet-group-children">
-            <RenderNodeSpawnProxy v-for="(proxy, index) in group" v-bind:key="`pallet-group-${groupName}-${index}`" :type="proxy[0]" :args="proxy[1]" draggable="true" @dragstart="handleDragStart"/>
+            <RenderNodeSpawnProxy v-for="(proxy, index) in group" v-bind:key="`pallet-group-${groupName}-${index}`" :id="proxy[0]" :type="proxy[1]" :args="proxy[2]" draggable="true" :ondragstart="`event.dataTransfer.setData('id', '${proxy[0]}'); event.dataTransfer.setData('type', '${JSON.stringify(proxy[1])}'); event.dataTransfer.setData('args', '${JSON.stringify(proxy[2])}'); console.log('Set event Data')`" @dragstart="handleDragStart($event)"/>
           </div>
         </div>
       </div>
@@ -48,7 +48,7 @@
       workspace.grid.width: 20,
       -->
       <div class="workspace-chart">
-        <svg :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter" @dragover="debugDrag" @drop="debugDragDrop">
+        <svg :class="{dragging: false}" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter" @dragover="allowDrop($event)" @drop="handleDragDrop($event)">
           <g transform="scale(1)">
             <g class="grid" @mouseup="handleMouseUp">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
@@ -82,6 +82,12 @@
 </template>
 
 <style lang="css" scoped>
+  .workspace-chart svg.dragging {
+    pointer-events: all
+  }
+  .workspace-chart svg.dragging g {
+    pointer-events: none
+  }
   .pallet {
     position: absolute;
     top: 0px;
@@ -331,10 +337,10 @@ export default class Editor extends Vue {
     return this.loadedFlows.length > 0
   }
 
-  palette: {[index: string]: [NodeType<any>, any][]} = {
+  palette: {[index: string]: [string, NodeType<any>, any][]} = {
     IO: [
-      [NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
-      [NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
+      ['PinIn', NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
+      ['PinOut', NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
     ]
   }
 
@@ -397,29 +403,94 @@ export default class Editor extends Vue {
     // If entering with button down and drag is set consider drag still valid
     // If endering with button up and drag is set consider drag invalid and end it imidiately with a fail set
     // If drag not set then do nothing
-    console.log(`Mouse enter`)
-    console.log(e)
+    //console.log(`Mouse enter`)
+    //console.log(e)
   }
 
-  handleDragStart(e: MouseEvent) {
+  handleDragStart(e: DragEvent) {
     console.log(`DragStart`)
     console.log(e)
   }
 
-  debug: MouseEvent | null = null
-  debugMode: string = 'none'
-  debugDrag(e: MouseEvent) {
-    // console.log(`DragStart`)
-    // console.log(e)
-    this.debug = e
-    this.debugMode = 'move'
+  allowDrop(e: DragEvent) {
+    e.preventDefault()
+    // this.debug = e
+    // this.debugMode = 'over'
   }
 
-  debugDragDrop(e: MouseEvent) {
+  handleDragDrop(e: DragEvent) {
     console.log(`DragDrop`)
-    console.log(e)
-    this.debug = e
-    this.debugMode = 'drop'
+    //console.log(e)
+    if(e.dataTransfer != null){
+      console.log({
+        id: e.dataTransfer.getData('id'),
+        type: JSON.parse(e.dataTransfer.getData('type')),
+        args: JSON.parse(e.dataTransfer.getData('args'))
+      })
+      const type: string = e.dataTransfer.getData('id')
+      const args: IPinArgs = JSON.parse(e.dataTransfer.getData('args'))
+      const x: number = Math.round((e.offsetX - this.workspace.grid.width / 2 ) / this.workspace.grid.width)
+      const y: number = Math.round((e.offsetY - this.workspace.grid.height / 2 ) / this.workspace.grid.height)
+      const node: Node = { guid: uuid.v4(), x, y, type, args, error: false, changed: false, selected: false, inputState: [], outputState: []}
+      //this.doCMD(new CMDAddNode(node)) //TODO: Move Selected flow into the store and then change this to this the selected default
+      this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
+      //console.log((e.dataTransfer.getData('type') as any).title)
+    }
+    // this.debug = e
+    // this.debugMode = 'drop'
   }
+
+  debug: MouseEvent | null = null
+  debugMode: string = 'none'
+  // debugDrag(e: MouseEvent) {
+  //   // console.log(`DragStart`)
+  //   // console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'move'
+  // }
+
+  // von(e: any){
+  //   if(this.debugMode == 'move'){
+  //     console.log('v-on')
+  //     console.log(e)
+  //   }
+  // }
+
+  // debugDragEnter(e: MouseEvent) {
+  //   e.preventDefault()
+  //   // console.log(`DragStart`)
+  //   // console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'enter'
+  // }
+
+  // debugDragOver(e: MouseEvent) {
+  //   e.preventDefault()
+  //   // console.log(`DragStart`)
+  //   // console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'over'
+  // }
+
+  // debugDragDrop(e: MouseEvent) {
+  //   console.log(`DragDrop`)
+  //   console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'drop'
+  // }
+
+  // handleDragEnd(e: MouseEvent) {
+  //   console.log(`DragDrop`)
+  //   console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'end'
+  // }
+
+  // handleElemDrop(e: MouseEvent) {
+  //   console.log(`DragDrop`)
+  //   console.log(e)
+  //   this.debug = e
+  //   this.debugMode = 'elmdrop'
+  // }
 }
 </script>
