@@ -11,5 +11,9 @@ export interface WorkspaceState {
     },
     prefrences: {
         shiftMove: number
+    },
+    editor: {
+        selectedFlow: number
+        loadedFlows: string[]
     }
 }

@@ -247,6 +247,12 @@ export default class Editor extends Vue {
   @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
   @Action('deleteNode', { namespace: 'flows' }) deleteNode!: (nodeID: string) => void;
   @State('workspace') workspace!: WorkspaceState;
+  @Getter('flowLoaded', { namespace: 'workspace' }) flowLoaded!: boolean;
+  @Getter('loadedFlow', { namespace: 'workspace' }) loadedFlow!: string;
+  @Action('LoadFlow', { namespace: 'workspace' }) LoadFlow!: (flowID: string) => void;
+  @Action('SelectFlow', { namespace: 'workspace' }) SelectFlow!: (flowID: string) => void;
+  @Action('SelectPrevFlow', { namespace: 'workspace' }) SelectPrevFlow!: () => void;
+  @Action('SelectNextFlow', { namespace: 'workspace' }) SelectNextFlow!: () => void;
 
   created(){
     window.addEventListener('keydown', this.keydown, true)
@@ -332,20 +338,17 @@ export default class Editor extends Vue {
 
   get nodesInFlowCalc(): string[] {
     try {
-      console.log(this.selectedFlow)
-      console.log(this.loadedFlows[this.selectedFlow])
+      //console.log(this.selectedFlow)
+      //console.log(this.loadedFlows[this.selectedFlow])
       // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]])
       // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes)
       // console.log(this.flows)
       // return this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes
-      return this.nodesInFlow(this.loadedFlows[this.selectedFlow])
+      //return this.nodesInFlow(this.loadedFlows[this.selectedFlow])
+      return this.nodesInFlow(this.loadedFlow)
     } catch{
       return []
     }
-  }
-
-  get flowLoaded(): boolean {
-    return this.loadedFlows.length > 0
   }
 
   palette: {[index: string]: [string, NodeType<any>, any][]} = {
@@ -356,20 +359,24 @@ export default class Editor extends Vue {
   }
 
   node_filter: string = ''
-  selectedFlow: number = -1
-  loadedFlows: string[] = []
+  // selectedFlow: number = -1
+  // loadedFlows: string[] = []
 
   AddNewFlow() {
-    this.createFlow({guid:'root', title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})
-    this.loadedFlows.push('root')
-    this.selectedFlow = this.loadedFlows.length - 1
+    //this.createFlow({guid:'root', title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})
+    //this.loadedFlows.push('root')
+    //this.selectedFlow = this.loadedFlows.length - 1
+    const guid = uuid.v4()
+    this.createFlow({guid, title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})
+    this.LoadFlow(guid)
   }
   AddNewNode() {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
     //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
     const node: Node = { guid: uuid.v4(), x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     //this.createNodeInFlow({flowID: 'root', node})
-    this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
+    //this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
+    this.doCMD(new CMDAddNode(node, this.loadedFlow))
   }
   // closeWindow() {
   //   ipcRenderer.sendSync("closeWindow", "main")
@@ -444,7 +451,8 @@ export default class Editor extends Vue {
       const y: number = Math.round((e.offsetY - this.workspace.grid.height / 2 ) / this.workspace.grid.height)
       const node: Node = { guid: uuid.v4(), x, y, type, args, error: false, changed: false, selected: false, inputState: [], outputState: []}
       //this.doCMD(new CMDAddNode(node)) //TODO: Move Selected flow into the store and then change this to this the selected default
-      this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
+      //this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
+      this.doCMD(new CMDAddNode(node, this.loadedFlow))
       //console.log((e.dataTransfer.getData('type') as any).title)
     }
     // this.debug = e

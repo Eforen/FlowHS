@@ -27,4 +27,17 @@ import { RootState } from '../types';
 // }
 
 export const actions: ActionTree<WorkspaceState, RootState> = {
+    LoadFlow({ dispatch, commit, state, rootState }, flowID: String) {
+        commit('addFlow', flowID)
+        //commit('selectFlow', flowID)
+    },
+    SelectFlow({ dispatch, commit, state, rootState }, flowID: String) {
+        commit('selectFlow', flowID)
+    },
+    SelectPrevFlow({ dispatch, commit, state, rootState }) {
+        commit('selectPrevFlow')
+    },
+    SelectNextFlow({ dispatch, commit, state, rootState }) {
+        commit('selectNextFlow')
+    },
 };

@@ -18,6 +18,10 @@ export const state: WorkspaceState = {
     },
     prefrences: {
         shiftMove: 5
+    },
+    editor: {
+        selectedFlow: -1,
+        loadedFlows: []
     }
 }
 

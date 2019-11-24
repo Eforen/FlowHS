@@ -104,15 +104,16 @@
 
 ### Done 2019-11-24
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
+* [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 
 ### Next Commit 2019-11-24
-* [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
+* [Editor] Workspace Store
+* [Editor][Store] Loaded and selected flows in workspace store
 
 ## Testing
 
 ## Doing
 * [Editor] Show Pallet on the Left
-* [Editor] Workspace Store
 
 ## Backlog
 ### v0.1 
