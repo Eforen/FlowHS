@@ -9,7 +9,8 @@ import { RootState } from '../types';
 
 export const state: CommandsState = {
     historyCount: 20,
-    history: []
+    history: [],
+    redo: []
 }
 
 const namespaced: boolean = true;

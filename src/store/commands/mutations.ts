@@ -21,11 +21,30 @@ export const mutations: MutationTree<CommandsState> = {
             
             state.history = clone
         }
-    },    
+    },
     popCMD(state){
         let clone = [...state.history]
         clone.pop()
 
         state.history = clone
+    },
+    moveCMDtoRedo(state){
+        let done = [...state.history]
+        let redo = [...state.redo]
+        redo.push(done.pop() as Command)
+
+        state.history = done
+        state.redo = redo
+    },
+    moveCMDtoHistory(state){
+        let done = [...state.history]
+        let redo = [...state.redo]
+        done.push(redo.pop() as Command)
+
+        state.history = done
+        state.redo = redo
+    },
+    clearRedo(state){
+        state.redo = []
     }
 };

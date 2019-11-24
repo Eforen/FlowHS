@@ -106,6 +106,7 @@
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
 
 ### Next Commit 2019-11-24
+* [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 
 ## Testing
 
@@ -115,7 +116,6 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor][File Management] Add flow tabs functionality
 * [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)

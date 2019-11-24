@@ -5,5 +5,6 @@ import Command from './Command';
 export interface CommandsState {
     historyCount: number
     history: Command[]
+    redo: Command[]
     //TODO: setup Redo History
 }
