@@ -2,7 +2,13 @@
   - [Done](#done)
     - [Done 2019-11-9](#done-2019-11-9)
     - [Done 2019-11-10](#done-2019-11-10)
-    - [Next Commit 2019-11-19](#next-commit-2019-11-19)
+    - [Done 2019-11-11](#done-2019-11-11)
+    - [Done 2019-11-13](#done-2019-11-13)
+    - [Done 2019-11-19](#done-2019-11-19)
+    - [Done 2019-11-20](#done-2019-11-20)
+    - [Done 2019-11-21](#done-2019-11-21)
+    - [Done 2019-11-24](#done-2019-11-24)
+    - [Next Commit 2019-11-24](#next-commit-2019-11-24)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -53,6 +59,8 @@
 * [Editor] Setup Store
 * [Editor][Node] RenderNodeX component that takes a GUID and renders a RenderNode based on that GUID in store
 * [Editor] merge RenderNodeX and RenderNode
+
+### Done 2019-11-11
 * [BUG][Editor] RenderNode Flashes when draged
 * [Editor] Move workspace settings from editor component to store
 * [Editor][Node] RenderNode Click Drag to move
@@ -60,6 +68,11 @@
 * [BUG][Editor] All RenderNodes move when any are draged
 * [BUG][Editor] should switch select if drag source is not in selected
 * [BUG][Editor] Allow shift select of multiple nodes
+
+### Done 2019-11-13
+* [Editor][Node] Proxy Node OBJ
+
+### Done 2019-11-19
 * [Editor][Node] make a node type class that stores all the configurations of the parameters and such
 * [Editor][Node] Make the node type class able to take a parameters object and supply a parameters object that defines what the parameters should be
 * [Editor][Node] Make a node elemxent take a node type object and its parameters object
@@ -67,6 +80,8 @@
 * [Editor][Workspace] Make workspace only show grid when there is a flow loaded
 * [Editor][Palette] Display headers properly
 * [BUG][Editor][NodeProxy] When button is not shown the space is not taken up by body
+
+### Done 2019-11-20
 * [Editor][CMD] Make a command store that stores every command run by the Run Command action
 * [Editor][CMD] Stelth Run Command action (does not store action just does it)
 * [Editor][CMD] Add History action (just adds a command to the history as if it was run)
@@ -76,6 +91,8 @@
 * [Editor][CMD] Editor register key shortcut and send command Redo
 * [Editor][CMD] Make a undo Command action that takes the most recent command and runs its undo function
 * [Editor][Store] Delete Node from store nodes and flow (Action and Mutation)
+
+### Done 2019-11-21
 * [Editor][CMD] moveNode Command
 * [Editor][CMD] Editor register key shortcut and send command Move Up
 * [Editor][CMD] Editor register key shortcut and send command Move Down
@@ -83,12 +100,12 @@
 * [Editor][CMD] Editor register key shortcut and send command Move Right
 * [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
 * [Editor][CMD] allow moveNode to combine
-
-### Done 2019-11-19
 * [Editor][CMD] Editor register key shortcut to move nodes will move it 10x based on setting in workspace store when shift is pressed at the same time
 
-### Next Commit 2019-11-24
+### Done 2019-11-24
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
+
+### Next Commit 2019-11-24
 
 ## Testing
 
