@@ -53,8 +53,8 @@
       workspace.grid.height: 20,
       workspace.grid.width: 20,
       -->
-      <div class="workspace-chart">
-        <svg :class="{dragging: false}" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter" @dragover="allowDrop($event)" @drop="handleDragDrop($event)">
+      <div class="workspace-chart" id="workspace-chart">
+        <svg :class="{dragging: false}" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height" @mousemove="handleMouseMove" @mouseenter="handleMouseEnter" @mousedown="handleMouseDown" @dragover="allowDrop($event)" @drop="handleDragDrop($event)">
           <g transform="scale(1)">
             <g class="grid" @mouseup="handleMouseUp">
               <rect class="workspace-chart-background" :width="workspace.size.width * workspace.grid.width" :height="workspace.size.height * workspace.grid.height"></rect>
@@ -146,7 +146,7 @@
   }
   .workspace .workspace-chart {
     width: 100%;
-    height: 100%;
+    height: calc( 100% - 35px );
     overflow: scroll
   }
   /* Let's get this party started */
@@ -470,7 +470,16 @@ export default class Editor extends Vue {
   }
   handleMouseMove(e: MouseEvent) {
     if (this.workspace) {
-      if(this.selectionStore.dragging){
+      if(this.panning){
+        if(e.button != 0 || e.buttons != 4) {
+          this.panning = false
+          console.log("Mouse moved without middle down disabling drag")
+          return
+        }
+        let elem = document.getElementById("workspace-chart") as HTMLElement
+        elem.scrollTop += e.movementY * -1
+        elem.scrollLeft += e.movementX * -1
+      } else if(this.selectionStore.dragging){
         console.log(`MouseMove`)
         const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
         const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
@@ -491,12 +500,24 @@ export default class Editor extends Vue {
   }
   handleMouseUp(e: MouseEvent) {
       console.log(`MouseUp`)
-      
-      if(this.selectionStore.dragging){
+      if(this.panning){
+        this.panning=false
+      } else if(this.selectionStore.dragging){
         this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
       } else{
         this.setSelected([])
       }
+  }
+  panning = false
+  handleMouseDown(e: MouseEvent) {
+    if(e.button == 1 && e.buttons == 4){
+      e.preventDefault()
+      console.log(`MouseDown Middle Preventing Default`)
+      this.panning=true
+    } else{
+      console.log(`MouseDown`)
+      console.log(e)
+    }
   }
   handleMouseEnter(e: MouseEvent) {
     // If entering with button down and drag is set consider drag still valid

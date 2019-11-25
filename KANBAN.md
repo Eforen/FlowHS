@@ -110,9 +110,11 @@
 * [Editor] Workspace Store
 * [Editor][Store] Loaded and selected flows in workspace store
 * [Editor][File Management] Add flow tabs functionality
+* [Editor] Node Connection Renderer
+* [Editor] Middle mouse click drag makes the window pan
 
 ### Next Commit 2019-11-24
-* [Editor] Node Connection Renderer
+* [BUG] need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
 
 ## Testing
 
@@ -121,7 +123,7 @@
 
 ## Backlog
 ### v0.1 
-* Bug need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
+* [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor] Render Node connections from the flowStore
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
