@@ -64,7 +64,10 @@
               <line class="workspace-chart-grid-v" v-for="n in workspace.size.height" v-bind:key="'wcgv'+n" y1="0" :y2="workspace.size.width * workspace.grid.width"  :x1="n*workspace.grid.height" :x2="n*workspace.grid.height"></line>
               </g>
             </g>
-            <g class="selector"></g>
+            <g class="selector">
+              <RenderLink v-if="doTheThing" from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"/>
+              <RenderLink v-else :endX="debug ? debug.offsetX : 0" :endY="debug ? debug.offsetY : 0" :states="[true,false,true]"/>
+            </g>
             <g class="links"></g>
             <g class="nodes">
               <RenderNode v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id" @startMouseDown="handleStartMouseDown"/>
@@ -264,6 +267,7 @@ import Vue from 'vue';
 //import HelloWorld from './components/HelloWorld.vue';
 import { State, Action, Getter } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator'
+import RenderLink from './components/RenderLink.vue';
 import RenderNode from './components/RenderNode.vue';
 import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
@@ -283,8 +287,9 @@ import CMDGroup from './store/commands/cmds/CMDGroup';
 
 @Component({
   components: {
-     RenderNode,
-     RenderNodeSpawnProxy
+    RenderLink,
+    RenderNode,
+    RenderNodeSpawnProxy
   } 
 })
 export default class Editor extends Vue {
@@ -440,8 +445,14 @@ export default class Editor extends Vue {
   // minWindow() {
   //   ipcRenderer.sendSync("minWindow", "main")
   // },
+  doTheThing = false
   OpenFlowsMenu(e: MouseEvent) {
       console.log(`Open Flow Menu`)
+    let node: Node = { guid: 'debug1', x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    this.doCMD(new CMDAddNode(node, this.loadedFlow))
+    node = { guid: 'debug2', x: 10, y: 20, type: 'PinOut', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    this.doCMD(new CMDAddNode(node, this.loadedFlow))
+    this.doTheThing = true
   }
   
   handleTabClick(e: MouseEvent) {
@@ -471,6 +482,8 @@ export default class Editor extends Vue {
           this.updateDrag({ gridX, gridY })
           console.log(e)
         }
+      } else{
+        this.debug = e
       }
     } else {
       console.log('Workspace Not Ready')

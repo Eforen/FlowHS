@@ -109,9 +109,10 @@
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor] Workspace Store
 * [Editor][Store] Loaded and selected flows in workspace store
+* [Editor][File Management] Add flow tabs functionality
 
 ### Next Commit 2019-11-24
-* [Editor][File Management] Add flow tabs functionality
+* [Editor] Node Connection Renderer
 
 ## Testing
 
@@ -121,7 +122,11 @@
 ## Backlog
 ### v0.1 
 * Bug need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
-* [Editor] Node Connection Renderer
+* [Editor] Render Node connections from the flowStore
+* [Editor] Allow creation of connections by click dragging from outputs to inputs
+* [Editor] Allow creation of connections by click dragging from inputs to outputs
+* [Editor] Allow selection of connections by clicking them
+* [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node
