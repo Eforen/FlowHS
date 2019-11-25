@@ -22,23 +22,29 @@
     </div>
     <div class="workspace">
       <div class="workspace-tabs">
+        <div class="container">
+          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick" >{{index}}</div>
+        </div>
         <v-btn
-        class="button"
-        target="_blank"
-        icon
-        small dark
-        v-on:click="AddNewNode"
-      >
-        <v-icon>mdi-plus</v-icon>
-      </v-btn>
-        <v-btn
+        id="add"
         class="button"
         target="_blank"
         icon
         small dark
         v-on:click="AddNewFlow"
       >
-        <v-icon>mdi-folder-plus-outline</v-icon>
+        <v-icon>mdi-plus</v-icon>
+      </v-btn>
+        <v-btn
+        id="menu"
+        class="button"
+        target="_blank"
+        icon
+        small dark
+        v-on:click="OpenFlowsMenu"
+      >
+        <v-icon v-if="true">mdi-menu</v-icon>
+        <v-icon v-if="false">mdi-menu-open</v-icon>
       </v-btn>
       </div>
       <!--
@@ -74,7 +80,7 @@
           </g>
         </svg>
       </div>
-      <div class="workspace-tabs">
+      <div class="workspace-bottomBar">
       </div>
     </div>
     <div class="sidebar"> </div>
@@ -201,6 +207,55 @@
     border-top: 2px solid #383C45;
     padding-left: 1em;
     color: #ffffffCC;
+  }
+
+  .workspace-tabs {
+    height: 35px;
+    background-color: #434954;
+    position: relative;
+  }
+  
+  .workspace-tabs > .container {
+    position: absolute;
+    bottom: 0;
+    padding: 0;
+    margin: 0;
+    border-bottom: 1px solid #2E333A;
+    padding-left: 0.5em;
+  }
+  
+  .workspace-tabs > .container > div {
+    display: inline-block;
+    border: 1px solid #2E333A;
+    padding-right: 1em;
+    padding-left: 0.5em;
+    margin-bottom: -1px;
+    margin-right: 4px;
+    color: rgb(168, 168, 168);
+    background-color: rgba(0,0,0,0.15);
+    cursor: pointer;
+  }
+  .workspace-tabs > .container > div.selected {
+    border-bottom: 1px solid #434954;
+    font-weight: bold;
+    color: rgb(197, 197, 197);
+    background-color: #434954;
+    cursor: crosshair;
+  }
+
+  .workspace-tabs > button {
+    position: absolute;
+    color: rgb(168, 168, 168) !important;
+    bottom: 0;
+    border: 1px solid #2E333A;
+    border-radius: 0;
+  }
+
+  .workspace-tabs > button#add {
+    right: 36px;
+  }
+  .workspace-tabs > button#menu {
+    right: 4px;
   }
 </style>
 
@@ -385,7 +440,20 @@ export default class Editor extends Vue {
   // minWindow() {
   //   ipcRenderer.sendSync("minWindow", "main")
   // },
+  OpenFlowsMenu(e: MouseEvent) {
+      console.log(`Open Flow Menu`)
+  }
   
+  handleTabClick(e: MouseEvent) {
+      const flowID = ((e.target as HTMLElement).attributes.getNamedItem('flowid') as Attr).value
+      console.log(`tab Clicked: ${flowID}`)
+      this.SelectFlow(flowID)
+      // console.log(arg1)
+      // console.log(arg2)
+      // console.log(arg3)
+  }
+
+
   handleStartMouseDown(guid: string) {
       console.log(`${guid}: Parent MouseDown`)
   }

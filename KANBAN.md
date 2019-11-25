@@ -61,6 +61,7 @@
 * [Editor] merge RenderNodeX and RenderNode
 
 ### Done 2019-11-11
+* [Editor] Node Renderer
 * [BUG][Editor] RenderNode Flashes when draged
 * [Editor] Move workspace settings from editor component to store
 * [Editor][Node] RenderNode Click Drag to move
@@ -98,6 +99,7 @@
 * [Editor][CMD] Editor register key shortcut and send command Move Down
 * [Editor][CMD] Editor register key shortcut and send command Move Left
 * [Editor][CMD] Editor register key shortcut and send command Move Right
+* [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)
 * [Editor][CMD] make a combinable check on commands that sees if actions can be combined in history instead of adding a new action (method that returns true or false and if returning true it returns a combined version of the action)
 * [Editor][CMD] allow moveNode to combine
 * [Editor][CMD] Editor register key shortcut to move nodes will move it 10x based on setting in workspace store when shift is pressed at the same time
@@ -105,10 +107,11 @@
 ### Done 2019-11-24
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
-
-### Next Commit 2019-11-24
 * [Editor] Workspace Store
 * [Editor][Store] Loaded and selected flows in workspace store
+
+### Next Commit 2019-11-24
+* [Editor][File Management] Add flow tabs functionality
 
 ## Testing
 
@@ -117,8 +120,9 @@
 
 ## Backlog
 ### v0.1 
-* [Editor][File Management] Add flow tabs functionality
-* [Editor][CMD] Clump command (takes mutliple other commands and runs them sequencially as a single command in the history)
+* Bug need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
+* [Editor] Node Connection Renderer
+* [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node
 * Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
@@ -129,6 +133,7 @@
 * [Editor][Node] RenderNode Use Vuex to store state
 * [Editor][Node] Show loaded flows above the workspace in tabs
 * [Editor] Calapsable Inspecrtor on right
+* [Editor][File Management] Rename flows in Inspecrtor
 * [Editor] Calapsable New Node List on left
 * [Main] Titlebar Drag Move Window
 * [Main] Titlebar Minimize Window
@@ -138,8 +143,6 @@
 * [Editor] Chip Save/LOAD
 * [Editor] Chip Embed in other Files
 * [Editor] Allow Click drag around background infinitly
-* [Editor] Node Renderer
-* [Editor] Node Connection Renderer
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
 
