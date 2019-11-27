@@ -8,7 +8,7 @@
     - [Done 2019-11-20](#done-2019-11-20)
     - [Done 2019-11-21](#done-2019-11-21)
     - [Done 2019-11-24](#done-2019-11-24)
-    - [Next Commit 2019-11-24](#next-commit-2019-11-24)
+    - [Next Commit 2019-11-27](#next-commit-2019-11-27)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -106,29 +106,30 @@
 
 ### Done 2019-11-24
 * [Editor][Node] node proxy component have a command object that will be run on successful drop
+* [Editor] Show Pallet on the Left
 * [Editor][CMD] impliment redo where actions that are undone are added to the redoHistory list
 * [Editor] Workspace Store
 * [Editor][Store] Loaded and selected flows in workspace store
 * [Editor][File Management] Add flow tabs functionality
 * [Editor] Node Connection Renderer
 * [Editor] Middle mouse click drag makes the window pan
-
-### Next Commit 2019-11-24
 * [BUG] need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
+
+### Next Commit 2019-11-27
+* Change the view Model to be a centalized source to avoid duplicate math logic
 
 ## Testing
 
 ## Doing
-* [Editor] Show Pallet on the Left
 
 ## Backlog
 ### v0.1 
-* [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor] Render Node connections from the flowStore
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Allow selection of connections by clicking them
 * [Editor] Allow deletion of connections by selecting them then pressing delete
+* [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node
@@ -149,7 +150,6 @@
 * [Editor] Chip Names independent from filename
 * [Editor] Chip Save/LOAD
 * [Editor] Chip Embed in other Files
-* [Editor] Allow Click drag around background infinitly
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
 
@@ -176,6 +176,7 @@
 * Middle or shift dragging the workspace scrolls the space by moving the center point as it exists in the store everything else about the grid size and true scroll  position are all handled by the store actions/mutations
 * [Editor] Brute Force Chip Tester (Truth Table Builder)
 * [BUG][Editor] Sometimes when moving mouse around quickly and letting go of button the drag does not stop (This seems to be related to if the mouse is over a node when mouse up happens)
+* [Editor] Allow Click drag around background infinitly
 
 ### v0.5
 * Customizable Chip Tester (Truth Table Tester) {Only Test Select Pin Combinations}

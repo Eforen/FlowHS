@@ -13,8 +13,8 @@ export default class CMDMoveNode extends Command {
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         const node = state.flows.nodes[this.nodeID]
-        this.oldX = node.x
-        this.oldY = node.y
+        this.oldX = node.args.x
+        this.oldY = node.args.y
 
         if(this.nudge){
             dispatch('flows/moveNode', {node: this.nodeID, x: this.oldX + this.x, y: this.oldY + this.y} as FlowActionMoveNode, {root:true})

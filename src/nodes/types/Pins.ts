@@ -1,5 +1,6 @@
 import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
+import BasicChip from './BasicChip';
 
 export interface IPinArgs extends NodeTypeArgs {
     pinName: string
@@ -7,7 +8,7 @@ export interface IPinArgs extends NodeTypeArgs {
 export const ntPinArgTypes: NodeTypeArgsDef = {
     pinName: 'string'
 }
-export class ntPin extends NodeType<IPinArgs> {
+export class ntPin extends BasicChip<IPinArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({
             title: "Pin",

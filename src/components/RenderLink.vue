@@ -72,72 +72,93 @@ export default class RenderLink extends Vue {
     from!: string
     @Prop({default: -1})
     fromPin!: number
-
-
-    get fromRootX(): number { 
-        const node = this.nodeByID(this.from)
-        const dragOffsetX = (this.selectionStore.dragging && 
-            this.selectionStore.selectedNodes.includes(this.from) && 
-            this.from.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridX : 0)
-        return ((node as Node).x + dragOffsetX) * this.workspace.grid.width
+    
+    get fromTypeObj() {
+        const node = this.nodeByID(this.from);
+        if(node) { return NodeTypeDictionary.getType(node.type) }
+        else { throw 'Could not get type' }
     }
-    get fromRootY(): number {
-        const node = this.nodeByID(this.from)
-        const dragOffsetY = (this.selectionStore.dragging  && 
-            this.selectionStore.selectedNodes.includes(this.from) && 
-            this.from.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridY : 0)
-        return ((node as Node).y + dragOffsetY) * this.workspace.grid.height
-    }
-    get fromTitle(): string { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getTitle(node.args) } else { return 'ERROR'; }}
-    get fromIcon(): string { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getIcon(node.args) } else { return ''; }}
-    get fromTextWidthEstimation() { return 14 * this.fromTitle.length * 0.6 }
-    get fromNeededWidth() { return (this.fromIcon!=''? 30 : 0) + 8 + this.fromTextWidthEstimation + 8 } //30 8 text 8
-    get fromDesiredWidth() { return ( Math.ceil( this.fromNeededWidth / this.workspace.grid.width ) * this.workspace.grid.height ) }
-    get fromX() { return this.fromRootX + this.fromDesiredWidth - 5 + 5}
-    get fromFirstOutPinY() { return ((this.fromTotalHeight - 10) - (13 * (this.fromOutputs - 1))) / 2 }
-    get fromInputs(): number { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getInputs(node.args) } else { return 0; }}
-    get fromOutputs(): number { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getOutputs(node.args) } else { return 0; }}
-    get fromMaxPinCount() { console.log({fromOutputs: this.fromOutputs, fromInputs: this.fromInputs}); return Math.max(0, this.fromOutputs, this.fromInputs) }
-    get fromHeightMod() { return Math.max(0, ( this.fromMaxPinCount - 2 )) * 15}
-    get fromTotalHeight() { return 30 + this.fromHeightMod }
-    get fromY() { console.log(((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2)); return this.fromRootY + (13 * (this.fromPin) + this.fromFirstOutPinY) + ((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2) + 5}
+
+    get fromArgs(): NodeTypeArgs { return (this.nodeByID(this.from) as Node).args as NodeTypeArgs }
+
+    get fromX() { return this.fromTypeObj.getOutputX(this.fromArgs, this.fromPin, true) + 5 }
+    get fromY() { return this.fromTypeObj.getOutputY(this.fromArgs, this.fromPin, true) + 5 + this.fromTypeObj.getHeight(this.fromArgs) / 2 }
+
+    // get fromRootX(): number { 
+    //     const node = this.nodeByID(this.from)
+    //     const dragOffsetX = (this.selectionStore.dragging && 
+    //         this.selectionStore.selectedNodes.includes(this.from) && 
+    //         this.from.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridX : 0)
+    //     return ((node as Node).args.x + dragOffsetX) * this.workspace.grid.width
+    // }
+    // get fromRootY(): number {
+    //     const node = this.nodeByID(this.from)
+    //     const dragOffsetY = (this.selectionStore.dragging  && 
+    //         this.selectionStore.selectedNodes.includes(this.from) && 
+    //         this.from.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridY : 0)
+    //     return ((node as Node).args.y + dragOffsetY) * this.workspace.grid.height
+    // }
+    // get fromTitle(): string { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getTitle(node.args) } else { return 'ERROR'; }}
+    // get fromIcon(): string { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getIcon(node.args) } else { return ''; }}
+    // get fromTextWidthEstimation() { return 14 * this.fromTitle.length * 0.6 }
+    // get fromNeededWidth() { return (this.fromIcon!=''? 30 : 0) + 8 + this.fromTextWidthEstimation + 8 } //30 8 text 8
+    // get fromDesiredWidth() { return ( Math.ceil( this.fromNeededWidth / this.workspace.grid.width ) * this.workspace.grid.height ) }
+    // get fromFirstOutPinY() { return ((this.fromTotalHeight - 10) - (13 * (this.fromOutputs - 1))) / 2 }
+    // get fromInputs(): number { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getInputs(node.args) } else { return 0; }}
+    // get fromOutputs(): number { const node = this.nodeByID(this.from); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getOutputs(node.args) } else { return 0; }}
+    // get fromMaxPinCount() { console.log({fromOutputs: this.fromOutputs, fromInputs: this.fromInputs}); return Math.max(0, this.fromOutputs, this.fromInputs) }
+    // get fromHeightMod() { return Math.max(0, ( this.fromMaxPinCount - 2 )) * 15}
+    // get fromTotalHeight() { return 30 + this.fromHeightMod }
+    // get fromX() { return this.fromRootX + this.fromDesiredWidth - 5 + 5}
+    // get fromY() { console.log(((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2)); return this.fromRootY + (13 * (this.fromPin) + this.fromFirstOutPinY) + ((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2) + 5}
     
     @Prop({default:''})
     to!: string
     @Prop({default: -1})
     toPin!: number
+    
+    get toTypeObj() {
+        const node = this.nodeByID(this.to);
+        if(node) { return NodeTypeDictionary.getType(node.type) }
+        else { throw 'Could not get type' }
+    }
 
-    get toRootX(): number { 
-        const node = this.nodeByID(this.to)
-        const dragOffsetX = (this.selectionStore.dragging && 
-            this.selectionStore.selectedNodes.includes(this.to) && 
-            this.to.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridX : 0)
-        return ((node as Node).x + dragOffsetX) * this.workspace.grid.width
-    }
-    get toRootY(): number {
-        const node = this.nodeByID(this.to)
-        const dragOffsetY = (this.selectionStore.dragging  && 
-            this.selectionStore.selectedNodes.includes(this.to) && 
-            this.to.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridY : 0)
-        return ((node as Node).y + dragOffsetY) * this.workspace.grid.height
-    }
-    get toTitle(): string { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getTitle(node.args) } else { return 'ERROR'; }}
-    get toIcon(): string { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getIcon(node.args) } else { return ''; }}
-    get toTextWidthEstimation() { return 14 * this.toTitle.length * 0.6 }
-    get toNeededWidth() { return (this.toIcon!=''? 30 : 0) + 8 + this.toTextWidthEstimation + 8 } //30 8 text 8
-    get toDesiredWidth() { return ( Math.ceil( this.toNeededWidth / this.workspace.grid.width ) * this.workspace.grid.height ) }
-    get toX() { return this.toRootX - 5 + 5 }
-    get toFirstInPinY() { return ((this.toTotalHeight - 10) - (13 * (this.toInputs - 1))) / 2 }
-    get toInputs(): number { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getInputs(node.args) } else { return 0; }}
-    get toOutputs(): number { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getOutputs(node.args) } else { return 0; }}
-    get toMaxPinCount() { return Math.max(0, this.toOutputs, this.toInputs) }
-    get toHeightMod() { return Math.max(0, ( this.toMaxPinCount - 2 )) * 15}
-    get toTotalHeight() { return 30 + this.toHeightMod }
-    get toY() { return this.toRootY + (13 * (this.toPin) + this.toFirstInPinY) + (( Math.ceil( this.toTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.toTotalHeight) / 2 + 5 }
+    get toArgs(): NodeTypeArgs { return (this.nodeByID(this.to) as Node).args as NodeTypeArgs }
+
+    get toX() { return this.toTypeObj.getInputX(this.toArgs, this.toPin, true) + 5 }
+    get toY() { return this.toTypeObj.getInputY(this.toArgs, this.toPin, true) + 5 + this.toTypeObj.getHeight(this.toArgs) / 2  }
+
+    // get toRootX(): number { 
+    //     const node = this.nodeByID(this.to)
+    //     const dragOffsetX = (this.selectionStore.dragging && 
+    //         this.selectionStore.selectedNodes.includes(this.to) && 
+    //         this.to.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridX : 0)
+    //     return ((node as Node).args.x + dragOffsetX) * this.workspace.grid.width
+    // }
+    // get toRootY(): number {
+    //     const node = this.nodeByID(this.to)
+    //     const dragOffsetY = (this.selectionStore.dragging  && 
+    //         this.selectionStore.selectedNodes.includes(this.to) && 
+    //         this.to.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridY : 0)
+    //     return ((node as Node).args.y + dragOffsetY) * this.workspace.grid.height
+    // }
+    // get toTitle(): string { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getTitle(node.args) } else { return 'ERROR'; }}
+    // get toIcon(): string { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getIcon(node.args) } else { return ''; }}
+    // get toTextWidthEstimation() { return 14 * this.toTitle.length * 0.6 }
+    // get toNeededWidth() { return (this.toIcon!=''? 30 : 0) + 8 + this.toTextWidthEstimation + 8 } //30 8 text 8
+    // get toDesiredWidth() { return ( Math.ceil( this.toNeededWidth / this.workspace.grid.width ) * this.workspace.grid.height ) }
+    // get toFirstInPinY() { return ((this.toTotalHeight - 10) - (13 * (this.toInputs - 1))) / 2 }
+    // get toInputs(): number { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getInputs(node.args) } else { return 0; }}
+    // get toOutputs(): number { const node = this.nodeByID(this.to); if(node) { const type = NodeTypeDictionary.getType(node.type); return type.getOutputs(node.args) } else { return 0; }}
+    // get toMaxPinCount() { return Math.max(0, this.toOutputs, this.toInputs) }
+    // get toHeightMod() { return Math.max(0, ( this.toMaxPinCount - 2 )) * 15}
+    // get toTotalHeight() { return 30 + this.toHeightMod }
+    // get toX() { return this.toRootX - 5 + 5 }
+    // get toY() { return this.toRootY + (13 * (this.toPin) + this.toFirstInPinY) + (( Math.ceil( this.toTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.toTotalHeight) / 2 + 5 }
 
     @Prop({default:false})
     dragging!: boolean

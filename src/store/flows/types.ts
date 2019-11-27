@@ -3,8 +3,6 @@ import { NodeTypeArgs } from '@/nodes/NodeType';
 // types.ts
 export interface Node {
     guid: string
-    x: number
-    y: number
     error: boolean
     changed: boolean
     selected: boolean

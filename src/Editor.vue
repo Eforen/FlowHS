@@ -433,7 +433,7 @@ export default class Editor extends Vue {
   AddNewNode() {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
     //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
-    const node: Node = { guid: uuid.v4(), x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    const node: Node = { guid: uuid.v4(), type: 'PinIn', args: {x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     //this.createNodeInFlow({flowID: 'root', node})
     //this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
     this.doCMD(new CMDAddNode(node, this.loadedFlow))
@@ -448,9 +448,9 @@ export default class Editor extends Vue {
   doTheThing = false
   OpenFlowsMenu(e: MouseEvent) {
       console.log(`Open Flow Menu`)
-    let node: Node = { guid: 'debug1', x: 2, y: 7, type: 'PinIn', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    let node: Node = { guid: 'debug1', type: 'PinIn', args: {x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.doCMD(new CMDAddNode(node, this.loadedFlow))
-    node = { guid: 'debug2', x: 10, y: 20, type: 'PinOut', args: {pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    node = { guid: 'debug2', type: 'PinOut', args: {x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.doCMD(new CMDAddNode(node, this.loadedFlow))
     this.doTheThing = true
   }
@@ -551,7 +551,7 @@ export default class Editor extends Vue {
       const args: IPinArgs = JSON.parse(e.dataTransfer.getData('args'))
       const x: number = Math.round((e.offsetX - this.workspace.grid.width / 2 ) / this.workspace.grid.width)
       const y: number = Math.round((e.offsetY - this.workspace.grid.height / 2 ) / this.workspace.grid.height)
-      const node: Node = { guid: uuid.v4(), x, y, type, args, error: false, changed: false, selected: false, inputState: [], outputState: []}
+      const node: Node = { guid: uuid.v4(), type, args:{...args, x, y}, error: false, changed: false, selected: false, inputState: [], outputState: []}
       //this.doCMD(new CMDAddNode(node)) //TODO: Move Selected flow into the store and then change this to this the selected default
       //this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
       this.doCMD(new CMDAddNode(node, this.loadedFlow))

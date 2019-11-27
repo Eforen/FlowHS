@@ -74,8 +74,8 @@ export const actions: ActionTree<SelectionState, RootState> = {
             //commit('moveSelected')
             state.selectedNodes.forEach(node => {
                 const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
-                const x = nodeProps.x + state.dragOffsetGridX
-                const y = nodeProps.y + state.dragOffsetGridY
+                const x = nodeProps.args.x + state.dragOffsetGridX
+                const y = nodeProps.args.y + state.dragOffsetGridY
                 dispatch('commands/DoCMD', new CMDMoveNode(node, x, y, false), {root:true})
                 //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
                 //console.log()

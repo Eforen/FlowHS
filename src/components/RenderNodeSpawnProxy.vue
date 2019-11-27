@@ -194,13 +194,14 @@ export default class RenderNodeSpawnProxy extends Vue {
 
     @Prop({default: ()=> ({
         guid: 'Not Set',
-        x: 0, 
-        y: 0,
         error: false, 
         changed: false, 
         selected: false, 
         type: '',
-        args: {},
+        args: {
+            x: 0, 
+            y: 0
+        },
         inputState: [],
         outputState: []
     } as Node)})
