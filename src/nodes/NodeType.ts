@@ -22,6 +22,7 @@ export interface NodeTypeArgsDef {
 }
 
 export interface NodeTypeArgs {
+    guid: string
     x: number
     y: number
 }

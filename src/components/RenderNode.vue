@@ -142,9 +142,9 @@ export default class RenderNode extends Vue {
     // args!: NodeTypeArgs
 
     @Prop({default: ()=> ({
-        guid: 'Not Set',
         type: '',
         args: {
+            guid: 'Not Set',
             x: 0, 
             y: 0
         },

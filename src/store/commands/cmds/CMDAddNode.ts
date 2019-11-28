@@ -17,7 +17,7 @@ export default class CMDAddNode extends Command {
     }
 
     undo(dispatch: Dispatch, state: FullCombinedRootState): void {
-        dispatch('flows/deleteNode', this.node.guid, {root:true})
+        dispatch('flows/deleteNode', this.node.args.guid, {root:true})
     }
 
     clone(): CMDAddNode {

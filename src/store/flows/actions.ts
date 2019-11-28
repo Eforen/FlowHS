@@ -30,7 +30,7 @@ export const actions: ActionTree<FlowsState, RootState> = {
     },
     createNodeInFlow({ commit }, {flowID, node}: {flowID: string, node: Node}) {
         commit('setNode', node)
-        commit('addNodeToFlow', {flow: flowID, node: node.guid})
+        commit('addNodeToFlow', {flow: flowID, node: node.args.guid})
     },
     moveNode({ commit }, {node, x, y}: FlowActionMoveNode) {
         commit('setNodePos', {node, x, y})

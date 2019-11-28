@@ -8,6 +8,7 @@
     - [Done 2019-11-20](#done-2019-11-20)
     - [Done 2019-11-21](#done-2019-11-21)
     - [Done 2019-11-24](#done-2019-11-24)
+    - [Done 2019-11-27](#done-2019-11-27)
     - [Next Commit 2019-11-27](#next-commit-2019-11-27)
   - [Testing](#testing)
   - [Doing](#doing)
@@ -115,12 +116,16 @@
 * [Editor] Middle mouse click drag makes the window pan
 * [BUG] need to remove space the tabs take up off of the space the grid does so the bottom is not cut off
 
-### Next Commit 2019-11-27
+### Done 2019-11-27
 * Change the view Model to be a centalized source to avoid duplicate math logic
+
+### Next Commit 2019-11-27
+* Move node guid into args
 
 ## Testing
 
 ## Doing
+* Line should move when dragging is happening
 
 ## Backlog
 ### v0.1 

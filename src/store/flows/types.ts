@@ -2,7 +2,6 @@ import { NodeTypeArgs } from '@/nodes/NodeType';
 
 // types.ts
 export interface Node {
-    guid: string
     error: boolean
     changed: boolean
     selected: boolean

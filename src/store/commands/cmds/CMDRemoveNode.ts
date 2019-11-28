@@ -14,7 +14,7 @@ export default class CMDRemoveNode extends Command {
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         ObjectForEach(state.flows.flows, (key, flow: Flow) => {
-            if(flow.nodes.indexOf(this.node.guid) != -1){
+            if(flow.nodes.indexOf(this.node.args.guid) != -1){
                 if(this.wasInFlows.includes(flow.guid) == false) this.wasInFlows.push(flow.guid)
             }
         })

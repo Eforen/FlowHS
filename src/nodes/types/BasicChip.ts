@@ -8,26 +8,26 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
     }
     
     getRootX(args: T): number {
+        const dragOffsetX = (this.rootState.selection.dragging && 
+            this.rootState.selection.selectedNodes.includes(args.guid) && 
+            args.guid.toLowerCase()!='pallet' ? 
+                this.rootState.selection.dragOffsetGridX : 0)
+            * this.rootState.workspace.grid.width
         return args.x * this.rootState.workspace.grid.width
     }
     getRootY(args: T): number {
+        const dragOffsetY = (this.rootState.selection.dragging  && 
+            this.rootState.selection.selectedNodes.includes(args.guid) && 
+            args.guid.toLowerCase()!='pallet' ? 
+                this.rootState.selection.dragOffsetGridY  : 0)
+            * this.rootState.workspace.grid.height
         return args.y * this.rootState.workspace.grid.height + this.yOffset(args)
     }
 
     // getX(args: T): number {
-    //     const dragOffsetX = (this.rootState.selection.dragging && 
-    //         this.rootState.selection.selectedNodes.includes(this.guid) && 
-    //         this.guid.toLowerCase()!='pallet' ? 
-    //             this.rootState.selection.dragOffsetGridX : 0)
-    //         * this.workspace.grid.width
     //     return args.x * this.rootState.workspace.grid.width + dragOffsetX
     // }
     // getY(args: T): number {
-    //     const dragOffsetY = (this.rootState.selection.dragging  && 
-    //         this.rootState.selection.selectedNodes.includes(this.guid) && 
-    //         this.guid.toLowerCase()!='pallet' ? 
-    //             this.rootState.selection.dragOffsetGridY  : 0)
-    //         * this.workspace.grid.height
     //     return args.y * this.rootState.workspace.grid.height + this.yOffset(args) + dragOffsetY
     // }
 

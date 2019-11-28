@@ -18,7 +18,7 @@ export const mutations: MutationTree<FlowsState> = {
         Vue.set(state.flows, payload.guid, payload)
     },
     setNode(state, payload: Node){
-        Vue.set(state.nodes, payload.guid, payload)
+        Vue.set(state.nodes, payload.args.guid, payload)
     },
     removeNode(state, nodeID: string){
         if(state.nodes[nodeID] == undefined) return
