@@ -119,9 +119,10 @@
 ### Done 2019-11-27
 * Change the view Model to be a centalized source to avoid duplicate math logic
 * Move node guid into args
+* Line should move when dragging is happening
 
 ### Next Commit 2019-11-27
-* Line should move when dragging is happening
+* Convert Proxies to use new math controller for rendering
 
 ## Testing
 

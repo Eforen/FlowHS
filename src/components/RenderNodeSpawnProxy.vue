@@ -4,7 +4,7 @@
             <div class="palette-button-background"></div>
             <div class="palette-button-pad" :style="{backgroundColor: color}"></div>
         </div>
-        <div class="palette-body" style="background-color: rgb(166, 187, 207); height: 28px;"></div>
+        <div class="palette-body" :style="{ backgroundColor:typeObj.getColor(args), height: '28px'  }" ></div>
         <div class="palette-label" dir="">{{title}}</div>
         <div class="palette-icon-container">
             <div class="palette-icon" style="background-image: url(&quot;/icons/subdirectory_arrow_right-24px.svg&quot;);"></div>
@@ -12,11 +12,11 @@
         <div class="palette-port palette-port-output"
             v-for="n in outputs"
             :key="'output'+n"
-            :style="{top: `${13 * (n - 1) + firstOutPinY}px`}"></div>
+            :style="{top: `${typeObj.getOutputY(args, n)}px`}"></div>
         <div class="palette-port palette-port-input"
             v-for="n in inputs"
             :key="'input'+n"
-            :style="{top: `${13 * (n - 1) + firstInPinY}px`}"></div>
+            :style="{top: `${typeObj.getInputY(args, n)}px`}"></div>
         <!--
         <div class="draggable" draggable="true" @dragstart="handleDragStart">
           <svg class="draggable" height="40">
@@ -207,18 +207,18 @@ export default class RenderNodeSpawnProxy extends Vue {
     } as Node)})
     defaults!: Node
 
-    get xPos() { return this.x * this.xGridSize }
-    get yPos() { return this.y * this.yGridSize }
-    get maxPinCount() { return Math.max(0, this.outputs, this.inputs) }
-    get heightMod() { return Math.max(0, ( this.maxPinCount - 2 )) * 15}
-    get totalHeight() { return 30 + this.heightMod }
-    get yOffsetMod() { return (7.5 * Math.max(0, ( this.maxPinCount - 2 ))) }
-    get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 - 1 }
-    get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 - 1 }
-    get yOffset() { return (( Math.ceil( this.totalHeight / this.yGridSize ) * this.yGridSize ) - this.totalHeight) / 2}
-    get textWidthEstimation() { return 14 * this.title.length * 0.6 }
-    get neededWidth() { return (this.icon!=''? 30 : 0) + 8 + this.textWidthEstimation + 8 } //30 8 text 8
-    get desiredWidth() { return ( Math.ceil( this.neededWidth / this.xGridSize ) * this.xGridSize ) }
+    // get xPos() { return this.x * this.xGridSize }
+    // get yPos() { return this.y * this.yGridSize }
+    // get maxPinCount() { return Math.max(0, this.outputs, this.inputs) }
+    // get heightMod() { return Math.max(0, ( this.maxPinCount - 2 )) * 15}
+    // get totalHeight() { return 30 + this.heightMod }
+    // get yOffsetMod() { return (7.5 * Math.max(0, ( this.maxPinCount - 2 ))) }
+    // get firstOutPinY() { return ((this.totalHeight - 10) - (13 * (this.outputs - 1))) / 2 - 1 }
+    // get firstInPinY() { return ((this.totalHeight - 10) - (13 * (this.inputs - 1))) / 2 - 1 }
+    // get yOffset() { return (( Math.ceil( this.totalHeight / this.yGridSize ) * this.yGridSize ) - this.totalHeight) / 2}
+    // get textWidthEstimation() { return 14 * this.title.length * 0.6 }
+    // get neededWidth() { return (this.icon!=''? 30 : 0) + 8 + this.textWidthEstimation + 8 } //30 8 text 8
+    // get desiredWidth() { return ( Math.ceil( this.neededWidth / this.xGridSize ) * this.xGridSize ) }
 
     @Prop({ default: 20 })
     xGridSize!: number

@@ -480,7 +480,7 @@ export default class Editor extends Vue {
         elem.scrollTop += e.movementY * -1
         elem.scrollLeft += e.movementX * -1
       } else if(this.selectionStore.dragging){
-        console.log(`MouseMove`)
+        //console.log(`MouseMove`)
         const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
         const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
         // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
@@ -489,7 +489,7 @@ export default class Editor extends Vue {
         // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
         if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
           this.updateDrag({ gridX, gridY })
-          console.log(e)
+          //console.log(e)
         }
       } else{
         this.debug = e
