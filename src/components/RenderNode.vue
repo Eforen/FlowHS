@@ -1,5 +1,5 @@
 <template>
-    <g :class="`node node-group ${hover.node && selected == false ? ' node-hover hover':''}${selected ? ' node-selected selected':''}`" id="b5537584.cdacc8" :transform="`translate(${x}, ${y})`">
+    <g :class="`node node-group ${hover.node && selected == false ? ' node-hover hover':''}${selected ? ' node-selected selected':''}`" id="b5537584.cdacc8" :transform="`translate(${typeObj.getRootX(args)}, ${typeObj.getRootY(args)})`">
         <g v-show="button" transform="translate(-25,2)" class="node-button" opacity="1">
             <rect class="node-button-background" rx="5" ry="5" width="32" height="26" fill-opacity="1"></rect>
             <rect class="node-button-pad" x="5" y="4" rx="4" ry="4" width="16" height="18" :fill="color" cursor="pointer" fill-opacity="1"></rect>
@@ -157,22 +157,22 @@ export default class RenderNode extends Vue {
     defaults!: Node
 
     get args(): NodeTypeArgs { return (this.nodeByID(this.guid) as Node).args || { x: 0, y: 0 } }
-    get x(): number { 
-        const dragOffsetX = (this.selectionStore.dragging && 
-            this.selectionStore.selectedNodes.includes(this.guid) && 
-            this.guid.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridX : 0)
-            * this.workspace.grid.width
-        return this.typeObj.getRootX(this.args) + dragOffsetX
-    }
-    get y(): number {
-        const dragOffsetY = (this.selectionStore.dragging  && 
-            this.selectionStore.selectedNodes.includes(this.guid) && 
-            this.guid.toLowerCase()!='pallet' ? 
-                this.selectionStore.dragOffsetGridY  : 0)
-            * this.workspace.grid.height
-        return this.typeObj.getRootY(this.args) + dragOffsetY
-    }
+    // get x(): number { 
+    //     const dragOffsetX = (this.selectionStore.dragging && 
+    //         this.selectionStore.selectedNodes.includes(this.guid) && 
+    //         this.guid.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridX : 0)
+    //         * this.workspace.grid.width
+    //     return this.typeObj.getRootX(this.args) + dragOffsetX
+    // }
+    // get y(): number {
+    //     const dragOffsetY = (this.selectionStore.dragging  && 
+    //         this.selectionStore.selectedNodes.includes(this.guid) && 
+    //         this.guid.toLowerCase()!='pallet' ? 
+    //             this.selectionStore.dragOffsetGridY  : 0)
+    //         * this.workspace.grid.height
+    //     return this.typeObj.getRootY(this.args) + dragOffsetY
+    // }
     get title(): string { return this.typeObj.getTitle(this.args) }
     get error(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.error } else { return false; }}
     get changed(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.changed } else { return false; }}

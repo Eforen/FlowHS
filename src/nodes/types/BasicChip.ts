@@ -13,7 +13,7 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
             args.guid.toLowerCase()!='pallet' ? 
                 this.rootState.selection.dragOffsetGridX : 0)
             * this.rootState.workspace.grid.width
-        return args.x * this.rootState.workspace.grid.width
+        return args.x * this.rootState.workspace.grid.width + dragOffsetX
     }
     getRootY(args: T): number {
         const dragOffsetY = (this.rootState.selection.dragging  && 
@@ -21,7 +21,7 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
             args.guid.toLowerCase()!='pallet' ? 
                 this.rootState.selection.dragOffsetGridY  : 0)
             * this.rootState.workspace.grid.height
-        return args.y * this.rootState.workspace.grid.height + this.yOffset(args)
+        return args.y * this.rootState.workspace.grid.height + this.yOffset(args) + dragOffsetY
     }
 
     // getX(args: T): number {
