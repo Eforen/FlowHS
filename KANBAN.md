@@ -9,7 +9,7 @@
     - [Done 2019-11-21](#done-2019-11-21)
     - [Done 2019-11-24](#done-2019-11-24)
     - [Done 2019-11-27](#done-2019-11-27)
-    - [Next Commit 2019-11-27](#next-commit-2019-11-27)
+    - [Next Commit 2019-12-01](#next-commit-2019-12-01)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -120,9 +120,10 @@
 * Change the view Model to be a centalized source to avoid duplicate math logic
 * Move node guid into args
 * Line should move when dragging is happening
-
-### Next Commit 2019-11-27
 * Convert Proxies to use new math controller for rendering
+
+### Next Commit 2019-12-01
+* [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 
 ## Testing
 
@@ -135,7 +136,6 @@
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Allow selection of connections by clicking them
 * [Editor] Allow deletion of connections by selecting them then pressing delete
-* [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node

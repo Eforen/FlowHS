@@ -190,7 +190,6 @@ export default class RenderNode extends Vue {
     delay = 250
 
     handleClick (e: MouseEvent) {
-      //e.preventDefault()
 
       this.clickCount++
 
@@ -255,6 +254,11 @@ export default class RenderNode extends Vue {
     }
 
     handleMouseDown(e: MouseEvent) {
+      //e.preventDefault()
+      if(e.button == 1 && e.buttons == 4){
+          // If middle mouse down ditch
+          return
+      }
         e.preventDefault()
         this.watchingForDrag = true
         this.clickTimer = setTimeout(() => {
@@ -274,6 +278,11 @@ export default class RenderNode extends Vue {
     }
 
     handleMouseUp(e: MouseEvent) {
+      //e.preventDefault()
+      if(e.button == 1 && e.buttons == 4){
+          // If middle mouse up ditch
+          return
+      }
         e.preventDefault()
         console.log(`${this.guid}: MouseUp`)
         console.log(e)
