@@ -1,7 +1,8 @@
 // profile/actions.ts
 import { ActionTree } from 'vuex';
-import { FlowsState, Node, Flow } from './types';
+import { FlowsState, Node, Flow, Connection } from './types';
 import { RootState } from '../types';
+import { ObjectCount, ObjectFind } from '@/util/ObjectDictionary';
 
 export interface FlowActionMoveNode{
     node: string,
@@ -40,6 +41,18 @@ export const actions: ActionTree<FlowsState, RootState> = {
         commit('removeNode', nodeID)
         //commit('addNodeToFlow', {flow: flowID, node: node.guid})
         //throw new Error("Method not implemented.");
+    },
+    createConnection({ commit, rootState }, {conGUID, fromID, fromPort, toID, toPort}: {conGUID: string, fromID: string, fromPort: number, toID: string, toPort: number}) {
+        if(ObjectCount(rootState.flows.connections, (con: Connection, guid) => (conGUID == guid || (fromID == con.fromID && fromPort == con.fromPort && toID == con.toID && toPort == con.toPort) ? 1 : 0)) > 0){
+            // Already exists
+            console.warn('createConnection was called but connection already exists.')
+            return //Bail out and don't do anything
+        }
+        commit('setConnection', {conGUID, fromID, fromPort, toID, toPort})
+    },
+    deleteConnection({ commit, rootState }, conGUID:string) {
+        console.log("Debug: deleteConnection")
+        commit('unsetConnection', conGUID)
     },
     // fetchData({ commit }): any {
     //     axios({

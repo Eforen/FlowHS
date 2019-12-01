@@ -65,10 +65,12 @@
               </g>
             </g>
             <g class="selector">
-              <RenderLink v-if="doTheThing" from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"/>
-              <RenderLink v-else :endX="debug ? debug.offsetX : 0" :endY="debug ? debug.offsetY : 0" :states="[true,false,true]"/>
+              <!-- <RenderLink v-if="doTheThing" from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"/>
+              <RenderLink v-else :endX="debug ? debug.offsetX : 0" :endY="debug ? debug.offsetY : 0" :states="[true,false,true]"/> -->
             </g>
-            <g class="links"></g>
+            <g class="links">
+              <RenderLink v-for="id in consInFlowCalc" v-bind:key="`RenderLink-${id}`" :guid="id"/>
+            </g>
             <g class="nodes">
               <RenderNode v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id" @startMouseDown="handleStartMouseDown"/>
             </g>
@@ -271,7 +273,7 @@ import RenderLink from './components/RenderLink.vue';
 import RenderNode from './components/RenderNode.vue';
 import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
-import { Node, Flow, FlowsState } from './store/flows/types';
+import { Node, Flow, FlowsState, Connection } from './store/flows/types';
 import NodeType, { NodeTypeArgs } from './nodes/NodeType';
 import { ntPinIn, ntPinOut, IPinArgs } from './nodes/types/Pins';
 import uuid from 'uuid';
@@ -284,6 +286,7 @@ import CMDAddNode from '@/store/commands/cmds/CMDAddNode';
 import { mount } from '@vue/test-utils';
 import CMDMoveNode from './store/commands/cmds/CMDMoveNode';
 import CMDGroup from './store/commands/cmds/CMDGroup';
+import CMDConnectNodes from './store/commands/cmds/CMDConnectNodes';
 
 @Component({
   components: {
@@ -301,6 +304,7 @@ export default class Editor extends Vue {
   @Action('UndoCMD', { namespace: 'commands' }) undoCMD!: () => void
   @Action('RedoCMD', { namespace: 'commands' }) redoCMD!: () => void
   @Getter('nodesInFlow', { namespace: 'flows' }) nodesInFlow!: (id: string)  => string[]
+  @Getter('connectionsInFlow', { namespace: 'flows' }) connectionsInFlow!: (id: string)  => string[]
   @State('selection') selectionStore!: SelectionState;
   @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
   @Action('updateDrag', { namespace: 'selection' }) updateDrag!: (payload: ActionUpdateDrag) => void;
@@ -411,6 +415,21 @@ export default class Editor extends Vue {
     }
   }
 
+  get consInFlowCalc(): string[] {
+    try {
+      //console.log(this.selectedFlow)
+      //console.log(this.loadedFlows[this.selectedFlow])
+      // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]])
+      // console.log(this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes)
+      // console.log(this.flows)
+      // return this.flows.flows[this.loadedFlows[this.selectedFlow]].nodes
+      //return this.nodesInFlow(this.loadedFlows[this.selectedFlow])
+      return this.connectionsInFlow(this.loadedFlow)
+    } catch{
+      return []
+    }
+  }
+
   palette: {[index: string]: [string, NodeType<any>, any][]} = {
     IO: [
       ['PinIn', NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
@@ -447,26 +466,30 @@ export default class Editor extends Vue {
   // },
   doTheThing = false
   OpenFlowsMenu(e: MouseEvent) {
-      console.log(`Open Flow Menu`)
-    let node: Node = { type: 'PinIn', args: {guid: 'debug1', x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    this.doCMD(new CMDAddNode(node, this.loadedFlow))
-    node = { type: 'PinOut', args: {guid: 'debug2', x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    this.doCMD(new CMDAddNode(node, this.loadedFlow))
-    this.doTheThing = true
+    console.log(`Open Flow Menu`)
+    const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    this.doCMD(new CMDAddNode(debug1, this.loadedFlow))
+    const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
+    // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
+    const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 0, state: [false], selected: false}
+    this.doCMD(new CMDConnectNodes(con))
+    //this.doTheThing = true
+    
   }
   
   handleTabClick(e: MouseEvent) {
-      const flowID = ((e.target as HTMLElement).attributes.getNamedItem('flowid') as Attr).value
-      console.log(`tab Clicked: ${flowID}`)
-      this.SelectFlow(flowID)
-      // console.log(arg1)
-      // console.log(arg2)
-      // console.log(arg3)
+    const flowID = ((e.target as HTMLElement).attributes.getNamedItem('flowid') as Attr).value
+    console.log(`tab Clicked: ${flowID}`)
+    this.SelectFlow(flowID)
+    // console.log(arg1)
+    // console.log(arg2)
+    // console.log(arg3)
   }
 
 
   handleStartMouseDown(guid: string) {
-      console.log(`${guid}: Parent MouseDown`)
+    console.log(`${guid}: Parent MouseDown`)
   }
   handleMouseMove(e: MouseEvent) {
     if (this.workspace) {

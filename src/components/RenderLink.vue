@@ -65,13 +65,30 @@ export default class RenderLink extends Vue {
     @Prop({default:''})
     guid!: string
 
+    get conStoreState(){
+        if(this.guid == '') return null
+        return this.flows.connections[this.guid]
+    }
+
     @Prop({default: ()=>[false]})
     states!: boolean[]
 
     @Prop({default: ''})
-    from!: string
+    overrideFrom!: string
     @Prop({default: -1})
-    fromPin!: number
+    overrideFromPin!: number
+
+    get from(){
+        if(this.overrideFrom && this.overrideFrom != '') return this.overrideFrom
+        if(this.conStoreState  && this.conStoreState != null) return this.conStoreState.fromID
+        return ''
+    }
+
+    get fromPin(){
+        if(this.overrideFromPin && this.overrideFromPin != -1) return this.overrideFromPin
+        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.fromPort
+        return -1
+    }
     
     get fromTypeObj() {
         const node = this.nodeByID(this.from);
@@ -115,9 +132,21 @@ export default class RenderLink extends Vue {
     // get fromY() { console.log(((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2)); return this.fromRootY + (13 * (this.fromPin) + this.fromFirstOutPinY) + ((( Math.ceil( this.fromTotalHeight / this.workspace.grid.height ) * this.workspace.grid.height ) - this.fromTotalHeight) / 2) + 5}
     
     @Prop({default:''})
-    to!: string
+    overrideTo!: string
     @Prop({default: -1})
-    toPin!: number
+    overrideToPin!: number
+
+    get to(){
+        if(this.overrideTo && this.overrideTo != '') return this.overrideTo
+        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.toID
+        return ''
+    }
+
+    get toPin(){
+        if(this.overrideToPin && this.overrideToPin != -1) return this.overrideToPin
+        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.toPort
+        return -1
+    }
     
     get toTypeObj() {
         const node = this.nodeByID(this.to);

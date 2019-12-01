@@ -34,10 +34,10 @@ export interface FlowDictionary {
 
 export interface Connection {
     guid: string
-    fromPort: number
-    toPort: number
     fromID: string
+    fromPort: number
     toID: string
+    toPort: number
     state: boolean[]
     selected: boolean
 }

@@ -9,6 +9,7 @@
     - [Done 2019-11-21](#done-2019-11-21)
     - [Done 2019-11-24](#done-2019-11-24)
     - [Done 2019-11-27](#done-2019-11-27)
+    - [Done 2019-12-01](#done-2019-12-01)
     - [Next Commit 2019-12-01](#next-commit-2019-12-01)
   - [Testing](#testing)
   - [Doing](#doing)
@@ -122,18 +123,21 @@
 * Line should move when dragging is happening
 * Convert Proxies to use new math controller for rendering
 
-### Next Commit 2019-12-01
+### Done 2019-12-01
 * [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
+
+### Next Commit 2019-12-01
+* [Editor] Render Node connections from the flowStore
 
 ## Testing
 
 ## Doing
 
 ## Backlog
-### v0.1 
-* [Editor] Render Node connections from the flowStore
+### v0.1
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
+* [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 * [Editor] Allow selection of connections by clicking them
 * [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][File Management] Add flow renames
@@ -158,6 +162,7 @@
 * [Editor] Chip Embed in other Files
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
+* [Editor] Connections Get their render state from the Node they are from and do not store their own state
 
 ### v0.2
 * Chips Via Plugins
