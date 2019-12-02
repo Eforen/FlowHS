@@ -22,10 +22,10 @@
             <path d="M -5,4 l 10,0 -5,-8 z"></path>
         </g>
         
-        <g v-for="n in inputs" v-bind:key="'input'+n" :class="`port-input${hover.inputs == n? ' port-hover hover':''}`" :transform="`translate(${typeObj.getInputX(args, n)}, ${typeObj.getInputY(args, n)})`">
+        <g v-for="n in inputs" v-bind:key="'input'+n" :class="{'port-input': true, 'port-hover': hover.inputs == n, hover:hover.inputs == n, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n)}, ${typeObj.getInputY(args, n)})`">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="'output'+n" :class="`port-output${hover.outputs == n? ' port-hover hover':''}`" :transform="`translate(${typeObj.getOutputX(args, n)}, ${typeObj.getOutputY(args, n)})`">
+        <g v-for="n in outputs" v-bind:key="'output'+n" :class="{'port-output': true, 'port-hover': hover.outputs == n, hover:hover.outputs == n, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n)}, ${typeObj.getOutputY(args, n)})`">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n;" @mouseleave="hover.outputs = 0"></rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
@@ -112,7 +112,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
 import { Node } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
-import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
+import { ActionStartDragNode, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
 import NodeTypeDictionary from '../nodes/NodeTypeDictionary';
 import NodeType, { NodeTypeArgs } from '../nodes/NodeType';
 import { WorkspaceState } from '../store/workspace/types';
@@ -122,7 +122,7 @@ export default class RenderNode extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
     @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
     @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
-    @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
+    @Action('startDragNode', { namespace: 'selection' }) startDragNode!: (payload: ActionStartDragNode) => void;
     @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;
@@ -131,6 +131,18 @@ export default class RenderNode extends Vue {
         node: false,
         inputs: 0,
         outputs: 0
+    }
+
+    get draggingGlowInput(){
+        return this.selectionStore.draggingConnection && 
+            this.selectionStore.draggingConnectionFromOutput == true &&
+            this.selectionStore.draggingConnectionNode != this.guid
+    }
+
+    get draggingGlowOutput(){
+        return this.selectionStore.draggingConnection && 
+            this.selectionStore.draggingConnectionFromOutput == false &&
+            this.selectionStore.draggingConnectionNode != this.guid
     }
 
     @Prop({default:''})
@@ -270,8 +282,8 @@ export default class RenderNode extends Vue {
                 // Don't do normal stuff
                 return
             }
-            this.$emit('startDrag', this.guid)
-            this.startDrag({source: this.guid, startX: e.screenX, startY: e.screenY})
+            this.$emit('startDragNode', this.guid)
+            this.startDragNode({source: this.guid, startX: e.screenX, startY: e.screenY})
         }, this.delay)
         console.log(`${this.guid}: MouseDown`)
         console.log(e)
@@ -310,8 +322,8 @@ export default class RenderNode extends Vue {
                 // Don't do normal stuff
                 return
             }
-            this.$emit('startDrag', this.guid)
-            this.startDrag({source: this.guid, startX: e.screenX, startY: e.screenY})
+            this.$emit('startDragNode', this.guid)
+            this.startDragNode({source: this.guid, startX: e.screenX, startY: e.screenY})
         }
     }
 

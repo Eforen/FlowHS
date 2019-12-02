@@ -36,14 +36,27 @@ export const mutations: MutationTree<SelectionState> = {
         state.selectedNodes = []
     },
     clearDragging(state){
-        state.dragging = false
+        state.draggingNode = false
         state.dragOffsetGridX = 0
         state.dragOffsetGridY = 0
         state.mouseStartX = 0
         state.mouseStartY = 0
+
+        state.draggingConnection = false
+        state.draggingConnectionFromOutput = false
+        state.draggingConnectionNode = ''
     },
-    startDrag(state, {x, y}: {x: number, y: number}){
-        state.dragging = true
+    startDragNode(state, {x, y}: {x: number, y: number}){
+        state.draggingNode = true
+        state.draggingConnection = false
+        state.mouseStartX = x
+        state.mouseStartY = y
+    },
+    startDragConnection(state, {x, y, fromOutput, node}: {x: number, y: number, fromOutput: boolean, node: string}){
+        state.draggingNode = false
+        state.draggingConnection = true
+        state.draggingConnectionFromOutput = fromOutput
+        state.draggingConnectionNode = node
         state.mouseStartX = x
         state.mouseStartY = y
     },
@@ -52,7 +65,8 @@ export const mutations: MutationTree<SelectionState> = {
         state.dragOffsetGridY = y
     },
     stopDrag(state, {x, y}: {x: number, y: number}){
-        state.dragging = false
+        state.draggingNode = false
+        state.draggingConnection = false
     },
     moveSelected(state){
     },

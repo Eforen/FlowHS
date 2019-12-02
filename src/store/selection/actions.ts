@@ -8,13 +8,23 @@ import CMDMoveNode from '../commands/cmds/CMDMoveNode';
 
 export type SelectionPayloadSetSelected = string[]
 export type SelectionPayloadAddSelected = string[]
-export interface ActionStartDrag {
+export interface ActionStartDragNode {
     /** Starter's GUID */
     source: string
     /** Starting MousePos */
     startX: number
     /** Starting MousePos */
     startY: number
+}
+export interface ActionStartDragConnection {
+    /** Starter's GUID */
+    source: string
+    /** Starting MousePos */
+    startX: number
+    /** Starting MousePos */
+    startY: number
+    /** Is it an output that started the drag */
+    fromOutput: boolean
 }
 export interface ActionStopDrag {
     /** Ending MousePos */
@@ -57,13 +67,21 @@ export const actions: ActionTree<SelectionState, RootState> = {
         commit('clearDragging')
         commit('setSelection', [...state.selectedNodes, ...selectedGUIDs])
     },
-    startDrag({ commit, state }, {source, startX, startY}: ActionStartDrag) {
+    startDragNode({ commit, state }, {source, startX, startY}: ActionStartDragNode) {
         commit('clearDragging')
         if(state.selectedNodes.length == 0 || state.selectedNodes.includes(source) == false){
             // if no selection or selection does not include drag source change selection to the source
             commit('setSelection', [source])
         }
-        commit('startDrag', {x: startX, y: startY})
+        commit('startDragNode', {x: startX, y: startY})
+    },
+    startDragConnection({ commit, state }, {source, startX, startY}: ActionStartDragConnection) {
+        commit('clearDragging')
+        // if(state.selectedNodes.length == 0 || state.selectedNodes.includes(source) == false){
+        //     // if no selection or selection does not include drag source change selection to the source
+        //     commit('setSelection', [source])
+        // }
+        commit('startDragConnection', {x: startX, y: startY})
     },
     updateDrag({ commit, state }, {gridX, gridY}: ActionUpdateDrag) {
         console.log({x: gridX, y: gridY})

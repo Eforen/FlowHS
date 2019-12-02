@@ -45,7 +45,7 @@ import { State, Action, Getter } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
 import { SelectionState } from '@/store/selection/types';
-import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '@/store/selection/actions';
+//import { ActionStartDrag, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '@/store/selection/actions';
 import NodeTypeDictionary from '@/nodes/NodeTypeDictionary';
 import NodeType, { NodeTypeArgs } from '@/nodes/NodeType';
 import { Node, Flow, FlowsState } from '@/store/flows/types';
@@ -54,10 +54,10 @@ import { WorkspaceState } from '@/store/workspace/types';
 @Component
 export default class RenderLink extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
-    @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
-    @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
-    @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
-    @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
+    // @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
+    // @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
+    // @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
+    // @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('flows') flows!: FlowsState
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;

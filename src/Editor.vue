@@ -502,7 +502,7 @@ export default class Editor extends Vue {
         let elem = document.getElementById("workspace-chart") as HTMLElement
         elem.scrollTop += e.movementY * -1
         elem.scrollLeft += e.movementX * -1
-      } else if(this.selectionStore.dragging){
+      } else if(this.selectionStore.draggingNode){
         //console.log(`MouseMove`)
         const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
         const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
@@ -525,7 +525,7 @@ export default class Editor extends Vue {
       console.log(`MouseUp`)
       if(this.panning){
         this.panning=false
-      } else if(this.selectionStore.dragging){
+      } else if(this.selectionStore.draggingNode){
         this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
       } else{
         this.setSelected([])

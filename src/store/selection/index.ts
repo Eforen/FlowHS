@@ -9,7 +9,10 @@ import { RootState } from '../types';
 
 export const state: SelectionState = {
     selectedNodes: [],
-    dragging: false,
+    draggingNode: false,
+    draggingConnection: false,
+    draggingConnectionFromOutput: false,
+    draggingConnectionNode: '',
     dragOffsetGridX: 0,
     dragOffsetGridY: 0,
     mouseStartX: 0,

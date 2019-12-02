@@ -125,17 +125,17 @@
 
 ### Done 2019-12-01
 * [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
+* [Editor] Render Node connections from the flowStore
 
 ### Next Commit 2019-12-01
-* [Editor] Render Node connections from the flowStore
 
 ## Testing
 
 ## Doing
+* [Editor] Allow creation of connections by click dragging from outputs to inputs
 
 ## Backlog
 ### v0.1
-* [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 * [Editor] Allow selection of connections by clicking them
