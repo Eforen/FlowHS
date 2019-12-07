@@ -126,15 +126,15 @@
 ### Done 2019-12-01
 * [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor] Render Node connections from the flowStore
+* [Testing] Add Store tests to kanban
 
 ### Next Commit 2019-12-01
-* [Testing] Add Store tests to kanban
+* [Testing] Add tests for Command Class
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
-* [Testing] Add tests for Command Class
 
 ## Backlog
 ### v0.1
@@ -175,6 +175,7 @@
 * [Testing] Add tests type BasicChip
 * [Testing] Add tests Pins
 * [Testing] Add tests ObjectDictionary Utils
+* Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 * [Editor] Allow selection of connections by clicking them
