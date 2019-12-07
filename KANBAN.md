@@ -10,7 +10,9 @@
     - [Done 2019-11-24](#done-2019-11-24)
     - [Done 2019-11-27](#done-2019-11-27)
     - [Done 2019-12-01](#done-2019-12-01)
-    - [Next Commit 2019-12-01](#next-commit-2019-12-01)
+    - [Done 2019-12-05](#done-2019-12-05)
+    - [Done 2019-12-07](#done-2019-12-07)
+    - [Next Commit 2019-12-07](#next-commit-2019-12-07)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -126,10 +128,14 @@
 ### Done 2019-12-01
 * [BUG][Editor] If middle mouse down on node then node drags and weirdly (should just pan)
 * [Editor] Render Node connections from the flowStore
+
+### Done 2019-12-05
 * [Testing] Add Store tests to kanban
 
-### Next Commit 2019-12-01
+### Done 2019-12-07
 * [Testing] Add tests for Command Class
+
+### Next Commit 2019-12-07
 
 ## Testing
 
