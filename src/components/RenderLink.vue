@@ -1,7 +1,7 @@
 <template>
-    <g :class="{link: true}">
-        <path class="outline" :d="d" :style="{strokeWidth:states.length * 3 + 2}" :transform="`translate(0, -0.5)`"></path>
-        <path v-if="dragging" class="line drag" :d="d" :style="{strokeWidth:states.length * 3 }" :transform="`translate(0, -0.5)`"></path>
+    <g :class="{link: true}" :transform="`translate(0, 0)`">
+        <path class="outline" :d="d" :style="{strokeWidth:states.length * 3 + 2}" :transform="`translate(0, 0)`"></path>
+        <path v-if="dragging" class="line drag" :d="d" :style="{strokeWidth:states.length * 3 }" :transform="`translate(0, 0)`"></path>
         <path v-else v-for="(activity, index) in states" :key="`cores-${index}`" :transform="`translate(0, ${states.length * -1 + index * 3})`" :class="{core: true, active:activity}" :d="d"></path>
     </g>
 </template>
@@ -91,6 +91,12 @@ export default class RenderLink extends Vue {
     }
     
     get fromTypeObj() {
+        if(this.from == "0c3e1188-fd9a-4be2-923e-29053b71ad64") 
+            console.log("wtf")
+        if(this.guid == "88d022b9-19cc-4d5b-b144-8a9fd81f95fe") {
+            console.log("wtaf")
+        }
+        console.log(this)
         const node = this.nodeByID(this.from);
         if(node) { return NodeTypeDictionary.getType(node.type) }
         else { throw 'Could not get type' }
@@ -99,7 +105,8 @@ export default class RenderLink extends Vue {
     get fromArgs(): NodeTypeArgs { return (this.nodeByID(this.from) as Node).args as NodeTypeArgs }
 
     get fromX() { return this.fromTypeObj.getOutputX(this.fromArgs, this.fromPin, true) + 5 }
-    get fromY() { return this.fromTypeObj.getOutputY(this.fromArgs, this.fromPin, true) + 5 + this.fromTypeObj.getHeight(this.fromArgs) / 2 }
+    //get fromY() { return this.fromTypeObj.getOutputY(this.fromArgs, this.fromPin, true) + 5 + this.fromTypeObj.getHeight(this.fromArgs) / 2 }
+    get fromY() { return this.fromTypeObj.getOutputY(this.fromArgs, this.fromPin, true) + 5 }
 
     // get fromRootX(): number { 
     //     const node = this.nodeByID(this.from)
@@ -157,7 +164,8 @@ export default class RenderLink extends Vue {
     get toArgs(): NodeTypeArgs { return (this.nodeByID(this.to) as Node).args as NodeTypeArgs }
 
     get toX() { return this.toTypeObj.getInputX(this.toArgs, this.toPin, true) + 5 }
-    get toY() { return this.toTypeObj.getInputY(this.toArgs, this.toPin, true) + 5 + this.toTypeObj.getHeight(this.toArgs) / 2  }
+    //get toY() { return this.toTypeObj.getInputY(this.toArgs, this.toPin, true) + 5 + this.toTypeObj.getHeight(this.toArgs) / 2  }
+    get toY() { return this.toTypeObj.getInputY(this.toArgs, this.toPin, true) + 5  }
 
     // get toRootX(): number { 
     //     const node = this.nodeByID(this.to)
@@ -215,11 +223,13 @@ export default class RenderLink extends Vue {
     get endControlX() { return this.endX - RenderLink.CONTROL_FORCE } //396
     get endControlY() { return this.endY } //202
 
-    // get endX() { return 471 } //471
-    // get endY() { return 202 } //202
     get endX() { return this.to == ''? this.setEndX : this.toX } //471
     get endY() { return this.to == ''? this.setEndY : this.toY  } //202
+    // get endX() { return 471 } //471
+    // get endY() { return 202 } //202
 
-    get d() { return `M ${this.startX} ${this.startY} C ${this.startControlX} ${this.startControlY} ${this.endControlX} ${this.endControlY} ${this.endX} ${this.endY} ` }
+    get d() { 
+        return `M ${this.startX} ${this.startY} C ${this.startControlX} ${this.startControlY} ${this.endControlX} ${this.endControlY} ${this.endX} ${this.endY} ` 
+    }
 }
 </script>

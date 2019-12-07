@@ -37,6 +37,8 @@ export const mutations: MutationTree<SelectionState> = {
     },
     clearDragging(state){
         state.draggingNode = false
+        state.dragOffsetX = 0
+        state.dragOffsetY = 0
         state.dragOffsetGridX = 0
         state.dragOffsetGridY = 0
         state.mouseStartX = 0
@@ -51,20 +53,31 @@ export const mutations: MutationTree<SelectionState> = {
         state.draggingConnection = false
         state.mouseStartX = x
         state.mouseStartY = y
+        state.dragOffsetX = 0
+        state.dragOffsetY = 0
+        state.dragOffsetGridX = 0
+        state.dragOffsetGridY = 0
     },
-    startDragConnection(state, {x, y, fromOutput, node}: {x: number, y: number, fromOutput: boolean, node: string}){
+    startDragConnection(state, {x, y, fromOutput, node, nodePort}: {x: number, y: number, fromOutput: boolean, node: string, nodePort: number}){
         state.draggingNode = false
         state.draggingConnection = true
         state.draggingConnectionFromOutput = fromOutput
         state.draggingConnectionNode = node
+        state.draggingConnectionNodePort = nodePort
         state.mouseStartX = x
         state.mouseStartY = y
+        state.dragOffsetX = 0
+        state.dragOffsetY = 0
+        state.dragOffsetGridX = 0
+        state.dragOffsetGridY = 0
     },
-    updateDrag(state, {x, y}: {x: number, y: number}){
-        state.dragOffsetGridX = x
-        state.dragOffsetGridY = y
+    updateDrag(state, {x, y, gridX, gridY}: {x: number, y: number, gridX: number, gridY: number}){
+        state.dragOffsetX = x
+        state.dragOffsetY = y
+        state.dragOffsetGridX = gridX
+        state.dragOffsetGridY = gridY
     },
-    stopDrag(state, {x, y}: {x: number, y: number}){
+    stopDrag(state, {x, y}: {x: number, y: number, gridX: number, gridY: number}){
         state.draggingNode = false
         state.draggingConnection = false
     },

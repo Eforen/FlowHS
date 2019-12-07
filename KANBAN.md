@@ -128,14 +128,53 @@
 * [Editor] Render Node connections from the flowStore
 
 ### Next Commit 2019-12-01
+* [Testing] Add Store tests to kanban
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
+* [Testing] Add tests for Command Class
 
 ## Backlog
 ### v0.1
+* [Testing] Add tests for Command CMDAddNode
+* [Testing] Add tests for Command CMDConnectNodes
+* [Testing] Add tests for Command CMDDeleteConnection
+* [Testing] Add tests for Command CMDGroup
+* [Testing] Add tests for Command CMDMoveNode
+* [Testing] Add tests for Command CMDRemoveNode
+* [Testing] Add tests for Commands DoCMD
+* [Testing] Add tests for Commands UndoCMD
+* [Testing] Add tests for Commands RedoCMD
+* [Testing] Add tests for Commands stelthAddCMD
+* [Testing] Add tests for Commands stelthRemoveCMD
+* [Testing] Add tests for Selection setSelection
+* [Testing] Add tests for Selection addSelected
+* [Testing] Add tests for Selection startDragNode
+* [Testing] Add tests for Selection startDragConnection
+* [Testing] Add tests for Selection updateDrag
+* [Testing] Add tests for Selection stopDrag
+* [Testing] Add tests for Flows createFlow
+* [Testing] Add tests for Flows createNodeInSelectedFlow
+* [Testing] Add tests for Flows createNodeInFlow
+* [Testing] Add tests for Flows moveNode
+* [Testing] Add tests for Flows deleteNode
+* [Testing] Add tests for Flows createConnection
+* [Testing] Add tests for Flows deleteConnection
+* [Testing] Add tests for Workspace LoadFlow
+* [Testing] Add tests for Workspace SelectFlow
+* [Testing] Add tests for Workspace SelectPrevFlow
+* [Testing] Add tests for Workspace SelectNextFlow
+* [Testing] Add RenderNode tests to kanban
+* [Testing] Add RenderLink tests to kanban
+* [Testing] Add RenderNodeProxy tests to kanban
+* [Testing] Add tests NodeType
+* [Testing] Add tests NodeTypeDictionary
+* [Testing] Add tests type AND
+* [Testing] Add tests type BasicChip
+* [Testing] Add tests Pins
+* [Testing] Add tests ObjectDictionary Utils
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 * [Editor] Allow selection of connections by clicking them
@@ -163,6 +202,9 @@
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
 * [Editor] Connections Get their render state from the Node they are from and do not store their own state
+* [Testing] Add tests for Flows connectToEmulator
+* [Testing] Add tests for Flows loadFlow
+* [Testing] Add tests for Flows loadClose
 
 ### v0.2
 * Chips Via Plugins

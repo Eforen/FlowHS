@@ -13,8 +13,11 @@ export const state: SelectionState = {
     draggingConnection: false,
     draggingConnectionFromOutput: false,
     draggingConnectionNode: '',
+    draggingConnectionNodePort: -1,
     dragOffsetGridX: 0,
     dragOffsetGridY: 0,
+    dragOffsetX: 0,
+    dragOffsetY: 0,
     mouseStartX: 0,
     mouseStartY: 0
 };

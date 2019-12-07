@@ -54,8 +54,8 @@ export default abstract class NodeType<T extends NodeTypeArgs> {
     getIcon(args: T): string { return this.config.icon }
     getColor(args: T): string { return this.config.color }
 
-    abstract getRootX(args: T): number
-    abstract getRootY(args: T): number
+    abstract getRootX(args: T, absolute: boolean): number
+    abstract getRootY(args: T, absolute: boolean): number
 
     abstract getWidth(args: T): number
     abstract getHeight(args: T): number

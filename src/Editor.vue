@@ -65,6 +65,20 @@
               </g>
             </g>
             <g class="selector">
+              <RenderLink dragging=true 
+                v-if="selectionStore.draggingConnection && selectionStore.draggingConnectionFromOutput" 
+                :overrideFrom="selectionStore.draggingConnectionNode" 
+                :overrideFromPin="selectionStore.draggingConnectionNodePort" 
+                :setEndX="selectionStore.mouseStartX + selectionStore.dragOffsetX" 
+                :setEndY="selectionStore.mouseStartY + selectionStore.dragOffsetY" 
+                :states="[false]"/>
+              <RenderLink dragging=true 
+                v-if="selectionStore.draggingConnection && selectionStore.draggingConnectionFromOutput == false" 
+                :setStartX="selectionStore.mouseStartX + selectionStore.dragOffsetX" 
+                :setStartY="selectionStore.mouseStartY + selectionStore.dragOffsetY" 
+                :overrideTo="selectionStore.draggingConnectionNode" 
+                :overrideToPin="selectionStore.draggingConnectionNodePort" 
+                :states="[false]"/>
               <!-- <RenderLink v-if="doTheThing" from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"/>
               <RenderLink v-else :endX="debug ? debug.offsetX : 0" :endY="debug ? debug.offsetY : 0" :states="[true,false,true]"/> -->
             </g>
@@ -276,6 +290,7 @@ import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState, Connection } from './store/flows/types';
 import NodeType, { NodeTypeArgs } from './nodes/NodeType';
 import { ntPinIn, ntPinOut, IPinArgs } from './nodes/types/Pins';
+import { ntAnd, IAndArgs } from './nodes/types/AND';
 import uuid from 'uuid';
 import { SelectionState } from './store/selection/types';
 import { ActionStopDrag, ActionUpdateDrag, SelectionPayloadSetSelected } from './store/selection/actions';
@@ -434,6 +449,7 @@ export default class Editor extends Vue {
     IO: [
       ['PinIn', NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
       ['PinOut', NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
+      ['AND', NodeTypeDictionary.getType('AND'), { } as IAndArgs],
     ]
   }
 
@@ -469,10 +485,11 @@ export default class Editor extends Vue {
     console.log(`Open Flow Menu`)
     const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.doCMD(new CMDAddNode(debug1, this.loadedFlow))
-    const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    //const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    const debug2: Node = { type: 'AND', args: {guid: uuid.v4(), x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
     // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
-    const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 0, state: [false], selected: false}
+    const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}
     this.doCMD(new CMDConnectNodes(con))
     //this.doTheThing = true
     
@@ -502,17 +519,21 @@ export default class Editor extends Vue {
         let elem = document.getElementById("workspace-chart") as HTMLElement
         elem.scrollTop += e.movementY * -1
         elem.scrollLeft += e.movementX * -1
-      } else if(this.selectionStore.draggingNode){
-        //console.log(`MouseMove`)
-        const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
-        const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
-        // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
-        // const gridY = Math.round(e.offsetY / this.workspace.grid.height)
-        // const gridX = Math.round((e.offsetX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
-        // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
-        if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
-          this.updateDrag({ gridX, gridY })
-          //console.log(e)
+      // } else if(this.selectionStore.draggingNode){
+      //   //console.log(`MouseMove`)
+      //   const gridX = Math.round((e.screenX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+      //   const gridY = Math.round((e.screenY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+      //   // const gridX = Math.round(e.offsetX / this.workspace.grid.width)
+      //   // const gridY = Math.round(e.offsetY / this.workspace.grid.height)
+      //   // const gridX = Math.round((e.offsetX - this.selectionStore.mouseStartX) / this.workspace.grid.width)
+      //   // const gridY = Math.round((e.offsetY - this.selectionStore.mouseStartY) / this.workspace.grid.height)
+      //   if(this.selectionStore.dragOffsetGridX != gridX || this.selectionStore.dragOffsetGridY != gridY){
+      //     this.updateDrag({ gridX, gridY })
+      //     //console.log(e)
+      //   }
+      } else if(this.selectionStore.draggingNode || this.selectionStore.draggingConnection){
+        if(this.selectionStore.dragOffsetGridX != e.offsetX || this.selectionStore.dragOffsetGridY != e.offsetY){
+          this.updateDrag({ x: e.offsetX, y: e.offsetY})
         }
       } else{
         this.debug = e

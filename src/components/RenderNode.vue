@@ -22,10 +22,10 @@
             <path d="M -5,4 l 10,0 -5,-8 z"></path>
         </g>
         
-        <g v-for="n in inputs" v-bind:key="'input'+n" :class="{'port-input': true, 'port-hover': hover.inputs == n, hover:hover.inputs == n, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n)}, ${typeObj.getInputY(args, n)})`">
+        <g v-for="n in inputs" v-bind:key="'input'+n" :id="'input'+n" :class="{'port-input': true, 'port-hover': hover.inputs == n, hover:hover.inputs == n, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n, false)}, ${typeObj.getInputY(args, n, false)})`" @mousedown="handleMouseDownOnPort(false, n, $event)" @mouseup="handleMouseUpOnPort(false, n, $event)">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="'output'+n" :class="{'port-output': true, 'port-hover': hover.outputs == n, hover:hover.outputs == n, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n)}, ${typeObj.getOutputY(args, n)})`">
+        <g v-for="n in outputs" v-bind:key="'output'+n" :id="'input'+n"  :class="{'port-output': true, 'port-hover': hover.outputs == n, hover:hover.outputs == n, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n, false)}, ${typeObj.getOutputY(args, n, false)})`" @mousedown="handleMouseDownOnPort(true, n, $event)" @mouseup="handleMouseUpOnPort(true, n, $event)">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n;" @mouseleave="hover.outputs = 0"></rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
@@ -112,7 +112,7 @@ import { Component, Prop } from 'vue-property-decorator'
 import {ipcRenderer} from 'electron'
 import { Node } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
-import { ActionStartDragNode, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
+import { ActionStartDragNode, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected, ActionStartDragConnection } from '../store/selection/actions';
 import NodeTypeDictionary from '../nodes/NodeTypeDictionary';
 import NodeType, { NodeTypeArgs } from '../nodes/NodeType';
 import { WorkspaceState } from '../store/workspace/types';
@@ -123,6 +123,7 @@ export default class RenderNode extends Vue {
     @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
     @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
     @Action('startDragNode', { namespace: 'selection' }) startDragNode!: (payload: ActionStartDragNode) => void;
+    @Action('startDragConnection', { namespace: 'selection' }) startDragConnection!: (payload: ActionStartDragConnection) => void;
     @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;
@@ -283,10 +284,30 @@ export default class RenderNode extends Vue {
                 return
             }
             this.$emit('startDragNode', this.guid)
-            this.startDragNode({source: this.guid, startX: e.screenX, startY: e.screenY})
+            this.startDragNode({source: this.guid, startX: e.offsetX, startY: e.offsetY})
         }, this.delay)
         console.log(`${this.guid}: MouseDown`)
         console.log(e)
+    }
+
+    handleMouseDownOnPort(output: boolean, port: number, e: MouseEvent) {
+        //e.preventDefault()
+        if(e.button == 1 && e.buttons == 4){
+            // If middle mouse down ditch
+            return
+        }
+        e.preventDefault()
+        //this.$emit('startDragConnection', this.guid, output, port)
+        this.startDragConnection({source: this.guid, startX: e.offsetX, startY: e.offsetY, output, port})
+    }
+
+    handleMouseUpOnPort(output: boolean, port: number, e: MouseEvent) {
+        if(e.button == 1 && e.buttons == 4){
+            // If middle mouse down ditch
+        }
+        e.preventDefault()
+        //this.$emit('stopDragConnection', this.guid, output, port)
+        this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
     }
 
     handleMouseUp(e: MouseEvent) {
@@ -307,7 +328,7 @@ export default class RenderNode extends Vue {
                 // Don't do normal stuff
                 return
             }
-            this.stopDrag({commitMove: true, endX: e.screenX, endY: e.screenY})
+            this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
         }
     }
 
@@ -323,7 +344,7 @@ export default class RenderNode extends Vue {
                 return
             }
             this.$emit('startDragNode', this.guid)
-            this.startDragNode({source: this.guid, startX: e.screenX, startY: e.screenY})
+            this.startDragNode({source: this.guid, startX: e.offsetX, startY: e.offsetY})
         }
     }
 

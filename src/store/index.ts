@@ -9,7 +9,7 @@ import { commands, state as commandsState } from './commands/index';
 
 Vue.use(Vuex);
 
-const store: StoreOptions<RootState> = {
+export const storeDef: StoreOptions<RootState> = {
     state: {
         version: '1.0.0', // a simple property
         flows: flowsState,
@@ -25,4 +25,6 @@ const store: StoreOptions<RootState> = {
     }
 };
 
-export default new Vuex.Store<RootState>(store);
+const store = new Vuex.Store<RootState>(storeDef);
+
+export default store

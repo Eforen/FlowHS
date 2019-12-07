@@ -7,7 +7,7 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
         })
     }
     
-    getRootX(args: T): number {
+    getRootX(args: T, absolute: boolean): number {
         const dragOffsetX = (this.rootState.selection.draggingNode && 
             this.rootState.selection.selectedNodes.includes(args.guid) && 
             args.guid.toLowerCase()!='pallet' ? 
@@ -15,13 +15,14 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
             * this.rootState.workspace.grid.width
         return args.x * this.rootState.workspace.grid.width + dragOffsetX
     }
-    getRootY(args: T): number {
+    getRootY(args: T, absolute: boolean): number {
         const dragOffsetY = (this.rootState.selection.draggingNode  && 
             this.rootState.selection.selectedNodes.includes(args.guid) && 
             args.guid.toLowerCase()!='pallet' ? 
                 this.rootState.selection.dragOffsetGridY  : 0)
             * this.rootState.workspace.grid.height
         return args.y * this.rootState.workspace.grid.height + this.yOffset(args) + dragOffsetY
+            + (absolute? (this.getHeight(args)) / 2: 0) //need to adjust for offset of center vs corner
     }
 
     // getX(args: T): number {
@@ -74,38 +75,42 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
         / 2
     }
     getLabelX(args: T, absolute: boolean): number {
-        return (absolute? this.getRootX(args) : 0) + (this.getIcon(args) != '' ? 38 : 8)
+        return (absolute? this.getRootX(args, absolute) : 0) + (this.getIcon(args) != '' ? 38 : 8)
     }
     getLabelY(args: T, absolute: boolean): number {
-        return (absolute? this.getRootY(args) : 0) + 14 + this.yOffsetMod(args)
+        return (absolute? this.getRootY(args, absolute) : 0) + 14 + this.yOffsetMod(args)
     }
 
     getInputX(args: T, index: number, absolute: boolean): number {
-        return (absolute? this.getRootX(args) : 0) + -5
+        return (absolute? this.getRootX(args, absolute) : 0) + -5
     }
     getInputY(args: T, index: number, absolute: boolean): number {
-        return (absolute? this.getRootY(args) : 0) + 13 * (index - 1) + this.firstInPinY(args)
+        return (absolute? this.getRootY(args, absolute) : 0) + 13 * (index - 1) + this.firstInPinY(args)
     }
 
     getOutputX(args: T, index: number, absolute: boolean): number {
-        return (absolute? this.getRootX(args) : 0) + this.desiredWidth(args) - 5
+        return (absolute? this.getRootX(args, absolute) : 0) + this.desiredWidth(args) - 5
     }
     getOutputY(args: T, index: number, absolute: boolean): number {
-        return (absolute? this.getRootY(args) : 0) + 13 * (index - 1) + this.firstOutPinY(args)
+        if(absolute === false){
+            console.log("ChipA")
+            console.log({t:this, args, index, absolute})
+        }
+        return (absolute? this.getRootY(args, absolute) : 0) + 13 * (index - 1) + this.firstOutPinY(args)
     }
 
     getChangedX(args: T, absolute: boolean): number {
-        return (absolute? this.getRootX(args) : 0) + 150
+        return (absolute? this.getRootX(args, absolute) : 0) + 150
     }
     getChangedY(args: T, absolute: boolean): number {
-        return (absolute? this.getRootY(args) : 0) + -2
+        return (absolute? this.getRootY(args, absolute) : 0) + -2
     }
 
     getErrorX(args: T, absolute: boolean): number {
-        return (absolute? this.getRootX(args) : 0) + 150
+        return (absolute? this.getRootX(args, absolute) : 0) + 150
 
     }
     getErrorY(args: T, absolute: boolean): number {
-        return (absolute? this.getRootY(args) : 0) + -2
+        return (absolute? this.getRootY(args, absolute) : 0) + -2
     }
 }

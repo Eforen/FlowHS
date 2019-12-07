@@ -9,8 +9,12 @@ export interface SelectionState {
     draggingConnectionFromOutput: boolean
     /** The node that the drag started at */
     draggingConnectionNode: string
+    /** The node port that the drag started at */
+    draggingConnectionNodePort: number
     dragOffsetGridX: number
     dragOffsetGridY: number
+    dragOffsetX: number
+    dragOffsetY: number
     mouseStartX: number
     mouseStartY: number
 }
