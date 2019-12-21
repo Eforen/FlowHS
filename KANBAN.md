@@ -137,15 +137,15 @@
 * [Testing] Add tests for Command Class
 
 ### Done 2019-12-21
+* [Testing] Add tests for Command CMDAddNode
 
 ### Next Commit 2019-12-21
-* [Testing] Add tests for Command CMDAddNode
+* [Testing] Add tests for Flows createFlow
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
-* [Testing] Add tests for Flows createFlow
 
 ## Backlog
 ### v0.1

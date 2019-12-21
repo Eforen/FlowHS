@@ -31,12 +31,48 @@ describe('Store: flows', () => {
 
         it('createFlow', ()=>{
             expect(Object.keys(store.state.flows.flows).length).to.equal(0, "flows are not empty at start")
-            const guid = uuid.v4()
-            const filename = uuid.v4()
-            const title = uuid.v4()
-            const flow: Flow = {guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] }
-            store.dispatch('flows/createFlow', flow)
-            expect(store.state.flows.flows[guid]).to.deep.equal({guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] })
+
+            const checkFlow = (guid: string, filename: string, title: string, count: number = 1)=>{
+                expect(Object.keys(store.state.flows.flows).length).to.equal(count, "cF: Node count wrong")
+                // expect(store.state.flows.flows[guid].args.guid).to.equal(guid, 'cF: Guid is wrong')
+                // expect(store.state.flows.flows[guid].args.x).to.equal(x, 'cF: X Pos is wrong')
+                // expect(store.state.flows.flows[guid].args.y).to.equal(y, 'cF: Y Pos is wrong')
+                // expect(store.state.flows.flows[guid].type).to.equal(type, 'cF: Type is wrong')
+                // expect(store.state.flows.flows[guid].type).to.equal(type, 'cF: Type is wrong')
+                
+                expect(store.state.flows.flows[guid]).to.deep.equal({guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] })
+            }
+
+            const addFlow = (guid: string, filename: string, title: string, beforeCount: number = 0)=>{
+                // Confirm State
+                expect(Object.keys(store.state.flows.flows).length).to.equal(beforeCount, "aF: Nodes are not as expected at start")
+                expect(guid).to.not.equal(filename, 'aF: Seting Up Test Failed')
+                expect(filename).to.not.equal(title, 'aF: Seting Up Test Failed')
+    
+                // Setup it
+                const flow: Flow = {guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] }
+                //const cmd = new CMDAddNode(node, flow.guid)
+
+                // Do it
+                //cmd.exe(store.dispatch, store.state)
+                store.dispatch('flows/createFlow', flow)
+
+                // Check it
+                checkFlow(guid, filename, title, beforeCount + 1)
+                return flow
+            }
+
+            const checkExists = (nodes: Flow[], checkCount: number, count: number) => {
+                expect(nodes.length).to.equal(checkCount, "cE: Input is not as expected")
+                expect(Object.keys(store.state.flows.flows).length).to.equal(count, "cE: Nodes are not as expected at start")
+                nodes.forEach(value => {
+                    const {guid, filename, title} = value
+
+                    checkFlow(guid, filename, title, count)
+                })
+            }
+
+            addFlow(uuid.v4(), uuid.v4(), uuid.v4(), 0)
         })
 
         it.skip('createNodeInSelectedFlow', ()=>{})
@@ -54,8 +90,8 @@ describe('Store: flows', () => {
     })
     
     // it('', () => {
-    //     //expect(Object.keys(store.state.flows.nodes).length).to.equal(0, "Nodes are not empty at start")
-    //     expect(Object.keys(store.state.flows.nodes).length).to.equal(0, "Nodes are not empty at start")
+    //     //expect(Object.keys(store.state.flows.flows).length).to.equal(0, "Nodes are not empty at start")
+    //     expect(Object.keys(store.state.flows.flows).length).to.equal(0, "Nodes are not empty at start")
     //     const node: Node = {
     //         error: false,
     //         changed: false, 
@@ -73,8 +109,8 @@ describe('Store: flows', () => {
     //     console.log("store.state")
     //     console.log(localVue)
     //     console.log(store.state)
-    //     console.log(store.state.flows.nodes)
+    //     console.log(store.state.flows.flows)
     //     cmd.exe(store.dispatch, store.state)
-    //     expect(Object.keys(store.state.flows.nodes).length).to.equal(0, "Nodes are not empty at start")
+    //     expect(Object.keys(store.state.flows.flows).length).to.equal(0, "Nodes are not empty at start")
     // })
     })
