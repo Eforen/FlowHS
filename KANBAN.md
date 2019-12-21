@@ -12,7 +12,8 @@
     - [Done 2019-12-01](#done-2019-12-01)
     - [Done 2019-12-05](#done-2019-12-05)
     - [Done 2019-12-07](#done-2019-12-07)
-    - [Next Commit 2019-12-07](#next-commit-2019-12-07)
+    - [Done 2019-12-21](#done-2019-12-21)
+    - [Next Commit 2019-12-21](#next-commit-2019-12-21)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -135,21 +136,30 @@
 ### Done 2019-12-07
 * [Testing] Add tests for Command Class
 
-### Next Commit 2019-12-07
+### Done 2019-12-21
+
+### Next Commit 2019-12-21
+* [Testing] Add tests for Command CMDAddNode
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
+* [Testing] Add tests for Flows createFlow
 
 ## Backlog
 ### v0.1
-* [Testing] Add tests for Command CMDAddNode
+* [Testing] Add tests for Flows createNodeInFlow
+* [Testing] Add tests for Flows createNodeInSelectedFlow
+* [Testing] Add tests for Flows moveNode
+* [Testing] Add tests for Flows deleteNode
+* [Testing] Add tests for Flows createConnection
+* [Testing] Add tests for Flows deleteConnection
+* [Testing] Add tests for Command CMDRemoveNode
+* [Testing] Add tests for Command CMDMoveNode
+* [Testing] Add tests for Command CMDGroup
 * [Testing] Add tests for Command CMDConnectNodes
 * [Testing] Add tests for Command CMDDeleteConnection
-* [Testing] Add tests for Command CMDGroup
-* [Testing] Add tests for Command CMDMoveNode
-* [Testing] Add tests for Command CMDRemoveNode
 * [Testing] Add tests for Commands DoCMD
 * [Testing] Add tests for Commands UndoCMD
 * [Testing] Add tests for Commands RedoCMD
@@ -161,13 +171,6 @@
 * [Testing] Add tests for Selection startDragConnection
 * [Testing] Add tests for Selection updateDrag
 * [Testing] Add tests for Selection stopDrag
-* [Testing] Add tests for Flows createFlow
-* [Testing] Add tests for Flows createNodeInSelectedFlow
-* [Testing] Add tests for Flows createNodeInFlow
-* [Testing] Add tests for Flows moveNode
-* [Testing] Add tests for Flows deleteNode
-* [Testing] Add tests for Flows createConnection
-* [Testing] Add tests for Flows deleteConnection
 * [Testing] Add tests for Workspace LoadFlow
 * [Testing] Add tests for Workspace SelectFlow
 * [Testing] Add tests for Workspace SelectPrevFlow

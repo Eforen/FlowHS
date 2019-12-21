@@ -54,13 +54,15 @@ export const setNodePos = (state: FlowsState, {node, x, y}: {node:string, x: num
     Vue.set(state.nodes, node, {...state.nodes[node], args:{ ...state.nodes[node].args, x, y }})
 }
 export const addNodeToFlow = (state: FlowsState, payload: {flow: string, node: string}) => {
-    if(state.flows[payload.flow].nodes.indexOf(payload.node) == -1){
-        Vue.set(state.flows, payload.flow, 
-            {...state.flows[payload.flow], 
-                nodes: [...state.flows[payload.flow].nodes, payload.node]
-            }
-        )
-    }
+    if(state.flows[payload.flow]){
+        if(state.flows[payload.flow].nodes.indexOf(payload.node) == -1){
+            Vue.set(state.flows, payload.flow, 
+                {...state.flows[payload.flow], 
+                    nodes: [...state.flows[payload.flow].nodes, payload.node]
+                }
+            )
+        }
+    } else throw new Error("Flow Not Set")
 }
 export const addConToFlow = (state: FlowsState, payload: {flow: string, connection: string}) => {
     if(state.flows[payload.flow].connections.indexOf(payload.connection) == -1){

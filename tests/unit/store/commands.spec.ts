@@ -5,6 +5,7 @@ import Vuex, { Store } from 'vuex'
 import { storeDef } from '@/store'
 import { RootState } from '@/store/types'
 import { tests_CMDclass } from './CMDs/CMDclass'
+import { tests_CMDAddNode } from './CMDs/CMDAddNode'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -40,4 +41,5 @@ describe('Store: Commands', () => {
   })
 
   tests_CMDclass()
+  tests_CMDAddNode()
 })
