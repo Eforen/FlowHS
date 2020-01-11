@@ -13,7 +13,7 @@
     - [Done 2019-12-05](#done-2019-12-05)
     - [Done 2019-12-07](#done-2019-12-07)
     - [Done 2019-12-21](#done-2019-12-21)
-    - [Next Commit 2019-12-21](#next-commit-2019-12-21)
+    - [Next Commit 2020-01-11](#next-commit-2020-01-11)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -138,21 +138,22 @@
 
 ### Done 2019-12-21
 * [Testing] Add tests for Command CMDAddNode
-
-### Next Commit 2019-12-21
 * [Testing] Add tests for Flows createFlow
+* [Testing] Add tests for Flows createNodeInFlow
+
+### Next Commit 2020-01-11
+* [Bug] Fixed some issues with proxy rendering
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
+* [Testing] Add tests for Flows deleteNode
 
 ## Backlog
 ### v0.1
-* [Testing] Add tests for Flows createNodeInFlow
 * [Testing] Add tests for Flows createNodeInSelectedFlow
 * [Testing] Add tests for Flows moveNode
-* [Testing] Add tests for Flows deleteNode
 * [Testing] Add tests for Flows createConnection
 * [Testing] Add tests for Flows deleteConnection
 * [Testing] Add tests for Command CMDRemoveNode

@@ -1,11 +1,11 @@
 <template>
-    <div :class="`palette-node ${available? 'available':''}`" data-palette-type="inject" :style="{paddingLeft: button ? '-30px' : '0px', marginLeft: button ? '35px' : '10px', height: '28px'}">
+    <div :class="`palette-node ${available? 'available':''}`" data-palette-type="inject" :style="{paddingLeft: button ? '-30px' : '0px', marginLeft: button ? '35px' : '10px', height: `${typeObj.getHeight(args)}px`}">
         <div v-show="button"  class="palette-button">
             <div class="palette-button-background"></div>
             <div class="palette-button-pad" :style="{backgroundColor: color}"></div>
         </div>
-        <div class="palette-body" :style="{ backgroundColor:typeObj.getColor(args), height: '28px'  }" ></div>
-        <div class="palette-label" dir="">{{title}}</div>
+        <div class="palette-body" :style="{ backgroundColor:typeObj.getColor(args), height: `${typeObj.getHeight(args)}px` }" ></div>
+        <div class="palette-label" dir="" :style="{left: `${typeObj.getLabelX(args)}px`, top: `calc(${typeObj.getLabelY(args)}px - 0.6em)`}">{{title}}</div>
         <div class="palette-icon-container">
             <div class="palette-icon" style="background-image: url(&quot;/icons/subdirectory_arrow_right-24px.svg&quot;);"></div>
         </div>
