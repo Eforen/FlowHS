@@ -14,7 +14,8 @@
     - [Done 2019-12-07](#done-2019-12-07)
     - [Done 2019-12-21](#done-2019-12-21)
     - [Done 2020-01-16](#done-2020-01-16)
-    - [Next Commit 2020-01-16](#next-commit-2020-01-16)
+    - [Done 2020-01-17](#done-2020-01-17)
+    - [Next Commit 2020-01-17](#next-commit-2020-01-17)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -148,16 +149,18 @@
 * [Bug] Fixed some issues with node rendering
 * [Testing] Add tests type BasicChip
 * [Bug] Fixed proxy ports rendering as wrong port
-
-### Next Commit 2020-01-16
 * [Bug] Port Highlighting not working (1st Stuck on)
+
+### Done 2020-01-17
+
+### Next Commit 2020-01-17
+* [Bug] Port not Highlighting when dragging from
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Testing] Add tests for Flows deleteNode
-* [Bug] Port not Highlighting when dragging from
 
 ## Backlog
 ### v0.1

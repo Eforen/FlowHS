@@ -95,12 +95,12 @@ export default class RenderLink extends Vue {
     }
     
     get fromTypeObj() {
-        if(this.from == "0c3e1188-fd9a-4be2-923e-29053b71ad64") 
-            console.log("wtf")
-        if(this.guid == "88d022b9-19cc-4d5b-b144-8a9fd81f95fe") {
-            console.log("wtaf")
-        }
-        console.log(this)
+        // if(this.from == "0c3e1188-fd9a-4be2-923e-29053b71ad64") 
+        //     console.log("wtf")
+        // if(this.guid == "88d022b9-19cc-4d5b-b144-8a9fd81f95fe") {
+        //     console.log("wtaf")
+        // }
+        //console.log(this)
         const node = this.nodeByID(this.from);
         if(node) { return NodeTypeDictionary.getType(node.type) }
         else { throw 'Could not get type' }

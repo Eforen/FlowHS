@@ -22,10 +22,10 @@
             <path d="M -5,4 l 10,0 -5,-8 z"></path>
         </g>
         
-        <g v-for="n in inputs" v-bind:key="`input${n - 1}`" :id="`input${n - 1}`" :class="{'port-input': true, 'port-hover': hover.inputs == n - 1, hover: (hover.inputs == n - 1 || draggingGlowInput(n - 1)), droptarget: draggingGlowInput(-1)}" :transform="`translate(${typeObj.getInputX(args, n - 1, false)}, ${typeObj.getInputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(false, n - 1, $event)" @mouseup="handleMouseUpOnPort(false, n - 1, $event)">
+        <g v-for="n in inputs" v-bind:key="`input${n - 1}`" :id="`input${n - 1}`" :class="{'port-input': true, 'port-hover': hover.inputs == n - 1, 'drag-hover': draggingGlowInput(n - 1), hover: (hover.inputs == n - 1 || draggingGlowInput(n - 1)), droptarget: draggingGlowInput(-1)}" :transform="`translate(${typeObj.getInputX(args, n - 1, false)}, ${typeObj.getInputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(false, n - 1, $event)" @mouseup="handleMouseUpOnPort(false, n - 1, $event)">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n - 1" @mouseleave="hover.inputs = -1"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="`output${n - 1}`" :id="`output${n - 1}`"  :class="{'port-output': true, 'port-hover': hover.outputs == n - 1, hover: (hover.outputs == n - 1 || draggingGlowOutput(n - 1)), droptarget: draggingGlowOutput(-1)}" :transform="`translate(${typeObj.getOutputX(args, n - 1, false)}, ${typeObj.getOutputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(true, n - 1, $event)" @mouseup="handleMouseUpOnPort(true, n - 1, $event)">
+        <g v-for="n in outputs" v-bind:key="`output${n - 1}`" :id="`output${n - 1}`"  :class="{'port-output': true, 'port-hover': hover.outputs == n - 1, 'drag-hover': draggingGlowOutput(n - 1), hover: (hover.outputs == n - 1 || draggingGlowOutput(n - 1)), droptarget: draggingGlowOutput(-1)}" :transform="`translate(${typeObj.getOutputX(args, n - 1, false)}, ${typeObj.getOutputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(true, n - 1, $event)" @mouseup="handleMouseUpOnPort(true, n - 1, $event)">
             <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n - 1;" @mouseleave="hover.outputs = -1"></rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
@@ -94,7 +94,7 @@ g.node-hover .node {
     stroke-width: 2;
     stroke: #0ecfff !important;
 }
-g.port-hover .port {
+g.port-hover .port, g .drag-hover .port {
     fill: #0BA5CC;
     stroke: #0ecfff !important;
 }
@@ -135,12 +135,35 @@ export default class RenderNode extends Vue {
     }
 
     draggingGlowInput(input: number){
+        // console.log(`${input}: The ID does ${this.guid == this.selectionStore.draggingConnectionNode ? '': `not ${this.guid.substr(0, 6)}:${this.selectionStore.draggingConnectionNode.substr(0, 6)}`}match`)
+        // if (this.selectionStore.draggingConnection == false) return false;
+        // console.log(`${input}: 1`)
+        // if(this.selectionStore.draggingConnectionFromOutput){
+        //     // Dragging from an Output
+        //     console.log(`${input}: 2`)
+        //     if(this.selectionStore.draggingConnectionNode == this.guid) return false
+            
+        //     console.log(`${input}: 3`)
+        //     if(input == -1) return true
+            
+        //     console.log(`${input}: 4`)
+        //     return true
+        // } else{
+        //     // Dragging from an Input
+        //     console.log(`${input}: 5`)
+        //     if(this.selectionStore.draggingConnectionNode != this.guid) return false
+
+        //     console.log(`${input}: 6 ${this.selectionStore.draggingConnectionNodePort}==${input}`)
+        //     if(this.selectionStore.draggingConnectionNodePort == input) return true
+
+        //     console.log(`${input}: 7`)
+        //     return false
+        // }
         return this.selectionStore.draggingConnection && 
             (
                 (
                     this.selectionStore.draggingConnectionFromOutput == true &&
-                    this.selectionStore.draggingConnectionNode != this.guid &&
-                    input == -1
+                    this.selectionStore.draggingConnectionNode != this.guid
                 )
                 || 
                 (
@@ -155,8 +178,7 @@ export default class RenderNode extends Vue {
             (
                 (
                     this.selectionStore.draggingConnectionFromOutput == false &&
-                    this.selectionStore.draggingConnectionNode != this.guid &&
-                    output == -1
+                    this.selectionStore.draggingConnectionNode != this.guid
                 )
                 || 
                 (
