@@ -143,12 +143,13 @@
 * [Testing] Add tests for Flows createNodeInFlow
 
 ### Done 2020-01-16
-
-### Next Commit 2020-01-16
 * [Bug] Fixed some issues with proxy rendering
 * [Bug] Fixed some issues with link rendering
 * [Bug] Fixed some issues with node rendering
 * [Testing] Add tests type BasicChip
+
+### Next Commit 2020-01-16
+* [Bug] Fixed proxy ports rendering as wrong port
 
 ## Testing
 
@@ -159,6 +160,7 @@
 ## Backlog
 ### v0.1
 * [Bug] Click drag is moving weird on drop
+* [Bug] Port Highlighting not working
 * [Testing] Add RenderNode tests to kanban
 * [Testing] Add RenderLink tests to kanban
 * [Testing] Add RenderNodeProxy tests to kanban

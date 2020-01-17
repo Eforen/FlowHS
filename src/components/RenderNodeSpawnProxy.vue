@@ -11,12 +11,12 @@
         </div>
         <div class="palette-port palette-port-output"
             v-for="n in outputs"
-            :key="'output'+n"
-            :style="{top: `${typeObj.getOutputY(args, n)}px`}"></div>
+            :key="`output${n - 1}`"
+            :style="{top: `${typeObj.getOutputY(args, n - 1)}px`}"></div>
         <div class="palette-port palette-port-input"
             v-for="n in inputs"
-            :key="'input'+n"
-            :style="{top: `${typeObj.getInputY(args, n)}px`}"></div>
+            :key="`input${n - 1}`"
+            :style="{top: `${typeObj.getInputY(args, n - 1)}px`}"></div>
         <!--
         <div class="draggable" draggable="true" @dragstart="handleDragStart">
           <svg class="draggable" height="40">
