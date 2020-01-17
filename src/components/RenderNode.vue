@@ -22,11 +22,11 @@
             <path d="M -5,4 l 10,0 -5,-8 z"></path>
         </g>
         
-        <g v-for="n in inputs" v-bind:key="`input${n - 1}`" :id="`input${n - 1}`" :class="{'port-input': true, 'port-hover': hover.inputs == n - 1, hover:hover.inputs == n - 1, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n - 1, false)}, ${typeObj.getInputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(false, n - 1, $event)" @mouseup="handleMouseUpOnPort(false, n - 1, $event)">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n - 1" @mouseleave="hover.inputs = 0"></rect>
+        <g v-for="n in inputs" v-bind:key="`input${n - 1}`" :id="`input${n - 1}`" :class="{'port-input': true, 'port-hover': hover.inputs == n - 1, hover: (hover.inputs == n - 1 || draggingGlowInput(n - 1)), droptarget: draggingGlowInput(-1)}" :transform="`translate(${typeObj.getInputX(args, n - 1, false)}, ${typeObj.getInputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(false, n - 1, $event)" @mouseup="handleMouseUpOnPort(false, n - 1, $event)">
+            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n - 1" @mouseleave="hover.inputs = -1"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="`output${n - 1}`" :id="`output${n - 1}`"  :class="{'port-output': true, 'port-hover': hover.outputs == n - 1, hover:hover.outputs == n - 1, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n - 1, false)}, ${typeObj.getOutputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(true, n - 1, $event)" @mouseup="handleMouseUpOnPort(true, n - 1, $event)">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n - 1;" @mouseleave="hover.outputs = 0"></rect>
+        <g v-for="n in outputs" v-bind:key="`output${n - 1}`" :id="`output${n - 1}`"  :class="{'port-output': true, 'port-hover': hover.outputs == n - 1, hover: (hover.outputs == n - 1 || draggingGlowOutput(n - 1)), droptarget: draggingGlowOutput(-1)}" :transform="`translate(${typeObj.getOutputX(args, n - 1, false)}, ${typeObj.getOutputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(true, n - 1, $event)" @mouseup="handleMouseUpOnPort(true, n - 1, $event)">
+            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n - 1;" @mouseleave="hover.outputs = -1"></rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
             <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
@@ -130,20 +130,40 @@ export default class RenderNode extends Vue {
 
     hover: { node: boolean, inputs: number, outputs: number} = {
         node: false,
-        inputs: 0,
-        outputs: 0
+        inputs: -1,
+        outputs: -1
     }
 
-    get draggingGlowInput(){
+    draggingGlowInput(input: number){
         return this.selectionStore.draggingConnection && 
-            this.selectionStore.draggingConnectionFromOutput == true &&
-            this.selectionStore.draggingConnectionNode != this.guid
+            (
+                (
+                    this.selectionStore.draggingConnectionFromOutput == true &&
+                    this.selectionStore.draggingConnectionNode != this.guid &&
+                    input == -1
+                )
+                || 
+                (
+                    this.selectionStore.draggingConnectionNode == this.guid &&
+                    this.selectionStore.draggingConnectionNodePort == input
+                )
+            )
     }
 
-    get draggingGlowOutput(){
+    draggingGlowOutput(output: number){
         return this.selectionStore.draggingConnection && 
-            this.selectionStore.draggingConnectionFromOutput == false &&
-            this.selectionStore.draggingConnectionNode != this.guid
+            (
+                (
+                    this.selectionStore.draggingConnectionFromOutput == false &&
+                    this.selectionStore.draggingConnectionNode != this.guid &&
+                    output == -1
+                )
+                || 
+                (
+                    this.selectionStore.draggingConnectionNode == this.guid &&
+                    this.selectionStore.draggingConnectionNodePort == output
+                )
+            )
     }
 
     @Prop({default:''})

@@ -147,20 +147,21 @@
 * [Bug] Fixed some issues with link rendering
 * [Bug] Fixed some issues with node rendering
 * [Testing] Add tests type BasicChip
+* [Bug] Fixed proxy ports rendering as wrong port
 
 ### Next Commit 2020-01-16
-* [Bug] Fixed proxy ports rendering as wrong port
+* [Bug] Port Highlighting not working (1st Stuck on)
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Testing] Add tests for Flows deleteNode
+* [Bug] Port not Highlighting when dragging from
 
 ## Backlog
 ### v0.1
 * [Bug] Click drag is moving weird on drop
-* [Bug] Port Highlighting not working
 * [Testing] Add RenderNode tests to kanban
 * [Testing] Add RenderLink tests to kanban
 * [Testing] Add RenderNodeProxy tests to kanban
