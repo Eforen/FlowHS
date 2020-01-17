@@ -92,7 +92,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
         const offsetY = (y - state.mouseStartY)
         const gridX = Math.round(offsetX / rootState.workspace.grid.width)
         const gridY = Math.round(offsetY / rootState.workspace.grid.height)
-        console.log({x: offsetX, y: offsetY, gridX, gridY})
+        //console.log({x: offsetX, y: offsetY, gridX, gridY})
         commit('updateDrag', {x: offsetX, y: offsetY, gridX, gridY})
     },
     stopDrag({ dispatch, commit, state, rootState }, {commitMove, endX, endY}: ActionStopDrag) {

@@ -22,11 +22,11 @@
             <path d="M -5,4 l 10,0 -5,-8 z"></path>
         </g>
         
-        <g v-for="n in inputs" v-bind:key="'input'+n" :id="'input'+n" :class="{'port-input': true, 'port-hover': hover.inputs == n, hover:hover.inputs == n, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n, false)}, ${typeObj.getInputY(args, n, false)})`" @mousedown="handleMouseDownOnPort(false, n, $event)" @mouseup="handleMouseUpOnPort(false, n, $event)">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n" @mouseleave="hover.inputs = 0"></rect>
+        <g v-for="n in inputs" v-bind:key="`input${n - 1}`" :id="`input${n - 1}`" :class="{'port-input': true, 'port-hover': hover.inputs == n - 1, hover:hover.inputs == n - 1, droptarget: draggingGlowInput}" :transform="`translate(${typeObj.getInputX(args, n - 1, false)}, ${typeObj.getInputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(false, n - 1, $event)" @mouseup="handleMouseUpOnPort(false, n - 1, $event)">
+            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.inputs = n - 1" @mouseleave="hover.inputs = 0"></rect>
         </g>
-        <g v-for="n in outputs" v-bind:key="'output'+n" :id="'input'+n"  :class="{'port-output': true, 'port-hover': hover.outputs == n, hover:hover.outputs == n, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n, false)}, ${typeObj.getOutputY(args, n, false)})`" @mousedown="handleMouseDownOnPort(true, n, $event)" @mouseup="handleMouseUpOnPort(true, n, $event)">
-            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n;" @mouseleave="hover.outputs = 0"></rect>
+        <g v-for="n in outputs" v-bind:key="`output${n - 1}`" :id="`output${n - 1}`"  :class="{'port-output': true, 'port-hover': hover.outputs == n - 1, hover:hover.outputs == n - 1, droptarget: draggingGlowOutput}" :transform="`translate(${typeObj.getOutputX(args, n - 1, false)}, ${typeObj.getOutputY(args, n - 1, false)})`" @mousedown="handleMouseDownOnPort(true, n - 1, $event)" @mouseup="handleMouseUpOnPort(true, n - 1, $event)">
+            <rect class="port" rx="3" ry="3" width="10" height="10" @mouseover="hover.outputs = n - 1;" @mouseleave="hover.outputs = 0"></rect>
         </g>
         <!-- <g v-if="outputs == 1" class="flow-port-output" transform="translate(155,10)">
             <rect class="flow-port" rx="3" ry="3" width="10" height="10"></rect>
@@ -247,7 +247,7 @@ export default class RenderNode extends Vue {
             // Don't do normal stuff
             return
         }
-        console.log(`${this.guid}: Drag`)
+        //console.log(`${this.guid}: Drag`)
     }
 
     handleDragStart() {
@@ -286,8 +286,8 @@ export default class RenderNode extends Vue {
             this.$emit('startDragNode', this.guid)
             this.startDragNode({source: this.guid, startX: e.offsetX, startY: e.offsetY})
         }, this.delay)
-        console.log(`${this.guid}: MouseDown`)
-        console.log(e)
+        //console.log(`${this.guid}: MouseDown`)
+        //console.log(e)
     }
 
     handleMouseDownOnPort(output: boolean, port: number, e: MouseEvent) {
@@ -317,8 +317,8 @@ export default class RenderNode extends Vue {
           return
       }
         e.preventDefault()
-        console.log(`${this.guid}: MouseUp`)
-        console.log(e)
+        //console.log(`${this.guid}: MouseUp`)
+        //console.log(e)
         if(this.clickTimer != null) {
             clearTimeout(this.clickTimer)
             this.clickTimer = null
@@ -333,8 +333,8 @@ export default class RenderNode extends Vue {
     }
 
     handleMouseOut(e: MouseEvent) {
-        console.log(`${this.guid}: MouseOut`)
-        console.log(e)
+        //console.log(`${this.guid}: MouseOut`)
+        //console.log(e)
         
         if(this.clickTimer != null) {
             clearTimeout(this.clickTimer)

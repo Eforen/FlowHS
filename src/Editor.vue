@@ -410,9 +410,9 @@ export default class Editor extends Vue {
         }
       }
     }
-    console.log('Keyboard Event')
-    console.log(this)
-    console.log(ev)
+    // console.log('Keyboard Event')
+    // console.log(this)
+    // console.log(ev)
   }
 
   get nodesInFlowCalc(): string[] {
@@ -539,7 +539,7 @@ export default class Editor extends Vue {
         this.debug = e
       }
     } else {
-      console.log('Workspace Not Ready')
+       console.log('Workspace Not Ready')
     }
   }
   handleMouseUp(e: MouseEvent) {
@@ -559,8 +559,8 @@ export default class Editor extends Vue {
       console.log(`MouseDown Middle Preventing Default`)
       this.panning=true
     } else{
-      console.log(`MouseDown`)
-      console.log(e)
+      // console.log(`MouseDown`)
+      // console.log(e)
     }
   }
   handleMouseEnter(e: MouseEvent) {

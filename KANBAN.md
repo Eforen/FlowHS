@@ -13,7 +13,8 @@
     - [Done 2019-12-05](#done-2019-12-05)
     - [Done 2019-12-07](#done-2019-12-07)
     - [Done 2019-12-21](#done-2019-12-21)
-    - [Next Commit 2020-01-11](#next-commit-2020-01-11)
+    - [Done 2020-01-16](#done-2020-01-16)
+    - [Next Commit 2020-01-16](#next-commit-2020-01-16)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -141,8 +142,13 @@
 * [Testing] Add tests for Flows createFlow
 * [Testing] Add tests for Flows createNodeInFlow
 
-### Next Commit 2020-01-11
+### Done 2020-01-16
+
+### Next Commit 2020-01-16
 * [Bug] Fixed some issues with proxy rendering
+* [Bug] Fixed some issues with link rendering
+* [Bug] Fixed some issues with node rendering
+* [Testing] Add tests type BasicChip
 
 ## Testing
 
@@ -152,6 +158,10 @@
 
 ## Backlog
 ### v0.1
+* [Bug] Click drag is moving weird on drop
+* [Testing] Add RenderNode tests to kanban
+* [Testing] Add RenderLink tests to kanban
+* [Testing] Add RenderNodeProxy tests to kanban
 * [Testing] Add tests for Flows createNodeInSelectedFlow
 * [Testing] Add tests for Flows moveNode
 * [Testing] Add tests for Flows createConnection
@@ -176,13 +186,9 @@
 * [Testing] Add tests for Workspace SelectFlow
 * [Testing] Add tests for Workspace SelectPrevFlow
 * [Testing] Add tests for Workspace SelectNextFlow
-* [Testing] Add RenderNode tests to kanban
-* [Testing] Add RenderLink tests to kanban
-* [Testing] Add RenderNodeProxy tests to kanban
 * [Testing] Add tests NodeType
 * [Testing] Add tests NodeTypeDictionary
 * [Testing] Add tests type AND
-* [Testing] Add tests type BasicChip
 * [Testing] Add tests Pins
 * [Testing] Add tests ObjectDictionary Utils
 * Make Command abstract track exe state and throw error if undo or exe is called in the wrong order

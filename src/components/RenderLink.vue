@@ -85,8 +85,12 @@ export default class RenderLink extends Vue {
     }
 
     get fromPin(){
-        if(this.overrideFromPin && this.overrideFromPin != -1) return this.overrideFromPin
-        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.fromPort
+        if(this.overrideFromPin != undefined && this.overrideFromPin != -1) {
+            return this.overrideFromPin
+        }
+        if(this.conStoreState != undefined && this.conStoreState != null) {
+            return this.conStoreState.fromPort
+        }
         return -1
     }
     
