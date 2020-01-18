@@ -79,8 +79,8 @@ export default class RenderLink extends Vue {
     overrideFromPin!: number
 
     get from(){
-        if(this.overrideFrom && this.overrideFrom != '') return this.overrideFrom
-        if(this.conStoreState  && this.conStoreState != null) return this.conStoreState.fromID
+        if(this.overrideFrom != undefined && this.overrideFrom != '') return this.overrideFrom
+        if(this.conStoreState != undefined  && this.conStoreState != null) return this.conStoreState.fromID
         return ''
     }
 
@@ -148,14 +148,14 @@ export default class RenderLink extends Vue {
     overrideToPin!: number
 
     get to(){
-        if(this.overrideTo && this.overrideTo != '') return this.overrideTo
-        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.toID
+        if(this.overrideTo != undefined && this.overrideTo != '') return this.overrideTo
+        if(this.conStoreState != undefined && this.conStoreState != null) return this.conStoreState.toID
         return ''
     }
 
     get toPin(){
-        if(this.overrideToPin && this.overrideToPin != -1) return this.overrideToPin
-        if(this.conStoreState && this.conStoreState != null) return this.conStoreState.toPort
+        if(this.overrideToPin != undefined && this.overrideToPin != -1) return this.overrideToPin
+        if(this.conStoreState != undefined && this.conStoreState != null) return this.conStoreState.toPort
         return -1
     }
     

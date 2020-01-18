@@ -152,9 +152,10 @@
 * [Bug] Port Highlighting not working (1st Stuck on)
 
 ### Done 2020-01-17
+* [Bug] Port not Highlighting when dragging from
 
 ### Next Commit 2020-01-17
-* [Bug] Port not Highlighting when dragging from
+* [Bug] Render Link To position is wrong for 0th port only
 
 ## Testing
 
