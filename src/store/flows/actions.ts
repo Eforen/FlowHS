@@ -51,7 +51,7 @@ export const actions: ActionTree<FlowsState, RootState> = {
         commit('setConnection', {conGUID, fromID, fromPort, toID, toPort})
     },
     deleteConnection({ commit, rootState }, conGUID:string) {
-        console.log("Debug: deleteConnection")
+        //console.log("Debug: deleteConnection")
         commit('unsetConnection', conGUID)
     },
     // fetchData({ commit }): any {

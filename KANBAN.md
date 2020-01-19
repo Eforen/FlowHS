@@ -157,17 +157,17 @@
 * [Bug] Render Link To position is wrong for 0th port only
 
 ### Done 2020-01-19
+* [Testing] Add Tests for Current CMDConnectNodes Behavior
 
 ### Next Commit 2020-01-19
-* [Testing] Add Tests for Current CMDConnectNodes Behavior
+* [Testing] Add Tests for CMDConnectNodes
+* [Testing] Change CMDConnectNodes to just take in 2 nodes and their ports not the full connection object
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Testing] Add tests for Flows deleteNode
-* [Testing] Add Tests for CMDConnectNodes
-* [Testing] Change CMDConnectNodes to just take in 2 nodes and their ports not the full connection object
 
 ## Backlog
 ### v0.1

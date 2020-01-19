@@ -168,7 +168,7 @@ export const tests_CMDConnectNodes = () => {
             
             expect(store.state.flows).to.deep.equal(targetNoCon)
 
-            const conN = new CMDConnectNodes(con)
+            const conN = new CMDConnectNodes("a0a64a9c-6603-4476-a5f1-2f1373c79962", debug1.args.guid, 0, debug2.args.guid, 2)
             conN.exe(store.dispatch, store.state)
 
             expect(store.state.flows).to.deep.equal(target)

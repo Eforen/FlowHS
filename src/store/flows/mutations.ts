@@ -105,7 +105,7 @@ export const setConnection = (state: FlowsState, payload: {conGUID: string, from
     }
 }
 export const unsetConnection = (state: FlowsState, conGUID: string) => {
-    console.log("Debug: unsetConnection")
+    //console.log("Debug: unsetConnection")
     // If connection does not exist bail out
     if(state.connections[conGUID] == undefined) return
     

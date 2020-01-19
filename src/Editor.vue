@@ -490,7 +490,7 @@ export default class Editor extends Vue {
     this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
     // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
     const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}
-    this.doCMD(new CMDConnectNodes(con))
+    this.doCMD(new CMDConnectNodes('', debug1.args.guid, 0, debug2.args.guid, 2))
     //this.doTheThing = true
     
   }
