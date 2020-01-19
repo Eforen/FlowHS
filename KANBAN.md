@@ -15,7 +15,8 @@
     - [Done 2019-12-21](#done-2019-12-21)
     - [Done 2020-01-16](#done-2020-01-16)
     - [Done 2020-01-17](#done-2020-01-17)
-    - [Next Commit 2020-01-17](#next-commit-2020-01-17)
+    - [Done 2020-01-19](#done-2020-01-19)
+    - [Next Commit 2020-01-19](#next-commit-2020-01-19)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -153,19 +154,55 @@
 
 ### Done 2020-01-17
 * [Bug] Port not Highlighting when dragging from
-
-### Next Commit 2020-01-17
 * [Bug] Render Link To position is wrong for 0th port only
+
+### Done 2020-01-19
+
+### Next Commit 2020-01-19
+* [Testing] Add Tests for Current CMDConnectNodes Behavior
 
 ## Testing
 
 ## Doing
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Testing] Add tests for Flows deleteNode
+* [Testing] Add Tests for CMDConnectNodes
+* [Testing] Change CMDConnectNodes to just take in 2 nodes and their ports not the full connection object
 
 ## Backlog
 ### v0.1
 * [Bug] Click drag is moving weird on drop
+* Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
+* [Editor] Allow creation of connections by click dragging from inputs to outputs
+* [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
+* [Editor] Allow selection of connections by clicking them
+* [Editor] Allow deletion of connections by selecting them then pressing delete
+* [Editor][File Management] Add flow renames
+* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
+* Be redundent with data a little for speed by storing all flowIDs a node is in in the node
+* Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
+* Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection
+* [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
+* [Editor][Node] RenderNode Property Inspector on double click
+* [Editor][Node] RenderNode State Flip Button (left) functionality
+* [Editor][Node] RenderNode Use Vuex to store state
+* [Editor][Node] Show loaded flows above the workspace in tabs
+* [Editor] Calapsable Inspecrtor on right
+* [Editor][File Management] Rename flows in Inspecrtor
+* [Editor] Calapsable New Node List on left
+* [Main] Titlebar Drag Move Window
+* [Main] Titlebar Minimize Window
+* [Main] Titlebar Close Window
+* [Editor] Titlebar Reflects the state of the file and what the ChipName is
+* [Editor] Chip Names independent from filename
+* [Editor] Chip Save/LOAD
+* [Editor] Chip Embed in other Files
+* [Builtin Chips] 1 Bit Pin-IN
+* [Builtin Chips] 1 Bit Pin-OUT
+* [Editor] Connections Get their render state from the Node they are from and do not store their own state
+* [Testing] Add tests for Flows connectToEmulator
+* [Testing] Add tests for Flows loadFlow
+* [Testing] Add tests for Flows loadClose
 * [Testing] Add RenderNode tests to kanban
 * [Testing] Add RenderLink tests to kanban
 * [Testing] Add RenderNodeProxy tests to kanban
@@ -198,37 +235,6 @@
 * [Testing] Add tests type AND
 * [Testing] Add tests Pins
 * [Testing] Add tests ObjectDictionary Utils
-* Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
-* [Editor] Allow creation of connections by click dragging from inputs to outputs
-* [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
-* [Editor] Allow selection of connections by clicking them
-* [Editor] Allow deletion of connections by selecting them then pressing delete
-* [Editor][File Management] Add flow renames
-* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
-* Be redundent with data a little for speed by storing all flowIDs a node is in in the node
-* Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
-* Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection
-* [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
-* [Editor][Node] RenderNode Property Inspector on double click
-* [Editor][Node] RenderNode State Flip Button (left) functionality
-* [Editor][Node] RenderNode Use Vuex to store state
-* [Editor][Node] Show loaded flows above the workspace in tabs
-* [Editor] Calapsable Inspecrtor on right
-* [Editor][File Management] Rename flows in Inspecrtor
-* [Editor] Calapsable New Node List on left
-* [Main] Titlebar Drag Move Window
-* [Main] Titlebar Minimize Window
-* [Main] Titlebar Close Window
-* [Editor] Titlebar Reflects the state of the file and what the ChipName is
-* [Editor] Chip Names independent from filename
-* [Editor] Chip Save/LOAD
-* [Editor] Chip Embed in other Files
-* [Builtin Chips] 1 Bit Pin-IN
-* [Builtin Chips] 1 Bit Pin-OUT
-* [Editor] Connections Get their render state from the Node they are from and do not store their own state
-* [Testing] Add tests for Flows connectToEmulator
-* [Testing] Add tests for Flows loadFlow
-* [Testing] Add tests for Flows loadClose
 
 ### v0.2
 * Chips Via Plugins

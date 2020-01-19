@@ -20,7 +20,9 @@ describe('Store: flows', () => {
 
     describe('', () => {
         beforeEach(() => {
-        store = new Store(storeDef)
+            store = new Store(storeDef())
+            store.replaceState(storeDef().state as RootState)
+            //console.log("New Store")
         })
         
         it.skip('connectToEmulator', ()=>{})

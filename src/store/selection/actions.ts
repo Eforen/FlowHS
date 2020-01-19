@@ -33,6 +33,10 @@ export interface ActionStopDrag {
     endX: number
     /** Ending MousePos */
     endY: number
+    /** Target GUID */
+    guid?: string
+    /** Port Targeted */
+    port?: number
     /** Should the drag be considered valid */
     commitMove: boolean
 }
@@ -95,7 +99,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
         //console.log({x: offsetX, y: offsetY, gridX, gridY})
         commit('updateDrag', {x: offsetX, y: offsetY, gridX, gridY})
     },
-    stopDrag({ dispatch, commit, state, rootState }, {commitMove, endX, endY}: ActionStopDrag) {
+    stopDrag({ dispatch, commit, state, rootState }, {commitMove, guid, port, endX, endY}: ActionStopDrag) {
         const gridX = Math.round(endX / rootState.workspace.grid.width)
         const gridY = Math.round(endY / rootState.workspace.grid.height)
         if(commitMove){

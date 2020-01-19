@@ -9,13 +9,13 @@ import { commands, state as commandsState } from './commands/index';
 
 Vue.use(Vuex);
 
-export const storeDef: StoreOptions<RootState> = {
+export const storeDef: () => StoreOptions<RootState> = () => ({
     state: {
         version: '1.0.0', // a simple property
-        flows: flowsState,
-        selection: selectionState,
-        workspace: workspaceState,
-        commands: commandsState
+        flows: flowsState(),
+        selection: selectionState(),
+        workspace: workspaceState(),
+        commands: commandsState()
     },
     modules: {
         commands,
@@ -23,8 +23,8 @@ export const storeDef: StoreOptions<RootState> = {
         selection,
         workspace
     }
-};
+})
 
-const store = new Vuex.Store<RootState>(storeDef);
+const store = new Vuex.Store<RootState>(storeDef());
 
 export default store

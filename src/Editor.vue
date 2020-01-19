@@ -481,7 +481,7 @@ export default class Editor extends Vue {
   //   ipcRenderer.sendSync("minWindow", "main")
   // },
   doTheThing = false
-  OpenFlowsMenu(e: MouseEvent) {
+  OpenFlowsMenu(e: MouseEvent) { 
     console.log(`Open Flow Menu`)
     const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     this.doCMD(new CMDAddNode(debug1, this.loadedFlow))

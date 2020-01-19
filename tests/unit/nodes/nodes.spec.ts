@@ -14,7 +14,8 @@ describe('Store: Commands', () => {
   let store: Store<RootState>
 
   beforeEach(() => {
-    store = new Store(storeDef)
+    store = new Store(storeDef())
+    store.replaceState(storeDef().state as RootState)
   })
 
   it('Test Defaults', () => {

@@ -7,7 +7,7 @@ import { mutations } from './mutations';
 import { SelectionState } from './types';
 import { RootState } from '../types';
 
-export const state: SelectionState = {
+export const state: () => SelectionState = () => ( {
     selectedNodes: [],
     draggingNode: false,
     draggingConnection: false,
@@ -20,13 +20,13 @@ export const state: SelectionState = {
     dragOffsetY: 0,
     mouseStartX: 0,
     mouseStartY: 0
-};
+})
 
 const namespaced: boolean = true;
 
 export const selection: Module<SelectionState, RootState> = {
     namespaced,
-    state,
+    state: state(),
     getters,
     actions,
     mutations

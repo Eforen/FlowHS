@@ -122,7 +122,15 @@ g.node-hover .node {
     stroke-width: 2;
     stroke: #0ecfff !important;
 }
-g.port-hover .port, g .drag-hover .port {
+g .drag-hover .port {
+    fill: #0BA5CC;
+    stroke: #0ecfff !important;
+}
+g.droptarget .port {
+    fill: rgb(11, 204, 98);
+    stroke: #0eff6a !important;
+}
+g.port-hover .port {
     fill: #0BA5CC;
     stroke: #0ecfff !important;
 }
@@ -377,7 +385,7 @@ export default class RenderNode extends Vue {
         }
         e.preventDefault()
         //this.$emit('stopDragConnection', this.guid, output, port)
-        this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
+        this.stopDrag({commitMove: true, guid: this.guid, port:(this.selectionStore.draggingConnectionFromOutput? this.hover.inputs: this.hover.outputs), endX: e.offsetX, endY: e.offsetY})
     }
 
     handleMouseUp(e: MouseEvent) {
@@ -398,7 +406,7 @@ export default class RenderNode extends Vue {
                 // Don't do normal stuff
                 return
             }
-            this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
+            this.stopDrag({commitMove: true, guid: this.guid, port:(this.selectionStore.draggingConnectionFromOutput? this.hover.inputs: this.hover.outputs), endX: e.offsetX, endY: e.offsetY})
         }
     }
 

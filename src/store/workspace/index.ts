@@ -7,7 +7,7 @@ import { mutations } from './mutations';
 import { WorkspaceState } from './types';
 import { RootState } from '../types';
 
-export const state: WorkspaceState = {
+export const state: () => WorkspaceState = () => ({
     size: {
         height: 250,
         width: 250,
@@ -23,13 +23,13 @@ export const state: WorkspaceState = {
         selectedFlow: -1,
         loadedFlows: []
     }
-}
+})
 
 const namespaced: boolean = true;
 
 export const workspace: Module<WorkspaceState, RootState> = {
     namespaced,
-    state,
+    state: state(),
     getters,
     actions,
     mutations

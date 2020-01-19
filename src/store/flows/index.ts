@@ -7,18 +7,18 @@ import { mutations } from './mutations';
 import { FlowsState, NodeDictionary } from './types';
 import { RootState } from '../types';
 
-export const state: FlowsState = {
+export const state: () => FlowsState = () => ({
     connectedToBackend: false,
     nodes: {},
     flows: {},
     connections: {}
-};
+})
 
 const namespaced: boolean = true;
 
 export const flows: Module<FlowsState, RootState> = {
     namespaced,
-    state,
+    state: state(),
     getters,
     actions,
     mutations

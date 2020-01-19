@@ -21,7 +21,8 @@ export const tests_basicChips = () => {
         
         let prep = () => {
             // Setup Store
-            store = new Store(storeDef)
+            store = new Store(storeDef())
+            store.replaceState(storeDef().state as RootState)
 
             // Setup Default Flow
             const guid = uuid.v4()
