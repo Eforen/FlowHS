@@ -5,6 +5,7 @@ import { RootState } from '../types';
 import { FlowActionMoveNode } from '../flows/actions';
 import { FlowsState, Node } from '../flows/types';
 import CMDMoveNode from '../commands/cmds/CMDMoveNode';
+import CMDConnectNodes from '../commands/cmds/CMDConnectNodes';
 
 export type SelectionPayloadSetSelected = string[]
 export type SelectionPayloadAddSelected = string[]
@@ -113,6 +114,14 @@ export const actions: ActionTree<SelectionState, RootState> = {
                     //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
                     //console.log()
                 })
+            } else if(state.draggingConnection && guid != undefined){
+                dispatch('commands/DoCMD', new CMDConnectNodes(
+                    '', 
+                    state.draggingConnectionNode, 
+                    state.draggingConnectionNodePort, 
+                    guid, 
+                    (port == undefined ? -1 : port)
+                ), {root:true})
             }
         }
         commit('stopDrag', {x: endX, y: endY, gridX, gridY})

@@ -158,15 +158,15 @@
 
 ### Done 2020-01-19
 * [Testing] Add Tests for Current CMDConnectNodes Behavior
-
-### Next Commit 2020-01-19
 * [Testing] Add Tests for CMDConnectNodes
 * [Testing] Change CMDConnectNodes to just take in 2 nodes and their ports not the full connection object
+
+### Next Commit 2020-01-19
+* [Editor] Allow creation of connections by click dragging from outputs to inputs
 
 ## Testing
 
 ## Doing
-* [Editor] Allow creation of connections by click dragging from outputs to inputs
 * [Testing] Add tests for Flows deleteNode
 
 ## Backlog

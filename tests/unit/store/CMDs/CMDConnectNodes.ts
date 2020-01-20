@@ -105,6 +105,70 @@ export const tests_CMDConnectNodes = () => {
                     }
                 }
             }
+            const target2 = {
+                "connectedToBackend": false,
+                "nodes": {
+                    "7d20d645-2115-4936-8bf0-4e697505be2a": {
+                        "type": "PinIn",
+                        "args": {
+                            "guid": "7d20d645-2115-4936-8bf0-4e697505be2a",
+                            "x": 2,
+                            "y": 7,
+                            "pinName": "A"
+                        },
+                        "error": false,
+                        "changed": false,
+                        "selected": false,
+                        "inputState": [],
+                        "outputState": []
+                    },
+                    "d159624c-cf1c-4192-a4cf-8d071c5eaa7e": {
+                        "type": "AND",
+                        "args": {
+                            "guid": "d159624c-cf1c-4192-a4cf-8d071c5eaa7e",
+                            "x": 10,
+                            "y": 20
+                        },
+                        "error": false,
+                        "changed": false,
+                        "selected": false,
+                        "inputState": [],
+                        "outputState": []
+                    }
+                },
+                "flows": {
+                    "b8c6ff64-8097-468b-af51-5582c214a473": {
+                        "guid": "b8c6ff64-8097-468b-af51-5582c214a473",
+                        "title": "",
+                        "isProxy": false,
+                        "filename": "",
+                        "error": false,
+                        "changed": true,
+                        "inputs": [],
+                        "outputs": [],
+                        "nodes": [
+                            "7d20d645-2115-4936-8bf0-4e697505be2a",
+                            "d159624c-cf1c-4192-a4cf-8d071c5eaa7e"
+                        ],
+                        "connections": [
+                            "a0a64a9c-6603-4476-a5f1-2f1373c79962"
+                        ]
+                    }
+                },
+                "connections": {
+                    "a0a64a9c-6603-4476-a5f1-2f1373c79962": {
+                        "guid": "a0a64a9c-6603-4476-a5f1-2f1373c79962",
+                        "fromID": "7d20d645-2115-4936-8bf0-4e697505be2a",
+                        "fromPort": 0,
+                        "toID": "d159624c-cf1c-4192-a4cf-8d071c5eaa7e",
+                        "toPort": 0,
+                        "selected": false,
+                        "state": [
+                            false
+                        ]
+                    }
+                }
+            }
 
             
             const targetNoCon = {
@@ -168,10 +232,28 @@ export const tests_CMDConnectNodes = () => {
             
             expect(store.state.flows).to.deep.equal(targetNoCon)
 
-            const conN = new CMDConnectNodes("a0a64a9c-6603-4476-a5f1-2f1373c79962", debug1.args.guid, 0, debug2.args.guid, 2)
+            let conN = new CMDConnectNodes("a0a64a9c-6603-4476-a5f1-2f1373c79962", debug1.args.guid, 0, debug2.args.guid, 2)
             conN.exe(store.dispatch, store.state)
 
             expect(store.state.flows).to.deep.equal(target)
+
+            conN.undo(store.dispatch, store.state)
+
+            expect(store.state.flows).to.deep.equal(targetNoCon)
+
+            conN = new CMDConnectNodes("a0a64a9c-6603-4476-a5f1-2f1373c79962", debug1.args.guid, -1, debug2.args.guid, 2)
+            conN.exe(store.dispatch, store.state)
+
+            expect(store.state.flows).to.deep.equal(target)
+
+            conN.undo(store.dispatch, store.state)
+
+            expect(store.state.flows).to.deep.equal(targetNoCon)
+
+            conN = new CMDConnectNodes("a0a64a9c-6603-4476-a5f1-2f1373c79962", debug1.args.guid, 0, debug2.args.guid, -1)
+            conN.exe(store.dispatch, store.state)
+
+            expect(store.state.flows).to.deep.equal(target2)
 
             conN.undo(store.dispatch, store.state)
 
