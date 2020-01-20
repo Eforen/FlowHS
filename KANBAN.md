@@ -16,7 +16,7 @@
     - [Done 2020-01-16](#done-2020-01-16)
     - [Done 2020-01-17](#done-2020-01-17)
     - [Done 2020-01-19](#done-2020-01-19)
-    - [Next Commit 2020-01-19](#next-commit-2020-01-19)
+    - [Next Commit 2020-01-20](#next-commit-2020-01-20)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -160,9 +160,10 @@
 * [Testing] Add Tests for Current CMDConnectNodes Behavior
 * [Testing] Add Tests for CMDConnectNodes
 * [Testing] Change CMDConnectNodes to just take in 2 nodes and their ports not the full connection object
-
-### Next Commit 2020-01-19
 * [Editor] Allow creation of connections by click dragging from outputs to inputs
+
+### Next Commit 2020-01-20
+* [Bug] Click drag is moving weird on drop
 
 ## Testing
 
@@ -171,7 +172,6 @@
 
 ## Backlog
 ### v0.1
-* [Bug] Click drag is moving weird on drop
 * Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy

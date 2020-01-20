@@ -108,8 +108,10 @@ export const actions: ActionTree<SelectionState, RootState> = {
             if(state.draggingNode){
                 state.selectedNodes.forEach(node => {
                     const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
-                    const x = nodeProps.args.x + state.dragOffsetGridX
-                    const y = nodeProps.args.y + state.dragOffsetGridY
+                    // const x = nodeProps.args.x + state.dragOffsetGridX
+                    // const y = nodeProps.args.y + state.dragOffsetGridY
+                    const gridX = Math.round(((nodeProps.args.x * rootState.workspace.grid.width) + state.dragOffsetX) / rootState.workspace.grid.width)
+                    const gridY = Math.round(((nodeProps.args.y * rootState.workspace.grid.height) + state.dragOffsetY) / rootState.workspace.grid.height)
                     dispatch('commands/DoCMD', new CMDMoveNode(node, gridX, gridY, false), {root:true})
                     //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
                     //console.log()
