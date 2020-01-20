@@ -117,13 +117,25 @@ export const actions: ActionTree<SelectionState, RootState> = {
                     //console.log()
                 })
             } else if(state.draggingConnection && guid != undefined){
-                dispatch('commands/DoCMD', new CMDConnectNodes(
-                    '', 
-                    state.draggingConnectionNode, 
-                    state.draggingConnectionNodePort, 
-                    guid, 
-                    (port == undefined ? -1 : port)
-                ), {root:true})
+                if(state.draggingConnectionFromOutput){
+                    // Out -> In
+                    dispatch('commands/DoCMD', new CMDConnectNodes(
+                        '', 
+                        state.draggingConnectionNode, 
+                        state.draggingConnectionNodePort, 
+                        guid, 
+                        (port == undefined ? -1 : port)
+                    ), {root:true})
+                } else{
+                    // In -> Out
+                    dispatch('commands/DoCMD', new CMDConnectNodes(
+                        '', 
+                        guid, 
+                        (port == undefined ? -1 : port), 
+                        state.draggingConnectionNode, 
+                        state.draggingConnectionNodePort
+                    ), {root:true})
+                }
             }
         }
         commit('stopDrag', {x: endX, y: endY, gridX, gridY})
