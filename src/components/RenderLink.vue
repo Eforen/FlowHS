@@ -1,5 +1,6 @@
 <template>
-    <g :class="{link: true}" :transform="`translate(0, 0)`">
+    <g :class="{link: true, hover: (somethingDragging == false && hovering) }" :transform="`translate(0, 0)`" @mouseover="hovering = true" @mouseleave="hovering = false">
+        <path class="selector" :d="d" :style="{strokeWidth:states.length * 3 + 2 * 3}" :transform="`translate(0, 0)`"></path>
         <path class="outline" :d="d" :style="{strokeWidth:states.length * 3 + 2}" :transform="`translate(0, 0)`"></path>
         <path v-if="dragging" class="line drag" :d="d" :style="{strokeWidth:states.length * 3 }" :transform="`translate(0, 0)`"></path>
         <path v-else v-for="(activity, index) in states" :key="`cores-${index}`" :transform="`translate(0, ${states.length * -1 + index * 3})`" :class="{core: true, active:activity}" :d="d"></path>
@@ -8,6 +9,12 @@
 
 <style lang="css" scoped>
 
+.link .selector {
+    stroke: transparent !important;
+    cursor: crosshair;
+    fill: none;
+    pointer-events: all;
+}
 .link .outline {
     stroke: #434954 !important;
     cursor: crosshair;
@@ -19,14 +26,18 @@
     fill: none;
     pointer-events: none;
 }
-.link .line.drag {
-    stroke: #0ecfff !important;
-}
 .link .core{
     stroke: #999 !important;
     stroke-width: 3;
     fill: none;
     pointer-events: none;
+}
+.link.hover .core {
+    stroke: #0ecfff !important;
+}
+
+.link .core.drag {
+    stroke: #0ecfff !important;
 }
 .link .core.active{
     stroke: #0c9413 !important;
@@ -61,6 +72,8 @@ export default class RenderLink extends Vue {
     @State('flows') flows!: FlowsState
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;
+
+    hovering: boolean = false
 
     @Prop({default:''})
     guid!: string
@@ -146,6 +159,10 @@ export default class RenderLink extends Vue {
     overrideTo!: string
     @Prop({default: -1})
     overrideToPin!: number
+
+    get somethingDragging(){
+        return this.selectionStore.draggingConnection || this.selectionStore.draggingNode
+    }
 
     get to(){
         if(this.overrideTo != undefined && this.overrideTo != '') return this.overrideTo

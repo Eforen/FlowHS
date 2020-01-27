@@ -64,6 +64,9 @@
               <line class="workspace-chart-grid-v" v-for="n in workspace.size.height" v-bind:key="'wcgv'+n" y1="0" :y2="workspace.size.width * workspace.grid.width"  :x1="n*workspace.grid.height" :x2="n*workspace.grid.height"></line>
               </g>
             </g>
+            <g class="links">
+              <RenderLink v-for="id in consInFlowCalc" v-bind:key="`RenderLink-${id}`" :guid="id"/>
+            </g>
             <g class="selector">
               <RenderLink dragging=true 
                 v-if="selectionStore.draggingConnection && selectionStore.draggingConnectionFromOutput" 
@@ -81,9 +84,6 @@
                 :states="[false]"/>
               <!-- <RenderLink v-if="doTheThing" from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"/>
               <RenderLink v-else :endX="debug ? debug.offsetX : 0" :endY="debug ? debug.offsetY : 0" :states="[true,false,true]"/> -->
-            </g>
-            <g class="links">
-              <RenderLink v-for="id in consInFlowCalc" v-bind:key="`RenderLink-${id}`" :guid="id"/>
             </g>
             <g class="nodes">
               <RenderNode v-for="id in nodesInFlowCalc" v-bind:key="`RenderNode-${id}`" :guid="id" @startMouseDown="handleStartMouseDown"/>

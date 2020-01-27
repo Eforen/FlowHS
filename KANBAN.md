@@ -177,6 +177,8 @@
 
 ## Backlog
 ### v0.1
+* [Bug] Can't drop line being dragged
+* [Bug] Can connected to self
 * [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
