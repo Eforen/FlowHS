@@ -250,7 +250,7 @@ export default class RenderNode extends Vue {
     get args(): NodeTypeArgs { return (this.nodeByID(this.guid) as Node).args || { x: 0, y: 0 } }
     // get x(): number { 
     //     const dragOffsetX = (this.selectionStore.dragging && 
-    //         this.selectionStore.selectedNodes.includes(this.guid) && 
+    //         this.selectionStore.selected.includes(this.guid) && 
     //         this.guid.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridX : 0)
     //         * this.workspace.grid.width
@@ -258,7 +258,7 @@ export default class RenderNode extends Vue {
     // }
     // get y(): number {
     //     const dragOffsetY = (this.selectionStore.dragging  && 
-    //         this.selectionStore.selectedNodes.includes(this.guid) && 
+    //         this.selectionStore.selected.includes(this.guid) && 
     //         this.guid.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridY  : 0)
     //         * this.workspace.grid.height
@@ -267,7 +267,7 @@ export default class RenderNode extends Vue {
     get title(): string { return this.typeObj.getTitle(this.args) }
     get error(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.error } else { return false; }}
     get changed(): boolean { const node = this.nodeByID(this.guid); if(node) { return node.changed } else { return false; }}
-    get selected(): boolean { return this.selectionStore.selectedNodes.indexOf(this.guid) >= 0 }
+    get selected(): boolean { return this.selectionStore.selected.indexOf(this.guid) >= 0 }
     get button(): boolean {  return this.typeObj.getButton(this.args) }
     get inputs(): number {  return this.typeObj.getInputs(this.args) }
     get outputs(): number {  return this.typeObj.getOutputs(this.args) }

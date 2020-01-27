@@ -1,7 +1,7 @@
 // types.ts
 
 export interface SelectionState {
-    selectedNodes: string[]
+    selected: string[]
     draggingNode: boolean
     /** Is a connection drag in progress */
     draggingConnection: boolean

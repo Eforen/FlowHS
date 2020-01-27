@@ -72,11 +72,11 @@ export const actions: ActionTree<SelectionState, RootState> = {
     },
     addSelected({ commit, state }, selectedGUIDs: SelectionPayloadAddSelected) {
         commit('clearDragging')
-        commit('setSelection', [...state.selectedNodes, ...selectedGUIDs])
+        commit('setSelection', [...state.selected, ...selectedGUIDs])
     },
     startDragNode({ commit, state }, {source, startX, startY}: ActionStartDragNode) {
         commit('clearDragging')
-        if(state.selectedNodes.length == 0 || state.selectedNodes.includes(source) == false){
+        if(state.selected.length == 0 || state.selected.includes(source) == false){
             // if no selection or selection does not include drag source change selection to the source
             commit('setSelection', [source])
         }
@@ -84,7 +84,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
     },
     startDragConnection({ commit, state }, {source, startX, startY, output, port}: ActionStartDragConnection) {
         commit('clearDragging')
-        // if(state.selectedNodes.length == 0 || state.selectedNodes.includes(source) == false){
+        // if(state.selected.length == 0 || state.selected.includes(source) == false){
         //     // if no selection or selection does not include drag source change selection to the source
         //     commit('setSelection', [source])
         // }
@@ -106,7 +106,7 @@ export const actions: ActionTree<SelectionState, RootState> = {
         if(commitMove){
             //commit('moveSelected')
             if(state.draggingNode){
-                state.selectedNodes.forEach(node => {
+                state.selected.forEach(node => {
                     const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
                     // const x = nodeProps.args.x + state.dragOffsetGridX
                     // const y = nodeProps.args.y + state.dragOffsetGridY

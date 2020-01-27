@@ -165,20 +165,18 @@
 
 ### Done 2020-01-20
 * [Bug] Click drag is moving weird on drop
+* [Editor] Allow creation of connections by click dragging from inputs to outputs
 
 ### Next Commit 2020-01-20
-* [Editor] Allow creation of connections by click dragging from inputs to outputs
 
 ## Testing
 
 ## Doing
+* [Editor] Allow selection of connections by clicking them
 * [Testing] Add tests for Flows deleteNode
 
 ## Backlog
 ### v0.1
-* Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
-* [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
-* [Editor] Allow selection of connections by clicking them
 * [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][File Management] Add flow renames
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
@@ -203,6 +201,7 @@
 * [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
 * [Editor] Connections Get their render state from the Node they are from and do not store their own state
+* Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
 * [Testing] Add tests for Flows connectToEmulator
 * [Testing] Add tests for Flows loadFlow
 * [Testing] Add tests for Flows loadClose
@@ -244,6 +243,7 @@
 * [Builtin Chips] NOT (1 BIT IN, 1 BIT OUT)
 * [Builtin Chips] OR (2 BIT IN, 1 BIT OUT)
 * [Builtin Chips] AND (2 BIT IN, 1 BIT OUT)
+* [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 
 ### v0.3
 * [Main][No Project Loaded] New Project 

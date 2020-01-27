@@ -25,7 +25,7 @@ describe('Store: Commands', () => {
     // })
     // expect(wrapper.text()).to.include(msg)
     expect(store.state.selection).to.deep.equal({
-        selectedNodes: [],
+        selected: [],
         draggingNode: false,
         draggingConnection: false,
         draggingConnectionFromOutput: false,

@@ -30,10 +30,10 @@ export const mutations: MutationTree<SelectionState> = {
     //     }
     // }
     setSelection(state, payload: string[]){
-        state.selectedNodes = payload
+        state.selected = payload
     },
     clearSelection(state){
-        state.selectedNodes = []
+        state.selected = []
     },
     clearDragging(state){
         state.draggingNode = false

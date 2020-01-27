@@ -115,7 +115,7 @@ export default class RenderLink extends Vue {
     // get fromRootX(): number { 
     //     const node = this.nodeByID(this.from)
     //     const dragOffsetX = (this.selectionStore.dragging && 
-    //         this.selectionStore.selectedNodes.includes(this.from) && 
+    //         this.selectionStore.selected.includes(this.from) && 
     //         this.from.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridX : 0)
     //     return ((node as Node).args.x + dragOffsetX) * this.workspace.grid.width
@@ -123,7 +123,7 @@ export default class RenderLink extends Vue {
     // get fromRootY(): number {
     //     const node = this.nodeByID(this.from)
     //     const dragOffsetY = (this.selectionStore.dragging  && 
-    //         this.selectionStore.selectedNodes.includes(this.from) && 
+    //         this.selectionStore.selected.includes(this.from) && 
     //         this.from.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridY : 0)
     //     return ((node as Node).args.y + dragOffsetY) * this.workspace.grid.height
@@ -174,7 +174,7 @@ export default class RenderLink extends Vue {
     // get toRootX(): number { 
     //     const node = this.nodeByID(this.to)
     //     const dragOffsetX = (this.selectionStore.dragging && 
-    //         this.selectionStore.selectedNodes.includes(this.to) && 
+    //         this.selectionStore.selected.includes(this.to) && 
     //         this.to.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridX : 0)
     //     return ((node as Node).args.x + dragOffsetX) * this.workspace.grid.width
@@ -182,7 +182,7 @@ export default class RenderLink extends Vue {
     // get toRootY(): number {
     //     const node = this.nodeByID(this.to)
     //     const dragOffsetY = (this.selectionStore.dragging  && 
-    //         this.selectionStore.selectedNodes.includes(this.to) && 
+    //         this.selectionStore.selected.includes(this.to) && 
     //         this.to.toLowerCase()!='pallet' ? 
     //             this.selectionStore.dragOffsetGridY : 0)
     //     return ((node as Node).args.y + dragOffsetY) * this.workspace.grid.height

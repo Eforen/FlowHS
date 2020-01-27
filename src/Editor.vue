@@ -366,22 +366,22 @@ export default class Editor extends Vue {
         if(ev.key == 'ArrowUp'){
           ev.preventDefault()
           console.log('Shortcut: Move Up Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, -1 * this.workspace.prefrences.shiftMove, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 0, -1 * this.workspace.prefrences.shiftMove, true))))
           return
         } else if(ev.key == 'ArrowDown'){
           ev.preventDefault()
           console.log('Shortcut: Move Down Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, 1 * this.workspace.prefrences.shiftMove, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 0, 1 * this.workspace.prefrences.shiftMove, true))))
           return
         } else if(ev.key == 'ArrowLeft'){
           ev.preventDefault()
           console.log('Shortcut: Move Left Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, -1 * this.workspace.prefrences.shiftMove, 0, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, -1 * this.workspace.prefrences.shiftMove, 0, true))))
           return
         } else if(ev.key == 'ArrowRight'){
           ev.preventDefault()
           console.log('Shortcut: Move Right Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 1 * this.workspace.prefrences.shiftMove, 0, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 1 * this.workspace.prefrences.shiftMove, 0, true))))
           return
         }
       } else {
@@ -390,22 +390,22 @@ export default class Editor extends Vue {
         } else if(ev.key == 'ArrowUp'){
           ev.preventDefault()
           console.log('Shortcut: Move Up Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, -1, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 0, -1, true))))
           return
         } else if(ev.key == 'ArrowDown'){
           ev.preventDefault()
           console.log('Shortcut: Move Down Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 0, 1, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 0, 1, true))))
           return
         } else if(ev.key == 'ArrowLeft'){
           ev.preventDefault()
           console.log('Shortcut: Move Left Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, -1, 0, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, -1, 0, true))))
           return
         } else if(ev.key == 'ArrowRight'){
           ev.preventDefault()
           console.log('Shortcut: Move Right Action')
-          this.doCMD(new CMDGroup(this.selectionStore.selectedNodes.map(guid => new CMDMoveNode(guid, 1, 0, true))))
+          this.doCMD(new CMDGroup(this.selectionStore.selected.map(guid => new CMDMoveNode(guid, 1, 0, true))))
           return
         }
       }

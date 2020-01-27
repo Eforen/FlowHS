@@ -8,7 +8,7 @@ import { SelectionState } from './types';
 import { RootState } from '../types';
 
 export const state: () => SelectionState = () => ( {
-    selectedNodes: [],
+    selected: [],
     draggingNode: false,
     draggingConnection: false,
     draggingConnectionFromOutput: false,
