@@ -107,14 +107,18 @@ export const actions: ActionTree<SelectionState, RootState> = {
             //commit('moveSelected')
             if(state.draggingNode){
                 state.selected.forEach(node => {
-                    const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
-                    // const x = nodeProps.args.x + state.dragOffsetGridX
-                    // const y = nodeProps.args.y + state.dragOffsetGridY
-                    const gridX = Math.round(((nodeProps.args.x * rootState.workspace.grid.width) + state.dragOffsetX) / rootState.workspace.grid.width)
-                    const gridY = Math.round(((nodeProps.args.y * rootState.workspace.grid.height) + state.dragOffsetY) / rootState.workspace.grid.height)
-                    dispatch('commands/DoCMD', new CMDMoveNode(node, gridX, gridY, false), {root:true})
-                    //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
-                    //console.log()
+                    try {
+                        const nodeProps: Node = ((rootState as any).flows as FlowsState).nodes[node]
+                        // const x = nodeProps.args.x + state.dragOffsetGridX
+                        // const y = nodeProps.args.y + state.dragOffsetGridY
+                        const gridX = Math.round(((nodeProps.args.x * rootState.workspace.grid.width) + state.dragOffsetX) / rootState.workspace.grid.width)
+                        const gridY = Math.round(((nodeProps.args.y * rootState.workspace.grid.height) + state.dragOffsetY) / rootState.workspace.grid.height)
+                        dispatch('commands/DoCMD', new CMDMoveNode(node, gridX, gridY, false), {root:true})
+                        //dispatch('flows/moveNode', {node, x, y} as FlowActionMoveNode, {root:true})
+                        //console.log()
+                    } catch (error) {
+                        //Nothing
+                    }
                 })
             } else if(state.draggingConnection && guid != undefined){
                 if(state.draggingConnectionFromOutput){

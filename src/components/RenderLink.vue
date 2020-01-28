@@ -1,6 +1,6 @@
 <template>
-    <g :class="{link: true, hover: (somethingDragging == false && hovering) }" :transform="`translate(0, 0)`" @mouseover="hovering = true" @mouseleave="hovering = false">
-        <path class="selector" :d="d" :style="{strokeWidth:states.length * 3 + 2 * 3}" :transform="`translate(0, 0)`"></path>
+    <g :class="{link: true, hover: (somethingDragging == false && hovering), selected: isSelected }" :transform="`translate(0, 0)`">
+        <path class="selector" :d="d" :style="{strokeWidth:states.length * 3 + 2 * 3}" :transform="`translate(0, 0)`" @click="handleSingleClick" @mouseover="hovering = true" @mouseleave="hovering = false"></path>
         <path class="outline" :d="d" :style="{strokeWidth:states.length * 3 + 2}" :transform="`translate(0, 0)`"></path>
         <path v-if="dragging" class="line drag" :d="d" :style="{strokeWidth:states.length * 3 }" :transform="`translate(0, 0)`"></path>
         <path v-else v-for="(activity, index) in states" :key="`cores-${index}`" :transform="`translate(0, ${states.length * -1 + index * 3})`" :class="{core: true, active:activity}" :d="d"></path>
@@ -32,7 +32,12 @@
     fill: none;
     pointer-events: none;
 }
+
 .link.hover .core {
+    stroke: #94eaff !important;
+}
+
+.link.selected .core {
     stroke: #0ecfff !important;
 }
 
@@ -61,12 +66,13 @@ import NodeTypeDictionary from '@/nodes/NodeTypeDictionary';
 import NodeType, { NodeTypeArgs } from '@/nodes/NodeType';
 import { Node, Flow, FlowsState } from '@/store/flows/types';
 import { WorkspaceState } from '@/store/workspace/types';
+import { SelectionPayloadSetSelected, SelectionPayloadAddSelected } from '../store/selection/actions';
 
 @Component
 export default class RenderLink extends Vue {
     @Getter('nodeByID', { namespace: 'flows' }) nodeByID!: (id: string)  => Node | undefined
-    // @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
-    // @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
+    @Action('setSelected', { namespace: 'selection' }) setSelected!: (selectedGUIDs: SelectionPayloadSetSelected) => void;
+    @Action('addSelected', { namespace: 'selection' }) addSelected!: (selectedGUIDs: SelectionPayloadAddSelected) => void;
     // @Action('startDrag', { namespace: 'selection' }) startDrag!: (payload: ActionStartDrag) => void;
     // @Action('stopDrag', { namespace: 'selection' }) stopDrag!: (payload: ActionStopDrag) => void;
     @State('flows') flows!: FlowsState
@@ -90,6 +96,19 @@ export default class RenderLink extends Vue {
     overrideFrom!: string
     @Prop({default: -1})
     overrideFromPin!: number
+
+    handleSingleClick(e: MouseEvent) {
+        if(e.shiftKey){
+            this.addSelected([this.guid])
+        } else{
+            this.setSelected([this.guid])
+        }
+
+    }
+
+    get isSelected(){
+        return this.selectionStore.selected.includes(this.guid)
+    }
 
     get from(){
         if(this.overrideFrom != undefined && this.overrideFrom != '') return this.overrideFrom
