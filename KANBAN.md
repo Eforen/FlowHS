@@ -17,7 +17,9 @@
     - [Done 2020-01-17](#done-2020-01-17)
     - [Done 2020-01-19](#done-2020-01-19)
     - [Done 2020-01-20](#done-2020-01-20)
-    - [Next Commit 2020-01-20](#next-commit-2020-01-20)
+    - [Done 2020-01-28](#done-2020-01-28)
+    - [Done 2020-01-31](#done-2020-01-31)
+    - [Next Commit 2020-01-31](#next-commit-2020-01-31)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -167,21 +169,28 @@
 * [Bug] Click drag is moving weird on drop
 * [Editor] Allow creation of connections by click dragging from inputs to outputs
 
-### Next Commit 2020-01-20
+### Done 2020-01-28
+* [Editor] Allow selection of connections by clicking them
+
+### Done 2020-01-31
+
+### Next Commit 2020-01-31
+* [Testing] Add tests for Flows deleteNode
+* [CMD] Add CMDDeleteNode
+* [Store] Allow nodes to be deleted
 
 ## Testing
 
 ## Doing
-* [Editor] Allow selection of connections by clicking them
-* [Testing] Add tests for Flows deleteNode
 
 ## Backlog
 ### v0.1
+* [Editor] Allow deletion of connections by selecting them then pressing delete
+* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
+* [Bug] Can't delete connections
 * [Bug] Can't drop line being dragged
 * [Bug] Can connected to self
-* [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][File Management] Add flow renames
-* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node
 * Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
 * Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection

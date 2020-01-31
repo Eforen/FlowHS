@@ -52,4 +52,5 @@ describe('Store: Commands', () => {
   tests_CMDAddNode()
   tests_CMDRemoveNode()
   tests_CMDConnectNodes()
+  tests_CMDRemoveNode()
 })

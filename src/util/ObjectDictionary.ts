@@ -9,20 +9,20 @@ export const ObjectForEach = (obj: StringInstancedArray, call: (key: string, ele
 }
 
 export const ObjectFilter = (obj: StringInstancedArray, filter: (element: any, key: string) => boolean, cloneIfUnchanged: boolean = false) => {
+    let changed = false
+    let newObj: any = {}
     for (let key of Object.keys(obj)) {
         let elem = obj[key];
-        let newObj: any = {}
-        let changed = false
         if(filter(elem, key)){
             newObj[key] = elem
         } else {
             changed = true
         }
-        if(changed == false && cloneIfUnchanged == false){
-            return obj
-        } else{
-            return newObj
-        }
+    }
+    if(changed == false && cloneIfUnchanged == false){
+        return obj
+    } else{
+        return newObj
     }
 }
 

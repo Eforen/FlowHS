@@ -2,35 +2,53 @@ import Command from '@/store/commands/Command'
 import { Dispatch } from 'vuex';
 import { FullCombinedRootState } from '@/store/types';
 import { Node, Flow, Connection } from '@/store/flows/types';
-import { ObjectForEach } from '@/util/ObjectDictionary';
+import { ObjectForEach, ObjectFilter } from '@/util/ObjectDictionary';
+import { SelectionPayloadAddSelected } from '@/store/selection/actions';
 
 export default class CMDRemoveNode extends Command {
     private wasInFlows: string[] = []
-    private wasInConnections: Connection[] = []
+    private cachedNode: Node | null = null
+    private cachedCons: Connection[] = []
+    private cachedSelected: string[] = []
 
-    constructor(private node: Node, private flow: string = "current"){
+    constructor(private nodeID: string){
         super()
     }
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         ObjectForEach(state.flows.flows, (key, flow: Flow) => {
-            if(flow.nodes.indexOf(this.node.args.guid) != -1){
+            if(flow.nodes.indexOf(this.nodeID) != -1){
                 if(this.wasInFlows.includes(flow.guid) == false) this.wasInFlows.push(flow.guid)
             }
         })
-        dispatch('flows/deleteNode', this.node, {root:true})
+        this.cachedNode = state.flows.nodes[this.nodeID]
+        this.cachedCons = []
+        ObjectForEach(state.flows.connections, (key, con:Connection) => {
+            if(con.fromID == this.nodeID || con.toID == this.nodeID){
+                this.cachedCons.push(con)
+            }
+        })
+        this.cachedSelected = []
+        if(state.selection.selected.includes(this.nodeID)) this.cachedSelected.push(this.nodeID)
+        this.cachedCons.forEach(con=>{
+            if(state.selection.selected.includes(con.guid)) this.cachedSelected.push(con.guid)
+        })
+        dispatch('flows/deleteNode', this.nodeID, {root:true})
     }
 
     undo(dispatch: Dispatch, state: FullCombinedRootState): void {
-        if(this.flow == "current"){
-            dispatch('flows/createNodeInSelectedFlow', this.node, {root:true})
-        } else{
-            dispatch('flows/createNodeInFlow', {flowID: this.flow, node: this.node} as {flowID: string, node: Node}, {root:true})
-        }
+        dispatch('flows/createNodeInFlow', {flowID: this.wasInFlows[0], node: this.cachedNode} as {flowID: string, node: Node}, {root:true})
+        //console.log(`Recreate Connections`)
+        this.cachedCons.forEach(con => {
+            //console.log(`Recreate Connection: ${con.guid}`)
+            dispatch('flows/createConnection', {conGUID: con.guid, fromID: con.fromID, fromPort: con.fromPort, toID: con.toID, toPort: con.toPort}, {root:true})
+        })
+        dispatch('selection/addSelected', this.cachedSelected as SelectionPayloadAddSelected, {root:true})
+        
     }
 
     clone(): CMDRemoveNode {
-        return new CMDRemoveNode(this.node, this.flow)
+        return new CMDRemoveNode(this.nodeID)
     }
 
     canMerge(other: CMDRemoveNode): boolean {

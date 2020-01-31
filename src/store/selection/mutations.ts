@@ -3,6 +3,7 @@ import Vue from 'vue';
 import { MutationTree } from 'vuex';
 import { SelectionState } from './types';
 import { start } from 'repl';
+import { selection } from '.';
 
 export const mutations: MutationTree<SelectionState> = {
     // setFlow(state, payload: Flow){
@@ -29,6 +30,9 @@ export const mutations: MutationTree<SelectionState> = {
     //         )
     //     }
     // }
+    unsetSelection(state, payload: string[]){
+        state.selected = state.selected.filter(selection => payload.includes(selection) == false)
+    },
     setSelection(state, payload: string[]){
         state.selected = payload
     },

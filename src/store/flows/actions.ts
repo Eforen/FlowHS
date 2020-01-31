@@ -2,7 +2,7 @@
 import { ActionTree } from 'vuex';
 import { FlowsState, Node, Flow, Connection } from './types';
 import { RootState } from '../types';
-import { ObjectCount, ObjectFind } from '@/util/ObjectDictionary';
+import { ObjectCount, ObjectFind, ObjectForEach } from '@/util/ObjectDictionary';
 
 export interface FlowActionMoveNode{
     node: string,
@@ -37,8 +37,17 @@ export const actions: ActionTree<FlowsState, RootState> = {
         commit('setNodePos', {node, x, y})
     },
     //TODO: need to make the createNodeInSelectedFlow
-    deleteNode({ commit }, nodeID: string) {
+    deleteNode({ commit, state }, nodeID: string) {
+        let removedGuids = [nodeID]
+    
+        // Get all connections that connect to this node and remove them
+        ObjectForEach(state.connections, (key, con: Connection) => {
+            if(con.fromID == nodeID || con.toID == nodeID){
+                removedGuids.push(con.guid)
+            }
+        })
         commit('removeNode', nodeID)
+        commit('selection/unsetSelection', removedGuids, {root: true})
         //commit('addNodeToFlow', {flow: flowID, node: node.guid})
         //throw new Error("Method not implemented.");
     },

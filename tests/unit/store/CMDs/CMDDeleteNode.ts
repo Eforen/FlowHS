@@ -20,114 +20,658 @@ export const tests_CMDRemoveNode = () => {
         let prep = () => {
             // Setup Store
             store = new Store(storeDef())
-            store.replaceState(storeDef().state as RootState)
+            store.replaceState({ 
+                "version":"1.0.0",
+                "commands":{ 
+                   "historyCount":20,
+                   "history":[],
+                   "redo":[]
+                },
+                "flows":{ 
+                   "connectedToBackend":false,
+                   "nodes":{ 
+                      "b990a45f-7416-4fa3-b19a-08102ec599c4":{ 
+                         "type":"AND",
+                         "args":{ 
+                            "guid":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                            "x":14,
+                            "y":10
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca":{ 
+                         "type":"PinOut",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "x":23,
+                            "y":8
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "x":3,
+                            "y":6
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "e1a2381b-35d0-4155-8659-a53e88e0600e":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                            "x":3,
+                            "y":15
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      }
+                   },
+                   "flows":{ 
+                      "4bc08543-15b3-4b5a-bfaf-fda8396181da":{ 
+                         "guid":"4bc08543-15b3-4b5a-bfaf-fda8396181da",
+                         "title":"",
+                         "isProxy":false,
+                         "filename":"",
+                         "error":false,
+                         "changed":true,
+                         "inputs":[ 
+             
+                         ],
+                         "outputs":[ 
+             
+                         ],
+                         "nodes":[ 
+                            "b990a45f-7416-4fa3-b19a-08102ec599c4",
+                            "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "e1a2381b-35d0-4155-8659-a53e88e0600e"
+                         ],
+                         "connections":[ 
+                            "537da82c-a67e-4993-ad25-4bf65059b15d",
+                            "65d26568-d1fd-45a5-8205-c392b7e14165",
+                            "3e6cd641-ea9c-48ca-8229-364433797152"
+                         ]
+                      }
+                   },
+                   "connections":{ 
+                      "537da82c-a67e-4993-ad25-4bf65059b15d":{ 
+                         "guid":"537da82c-a67e-4993-ad25-4bf65059b15d",
+                         "fromID":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                         "fromPort":0,
+                         "toID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "toPort":0,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      },
+                      "65d26568-d1fd-45a5-8205-c392b7e14165":{ 
+                         "guid":"65d26568-d1fd-45a5-8205-c392b7e14165",
+                         "fromID":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                         "fromPort":0,
+                         "toID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "toPort":1,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      },
+                      "3e6cd641-ea9c-48ca-8229-364433797152":{ 
+                         "guid":"3e6cd641-ea9c-48ca-8229-364433797152",
+                         "fromID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "fromPort":0,
+                         "toID":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                         "toPort":0,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      }
+                   }
+                },
+                "selection":{ 
+                   "selected":[ 
+                      "537da82c-a67e-4993-ad25-4bf65059b15d",
+                      "3e6cd641-ea9c-48ca-8229-364433797152",
+                      "b990a45f-7416-4fa3-b19a-08102ec599c4",
+                      "e1a2381b-35d0-4155-8659-a53e88e0600e",
+                      "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca"
+                   ],
+                   "draggingNode":false,
+                   "draggingConnection":false,
+                   "draggingConnectionFromOutput":false,
+                   "draggingConnectionNode":"",
+                   "draggingConnectionNodePort":0,
+                   "dragOffsetGridX":0,
+                   "dragOffsetGridY":0,
+                   "dragOffsetX":0,
+                   "dragOffsetY":0,
+                   "mouseStartX":0,
+                   "mouseStartY":0
+                },
+                "workspace":{ 
+                   "size":{ 
+                      "height":250,
+                      "width":250
+                   },
+                   "grid":{ 
+                      "height":20,
+                      "width":20
+                   },
+                   "prefrences":{ 
+                      "shiftMove":5
+                   },
+                   "editor":{ 
+                      "selectedFlow":0,
+                      "loadedFlows":[ 
+                         "4bc08543-15b3-4b5a-bfaf-fda8396181da"
+                      ]
+                   }
+                }
+             } as RootState)
 
             // Setup Default Flow
-            const guid = uuid.v4()
-            const filename = uuid.v4()
-            const title = uuid.v4()
-            flow = {guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] }
+            // const guid = uuid.v4()
+            // const filename = uuid.v4()
+            // const title = uuid.v4()
+            // flow = {guid, isProxy: false, filename, title, error: true, changed: false, connections:[], inputs: [], outputs: [], nodes: [] }
 
-            store.dispatch('flows/createFlow', flow)
+            // store.dispatch('flows/createFlow', flow)
           
         }
       
         beforeEach(prep)
 
-        it.skip('Do/Undo', () => {
-            const checkNode = (guid: string, x: number, y:number, type: string, inputState: boolean[], outputState: boolean[], count: number = 1)=>{
-                expect(Object.keys(store.state.flows.nodes).length).to.equal(count, "cN: Node count wrong")
-                expect(store.state.flows.nodes[guid].args.guid).to.equal(guid, 'cN: Guid is wrong')
-                expect(store.state.flows.nodes[guid].args.x).to.equal(x, 'cN: X Pos is wrong')
-                expect(store.state.flows.nodes[guid].args.y).to.equal(y, 'cN: Y Pos is wrong')
-                expect(store.state.flows.nodes[guid].type).to.equal(type, 'cN: Type is wrong')
-                expect(store.state.flows.nodes[guid].type).to.equal(type, 'cN: Type is wrong')
-                // expect(store.state.flows.nodes[guid].type).to.be(guid, 'Type is wrong')
-            }
-
-            const addNode = (guid: string, x: number, y:number, type: string, inputState: boolean[], outputState: boolean[], beforeCount: number = 0)=>{
-                //expect(Object.keys(store.state.flows.nodes).length).to.equal(0, "Nodes are not empty at start")
-                expect(Object.keys(store.state.flows.nodes).length).to.equal(beforeCount, "aN: Nodes are not as expected at start")
-                
-                expect(guid).to.not.equal(type, 'aN: Seting Up Test Failed')
-    
-                const node: Node = {
-                    error: false,
-                    changed: false, 
-                    selected: false,
-                    type,
-                    args: {
-                        guid,
-                        x,
-                        y
-                    },
-                    inputState: [],
-                    outputState: []
+        it('Do/Undo', () => {
+            let cmd = new CMDRemoveNode("b990a45f-7416-4fa3-b19a-08102ec599c4") //Was e1a2381b-35d0-4155-8659-a53e88e0600e
+            //console.log(JSON.stringify(store.state))
+            cmd.exe(store.dispatch, store.state)
+            //console.log(JSON.stringify(store.state))
+            expect(store.state).deep.equal({ 
+                "version":"1.0.0",
+                "commands":{ 
+                   "historyCount":20,
+                   "history":[
+                   ],
+                   "redo":[ 
+                   ]
+                },
+                "flows":{ 
+                   "connectedToBackend":false,
+                   "nodes":{ 
+                      "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca":{ 
+                         "type":"PinOut",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "x":23,
+                            "y":8
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "x":3,
+                            "y":6
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "e1a2381b-35d0-4155-8659-a53e88e0600e":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                            "x":3,
+                            "y":15
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      }
+                   },
+                   "flows":{ 
+                      "4bc08543-15b3-4b5a-bfaf-fda8396181da":{ 
+                         "guid":"4bc08543-15b3-4b5a-bfaf-fda8396181da",
+                         "title":"",
+                         "isProxy":false,
+                         "filename":"",
+                         "error":false,
+                         "changed":true,
+                         "inputs":[ 
+             
+                         ],
+                         "outputs":[ 
+             
+                         ],
+                         "nodes":[ 
+                            "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "e1a2381b-35d0-4155-8659-a53e88e0600e"
+                         ],
+                         "connections":[ 
+                         ]
+                      }
+                   },
+                   "connections":{ 
+                   }
+                },
+                "selection":{ 
+                   "selected":[ 
+                        "e1a2381b-35d0-4155-8659-a53e88e0600e",
+                        "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca"
+                    ],
+                   "draggingNode":false,
+                   "draggingConnection":false,
+                   "draggingConnectionFromOutput":false,
+                   "draggingConnectionNode":"",
+                   "draggingConnectionNodePort":0,
+                   "dragOffsetGridX":0,
+                   "dragOffsetGridY":0,
+                   "dragOffsetX":0,
+                   "dragOffsetY":0,
+                   "mouseStartX":0,
+                   "mouseStartY":0
+                },
+                "workspace":{ 
+                   "size":{ 
+                      "height":250,
+                      "width":250
+                   },
+                   "grid":{ 
+                      "height":20,
+                      "width":20
+                   },
+                   "prefrences":{ 
+                      "shiftMove":5
+                   },
+                   "editor":{ 
+                      "selectedFlow":0,
+                      "loadedFlows":[ 
+                         "4bc08543-15b3-4b5a-bfaf-fda8396181da"
+                      ]
+                   }
                 }
-                const cmd = new CMDRemoveNode(node, flow.guid)
-                //console.log("store.state")
-                //console.log(localVue)
-                //console.log(store.state)
-                //console.log(store.state.flows.nodes)
-                cmd.exe(store.dispatch, store.state)
-                checkNode(guid, x, y, type, inputState, outputState, beforeCount + 1)
-                return {node, cmd}
-            }
+             })
 
-            const checkExists = (nodes: Node[], checkCount: number, count: number) => {
-                expect(nodes.length).to.equal(checkCount, "cE: Input is not as expected")
-                expect(Object.keys(store.state.flows.nodes).length).to.equal(count, "cE: Nodes are not as expected at start")
-                nodes.forEach(value => {
-                    const {args, type, inputState, outputState} = value
-                    const {guid, x, y} = args
+             cmd.undo(store.dispatch, store.state)
 
-                    checkNode(guid, x, y, type, inputState, outputState, count)
-                })
-            }
-
-            const procIn = (nodes: Node[], cmds: CMDRemoveNode[], checkCount: number, count: number, arg: {node: Node, cmd: CMDRemoveNode}) => {
-                checkExists(nodes, checkCount, count)
-                nodes.push(arg.node)
-            }
-
-            const procOut = (nodes: Node[], cmds: CMDRemoveNode[], checkCount: number, count: number) => {
-                checkExists(nodes, checkCount, count)
-                let node = nodes.pop() as Node
-                let cmd: CMDRemoveNode = cmds.pop() as CMDRemoveNode
-                cmd.undo(store.dispatch, store.state)
-                nodes.push(node)
-            }
-            
-            let nodes: Node[] = []
-            let cmds: CMDRemoveNode[] = []
-            procIn(nodes, cmds, 1, 1, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [], []))
-            procIn(nodes, cmds, 2, 2, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [true], [], 1))
-            procIn(nodes, cmds, 3, 3, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false], [], 2))
-            procIn(nodes, cmds, 4, 4, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false, true], [], 3))
-            procIn(nodes, cmds, 5, 5, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false, true, false], [], 4))
-            procIn(nodes, cmds, 6, 6, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [], [true], 5))
-            procIn(nodes, cmds, 7, 7, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [], [false], 6))
-            procIn(nodes, cmds, 8, 8, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [], [false, true], 7))
-            procIn(nodes, cmds, 9, 9, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [], [false, true, false], 8))
-            procIn(nodes, cmds, 10, 10, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false, true, false], [true], 9))
-            procIn(nodes, cmds, 11, 11, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false, true], [false], 10))
-            procIn(nodes, cmds, 12, 12, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [false], [false, true], 11))
-            procIn(nodes, cmds, 13, 13, addNode(uuid.v4(), Math.random() * 100, Math.random() * 100, uuid.v4(), [true], [false, true, false], 12))
-
-
-            procOut(nodes, cmds, 13, 13)
-            procOut(nodes, cmds, 12, 12)
-            procOut(nodes, cmds, 11, 11)
-            procOut(nodes, cmds, 10, 10)
-            procOut(nodes, cmds, 9, 9)
-            procOut(nodes, cmds, 8, 8)
-            procOut(nodes, cmds, 7, 7)
-            procOut(nodes, cmds, 6, 6)
-            procOut(nodes, cmds, 5, 5)
-            procOut(nodes, cmds, 4, 4)
-            procOut(nodes, cmds, 3, 3)
-            procOut(nodes, cmds, 2, 2)
-            procOut(nodes, cmds, 1, 1)
+             expect(store.state).deep.equal({ 
+                "version":"1.0.0",
+                "commands":{ 
+                   "historyCount":20,
+                   "history":[],
+                   "redo":[]
+                },
+                "flows":{ 
+                   "connectedToBackend":false,
+                   "nodes":{ 
+                      "b990a45f-7416-4fa3-b19a-08102ec599c4":{ 
+                         "type":"AND",
+                         "args":{ 
+                            "guid":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                            "x":14,
+                            "y":10
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca":{ 
+                         "type":"PinOut",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "x":23,
+                            "y":8
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "x":3,
+                            "y":6
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "e1a2381b-35d0-4155-8659-a53e88e0600e":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                            "x":3,
+                            "y":15
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      }
+                   },
+                   "flows":{ 
+                      "4bc08543-15b3-4b5a-bfaf-fda8396181da":{ 
+                         "guid":"4bc08543-15b3-4b5a-bfaf-fda8396181da",
+                         "title":"",
+                         "isProxy":false,
+                         "filename":"",
+                         "error":false,
+                         "changed":true,
+                         "inputs":[ 
+             
+                         ],
+                         "outputs":[ 
+             
+                         ],
+                         "nodes":[ 
+                            "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "e1a2381b-35d0-4155-8659-a53e88e0600e",
+                            "b990a45f-7416-4fa3-b19a-08102ec599c4"
+                         ],
+                         "connections":[ 
+                            "537da82c-a67e-4993-ad25-4bf65059b15d",
+                            "65d26568-d1fd-45a5-8205-c392b7e14165",
+                            "3e6cd641-ea9c-48ca-8229-364433797152"
+                         ]
+                      }
+                   },
+                   "connections":{ 
+                      "537da82c-a67e-4993-ad25-4bf65059b15d":{ 
+                         "guid":"537da82c-a67e-4993-ad25-4bf65059b15d",
+                         "fromID":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                         "fromPort":0,
+                         "toID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "toPort":0,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      },
+                      "65d26568-d1fd-45a5-8205-c392b7e14165":{ 
+                         "guid":"65d26568-d1fd-45a5-8205-c392b7e14165",
+                         "fromID":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                         "fromPort":0,
+                         "toID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "toPort":1,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      },
+                      "3e6cd641-ea9c-48ca-8229-364433797152":{ 
+                         "guid":"3e6cd641-ea9c-48ca-8229-364433797152",
+                         "fromID":"b990a45f-7416-4fa3-b19a-08102ec599c4",
+                         "fromPort":0,
+                         "toID":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                         "toPort":0,
+                         "selected":false,
+                         "state":[ 
+                            false
+                         ]
+                      }
+                   }
+                },
+                "selection":{ 
+                   "selected":[ 
+                       "e1a2381b-35d0-4155-8659-a53e88e0600e",
+                       "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                       "b990a45f-7416-4fa3-b19a-08102ec599c4",
+                       "537da82c-a67e-4993-ad25-4bf65059b15d",
+                       "3e6cd641-ea9c-48ca-8229-364433797152"
+                   ],
+                   "draggingNode":false,
+                   "draggingConnection":false,
+                   "draggingConnectionFromOutput":false,
+                   "draggingConnectionNode":"",
+                   "draggingConnectionNodePort":0,
+                   "dragOffsetGridX":0,
+                   "dragOffsetGridY":0,
+                   "dragOffsetX":0,
+                   "dragOffsetY":0,
+                   "mouseStartX":0,
+                   "mouseStartY":0
+                },
+                "workspace":{ 
+                   "size":{ 
+                      "height":250,
+                      "width":250
+                   },
+                   "grid":{ 
+                      "height":20,
+                      "width":20
+                   },
+                   "prefrences":{ 
+                      "shiftMove":5
+                   },
+                   "editor":{ 
+                      "selectedFlow":0,
+                      "loadedFlows":[ 
+                         "4bc08543-15b3-4b5a-bfaf-fda8396181da"
+                      ]
+                   }
+                }
+             })
+            cmd.exe(store.dispatch, store.state)
+            expect(store.state).deep.equal({ 
+                "version":"1.0.0",
+                "commands":{ 
+                   "historyCount":20,
+                   "history":[
+                   ],
+                   "redo":[ 
+                   ]
+                },
+                "flows":{ 
+                   "connectedToBackend":false,
+                   "nodes":{ 
+                      "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca":{ 
+                         "type":"PinOut",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "x":23,
+                            "y":8
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "x":3,
+                            "y":6
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      },
+                      "e1a2381b-35d0-4155-8659-a53e88e0600e":{ 
+                         "type":"PinIn",
+                         "args":{ 
+                            "pinName":"A",
+                            "guid":"e1a2381b-35d0-4155-8659-a53e88e0600e",
+                            "x":3,
+                            "y":15
+                         },
+                         "error":false,
+                         "changed":false,
+                         "selected":false,
+                         "inputState":[ 
+             
+                         ],
+                         "outputState":[ 
+             
+                         ]
+                      }
+                   },
+                   "flows":{ 
+                      "4bc08543-15b3-4b5a-bfaf-fda8396181da":{ 
+                         "guid":"4bc08543-15b3-4b5a-bfaf-fda8396181da",
+                         "title":"",
+                         "isProxy":false,
+                         "filename":"",
+                         "error":false,
+                         "changed":true,
+                         "inputs":[ 
+             
+                         ],
+                         "outputs":[ 
+             
+                         ],
+                         "nodes":[ 
+                            "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
+                            "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
+                            "e1a2381b-35d0-4155-8659-a53e88e0600e"
+                         ],
+                         "connections":[ 
+                         ]
+                      }
+                   },
+                   "connections":{ 
+                   }
+                },
+                "selection":{ 
+                   "selected":[ 
+                        "e1a2381b-35d0-4155-8659-a53e88e0600e",
+                        "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca"
+                    ],
+                   "draggingNode":false,
+                   "draggingConnection":false,
+                   "draggingConnectionFromOutput":false,
+                   "draggingConnectionNode":"",
+                   "draggingConnectionNodePort":0,
+                   "dragOffsetGridX":0,
+                   "dragOffsetGridY":0,
+                   "dragOffsetX":0,
+                   "dragOffsetY":0,
+                   "mouseStartX":0,
+                   "mouseStartY":0
+                },
+                "workspace":{ 
+                   "size":{ 
+                      "height":250,
+                      "width":250
+                   },
+                   "grid":{ 
+                      "height":20,
+                      "width":20
+                   },
+                   "prefrences":{ 
+                      "shiftMove":5
+                   },
+                   "editor":{ 
+                      "selectedFlow":0,
+                      "loadedFlows":[ 
+                         "4bc08543-15b3-4b5a-bfaf-fda8396181da"
+                      ]
+                   }
+                }
+             })
         })
         it.skip('clone')
         it.skip('canMerge')

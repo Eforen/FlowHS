@@ -302,6 +302,7 @@ import { mount } from '@vue/test-utils';
 import CMDMoveNode from './store/commands/cmds/CMDMoveNode';
 import CMDGroup from './store/commands/cmds/CMDGroup';
 import CMDConnectNodes from './store/commands/cmds/CMDConnectNodes';
+import CMDDeleteGUIDs from '@/store/commands/cmds/CMDDeleteGUIDs';
 
 @Component({
   components: {
@@ -387,6 +388,7 @@ export default class Editor extends Vue {
       } else {
         if(ev.key == 'Delete'){
           console.log('Shortcut: Delete Action')
+          this.doCMD(new CMDDeleteGUIDs(this.selectionStore.selected, this.flows))
         } else if(ev.key == 'ArrowUp'){
           ev.preventDefault()
           console.log('Shortcut: Move Up Action')

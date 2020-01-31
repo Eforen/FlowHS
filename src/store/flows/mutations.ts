@@ -1,6 +1,6 @@
 // profile/mutations.ts
 import Vue from 'vue';
-import { MutationTree } from 'vuex';
+import { MutationTree, Mutation } from 'vuex';
 import { FlowsState, Node, Flow, Connection, ConnectionDictionary } from './types';
 import { ObjectForEach, ObjectFilter, ObjectFind } from '@/util/ObjectDictionary';
 import { flows } from '.';
@@ -11,12 +11,20 @@ export const setFlow = (state: FlowsState, payload: Flow)=>{
 export const setNode = (state: FlowsState, payload: Node) => {
     Vue.set(state.nodes, payload.args.guid, payload)
 }
-export const removeNode = (state: FlowsState, nodeID: string) => {
+export const removeNode: Mutation<FlowsState> = (state: FlowsState, nodeID: string) => {
     // If node does not exist bail out
     if(state.nodes[nodeID] == undefined) return
     
+    
+    //console.log("RemoveNodes")
+    //console.log(state.nodes)
     // filter out this node from nodes list
-    state.nodes = ObjectFilter(state.nodes, (node: Node, key) => key != nodeID)
+    state.nodes = ObjectFilter(state.nodes, (node: Node, key) => {
+        //console.log(`${key} != ${nodeID} == ${key != nodeID}`)
+        return key != nodeID
+    })
+
+    //console.log(state.nodes)
 
     // Setup some vars
     let newConnections: ConnectionDictionary = {}
