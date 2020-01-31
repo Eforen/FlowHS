@@ -118,7 +118,7 @@ export const unsetConnection = (state: FlowsState, conGUID: string) => {
     if(state.connections[conGUID] == undefined) return
     
     // get con for data
-    const con = ObjectFind(state.connections, (v, key) => key != conGUID)
+    //const con = ObjectFind(state.connections, (v, key) => key == conGUID)
 
     // filter out this connection from connections list
     state.connections = ObjectFilter(state.connections, (v, key) => key != conGUID)

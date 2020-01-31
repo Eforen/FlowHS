@@ -62,6 +62,7 @@ export const actions: ActionTree<FlowsState, RootState> = {
     deleteConnection({ commit, rootState }, conGUID:string) {
         //console.log("Debug: deleteConnection")
         commit('unsetConnection', conGUID)
+        commit('selection/unsetSelection', [conGUID], {root: true})
     },
     // fetchData({ commit }): any {
     //     axios({

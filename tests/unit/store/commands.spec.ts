@@ -9,6 +9,7 @@ import { tests_CMDAddNode } from './CMDs/CMDAddNode'
 import { tests_CMDRemoveNode } from './CMDs/CMDDeleteNode'
 import { tests_CMDConnectNodes } from './CMDs/CMDConnectNodes'
 import { VueConstructor } from 'vue'
+import { tests_CMDDeleteConnection } from './CMDs/CMDDeleteConnection'
 
 
 const localVue = createLocalVue()
@@ -53,4 +54,5 @@ describe('Store: Commands', () => {
   tests_CMDRemoveNode()
   tests_CMDConnectNodes()
   tests_CMDRemoveNode()
+  tests_CMDDeleteConnection()
 })

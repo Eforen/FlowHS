@@ -173,11 +173,14 @@
 * [Editor] Allow selection of connections by clicking them
 
 ### Done 2020-01-31
-
-### Next Commit 2020-01-31
 * [Testing] Add tests for Flows deleteNode
 * [CMD] Add CMDDeleteNode
 * [Store] Allow nodes to be deleted
+
+### Next Commit 2020-01-31
+* [Bug] Can't delete connections
+* [Editor] Allow deletion of connections by selecting them then pressing delete
+* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 
 ## Testing
 
@@ -185,9 +188,6 @@
 
 ## Backlog
 ### v0.1
-* [Editor] Allow deletion of connections by selecting them then pressing delete
-* [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
-* [Bug] Can't delete connections
 * [Bug] Can't drop line being dragged
 * [Bug] Can connected to self
 * [Editor][File Management] Add flow renames

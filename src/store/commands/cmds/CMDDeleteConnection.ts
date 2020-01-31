@@ -6,12 +6,19 @@ import uuid from 'uuid';
 
 export default class CMDDeleteConnection extends Command {
     private wasCon: Connection | null = null
+    private wasSelected: boolean = false
     constructor(private guid: string){
         super()
     }
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         this.wasCon = state.flows.connections[this.guid]
+        this.wasSelected = false
+        try {
+            if(state.selection.selected.includes(this.guid)) this.wasSelected = true
+        } catch (error) {
+            // Nothing
+        }
         dispatch('flows/deleteConnection', this.guid, {root:true})
     }
 
@@ -21,6 +28,7 @@ export default class CMDDeleteConnection extends Command {
         }
         const {guid, fromID, fromPort, toID, toPort} = this.wasCon
         dispatch('flows/createConnection', {conGUID: guid, fromID, fromPort, toID, toPort}, {root:true})
+        if(this.wasSelected) dispatch('selection/addSelected', [this.guid], {root:true})
     }
 
     clone(): CMDDeleteConnection {

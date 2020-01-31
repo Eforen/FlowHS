@@ -20,14 +20,15 @@ export default class CMDDeleteGUIDs extends Command {
                     this.cmds.push(new CMDRemoveNode(guid))
                 }
             } catch (error) {
-                // Was not a node
-                try {
-                    if(state.connections[guid] != undefined) {
-                        this.cmds.push(new CMDDeleteConnection(guid))
-                    }
-                } catch (error) {
-                    // Nothing
+                // Nothing
+            }
+            // If was not a node
+            try {
+                if(state.connections[guid] != undefined) {
+                    this.cmds.push(new CMDDeleteConnection(guid))
                 }
+            } catch (error) {
+                // Nothing
             }
         })
     }
