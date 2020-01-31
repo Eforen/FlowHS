@@ -550,8 +550,11 @@ export default class Editor extends Vue {
         this.panning=false
       } else if(this.selectionStore.draggingNode){
         this.stopDrag({commitMove: true, endX: e.offsetX, endY: e.offsetY})
+      } else if(this.selectionStore.draggingConnection){
+        this.stopDrag({commitMove: false, endX: e.offsetX, endY: e.offsetY})
       } else{
         this.setSelected([])
+        this.stopDrag({commitMove: false, endX: e.offsetX, endY: e.offsetY})
       }
   }
   panning = false

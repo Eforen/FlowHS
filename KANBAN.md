@@ -176,11 +176,13 @@
 * [Testing] Add tests for Flows deleteNode
 * [CMD] Add CMDDeleteNode
 * [Store] Allow nodes to be deleted
-
-### Next Commit 2020-01-31
 * [Bug] Can't delete connections
 * [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
+
+### Next Commit 2020-01-31
+* [Bug] Can't drop line being dragged
+* [Bug] Dropping Node when dragging it is unreliable
 
 ## Testing
 
@@ -188,8 +190,6 @@
 
 ## Backlog
 ### v0.1
-* [Bug] Can't drop line being dragged
-* [Bug] Can connected to self
 * [Editor][File Management] Add flow renames
 * Be redundent with data a little for speed by storing all flowIDs a node is in in the node
 * Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
@@ -255,6 +255,7 @@
 * [Builtin Chips] OR (2 BIT IN, 1 BIT OUT)
 * [Builtin Chips] AND (2 BIT IN, 1 BIT OUT)
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
+* [Bug?] Decide if this is a bug | Can connected to self
 
 ### v0.3
 * [Main][No Project Loaded] New Project 

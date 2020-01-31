@@ -1,5 +1,5 @@
 <template>
-    <g :class="{link: true, hover: (somethingDragging == false && hovering), selected: isSelected }" :transform="`translate(0, 0)`">
+    <g :class="{link: true, drag:dragging, hover: (somethingDragging == false && hovering), selected: isSelected }" :transform="`translate(0, 0)`">
         <path class="selector" :d="d" :style="{strokeWidth:states.length * 3 + 2 * 3}" :transform="`translate(0, 0)`" @click="handleSingleClick" @mouseover="hovering = true" @mouseleave="hovering = false"></path>
         <path class="outline" :d="d" :style="{strokeWidth:states.length * 3 + 2}" :transform="`translate(0, 0)`"></path>
         <path v-if="dragging" class="line drag" :d="d" :style="{strokeWidth:states.length * 3 }" :transform="`translate(0, 0)`"></path>
@@ -14,6 +14,9 @@
     cursor: crosshair;
     fill: none;
     pointer-events: all;
+}
+.link.drag .selector {
+    pointer-events: none;
 }
 .link .outline {
     stroke: #434954 !important;
