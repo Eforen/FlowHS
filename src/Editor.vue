@@ -23,7 +23,7 @@
     <div class="workspace">
       <div class="workspace-tabs">
         <div class="container">
-          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick" >{{index}}</div>
+          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" style="position: relative;" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick" @contextmenu="handleTabClick" >{{index}}<FlowMenu v-if="flowMenuOpen && index == workspace.editor.selectedFlow"/></div>
         </div>
         <v-btn
         id="add"
@@ -285,6 +285,7 @@ import { State, Action, Getter } from 'vuex-class';
 import { Component, Prop } from 'vue-property-decorator'
 import RenderLink from './components/RenderLink.vue';
 import RenderNode from './components/RenderNode.vue';
+import FlowMenu from '@/components/FlowMenu.vue';
 import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState, Connection } from './store/flows/types';
@@ -308,7 +309,8 @@ import CMDDeleteGUIDs from '@/store/commands/cmds/CMDDeleteGUIDs';
   components: {
     RenderLink,
     RenderNode,
-    RenderNodeSpawnProxy
+    RenderNodeSpawnProxy,
+    FlowMenu
   } 
 })
 export default class Editor extends Vue {
@@ -333,6 +335,8 @@ export default class Editor extends Vue {
   @Action('SelectFlow', { namespace: 'workspace' }) SelectFlow!: (flowID: string) => void;
   @Action('SelectPrevFlow', { namespace: 'workspace' }) SelectPrevFlow!: () => void;
   @Action('SelectNextFlow', { namespace: 'workspace' }) SelectNextFlow!: () => void;
+
+  flowMenuOpen: boolean = false
 
   created(){
     window.addEventListener('keydown', this.keydown, true)
@@ -499,8 +503,15 @@ export default class Editor extends Vue {
   
   handleTabClick(e: MouseEvent) {
     const flowID = ((e.target as HTMLElement).attributes.getNamedItem('flowid') as Attr).value
-    console.log(`tab Clicked: ${flowID}`)
-    this.SelectFlow(flowID)
+    //if(e)
+    if(e.button == 0){
+      console.log(`tab Clicked: ${e.button}:${flowID}`)
+      this.SelectFlow(flowID)
+    } else{
+      console.log(`tab Right-Clicked: ${e.button}:${flowID}`)
+      this.flowMenuOpen = true
+    }
+
     // console.log(arg1)
     // console.log(arg2)
     // console.log(arg3)

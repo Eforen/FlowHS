@@ -43,6 +43,7 @@
     - [v1.8](#v18)
     - [v1.9](#v19)
     - [v2.0](#v20)
+  - [Wishlist](#wishlist)
 
 # FlowHS Kanban
 
@@ -179,21 +180,28 @@
 * [Bug] Can't delete connections
 * [Editor] Allow deletion of connections by selecting them then pressing delete
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
-
-### Next Commit 2020-01-31
 * [Bug] Can't drop line being dragged
 * [Bug] Dropping Node when dragging it is unreliable
+
+### Next Commit 2020-01-31
 
 ## Testing
 
 ## Doing
+* [Editor] Add right click menu for tabs
 
 ## Backlog
 ### v0.1
+* [Editor] Add Toast notification system store
+* [Editor] Add Toast notification for undo/redo
 * [Editor][File Management] Add flow renames
-* Be redundent with data a little for speed by storing all flowIDs a node is in in the node
-* Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
-* Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection
+* [Editor] Chip Names independent from filename
+* [Editor] Chip Save/LOAD
+* [Editor] Chip Embed in other Files
+* [Builtin Chips] 1 Bit Pin-IN
+* [Consider] Be redundent with data a little for speed by storing all flowIDs a node is in in the node
+* [Consider] Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
+* [Consider] Be redundent with data a little for speed by storing all flowIDs a connection is in in the connection
 * [Editor][Node] RenderNode State Indicator (right) (Support For multi bit buses)
 * [Editor][Node] RenderNode Property Inspector on double click
 * [Editor][Node] RenderNode State Flip Button (left) functionality
@@ -202,52 +210,10 @@
 * [Editor] Calapsable Inspecrtor on right
 * [Editor][File Management] Rename flows in Inspecrtor
 * [Editor] Calapsable New Node List on left
-* [Main] Titlebar Drag Move Window
-* [Main] Titlebar Minimize Window
-* [Main] Titlebar Close Window
 * [Editor] Titlebar Reflects the state of the file and what the ChipName is
-* [Editor] Chip Names independent from filename
-* [Editor] Chip Save/LOAD
-* [Editor] Chip Embed in other Files
-* [Builtin Chips] 1 Bit Pin-IN
 * [Builtin Chips] 1 Bit Pin-OUT
 * [Editor] Connections Get their render state from the Node they are from and do not store their own state
 * Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
-* [Testing] Add tests for Flows connectToEmulator
-* [Testing] Add tests for Flows loadFlow
-* [Testing] Add tests for Flows loadClose
-* [Testing] Add RenderNode tests to kanban
-* [Testing] Add RenderLink tests to kanban
-* [Testing] Add RenderNodeProxy tests to kanban
-* [Testing] Add tests for Flows createNodeInSelectedFlow
-* [Testing] Add tests for Flows moveNode
-* [Testing] Add tests for Flows createConnection
-* [Testing] Add tests for Flows deleteConnection
-* [Testing] Add tests for Command CMDRemoveNode
-* [Testing] Add tests for Command CMDMoveNode
-* [Testing] Add tests for Command CMDGroup
-* [Testing] Add tests for Command CMDConnectNodes
-* [Testing] Add tests for Command CMDDeleteConnection
-* [Testing] Add tests for Commands DoCMD
-* [Testing] Add tests for Commands UndoCMD
-* [Testing] Add tests for Commands RedoCMD
-* [Testing] Add tests for Commands stelthAddCMD
-* [Testing] Add tests for Commands stelthRemoveCMD
-* [Testing] Add tests for Selection setSelection
-* [Testing] Add tests for Selection addSelected
-* [Testing] Add tests for Selection startDragNode
-* [Testing] Add tests for Selection startDragConnection
-* [Testing] Add tests for Selection updateDrag
-* [Testing] Add tests for Selection stopDrag
-* [Testing] Add tests for Workspace LoadFlow
-* [Testing] Add tests for Workspace SelectFlow
-* [Testing] Add tests for Workspace SelectPrevFlow
-* [Testing] Add tests for Workspace SelectNextFlow
-* [Testing] Add tests NodeType
-* [Testing] Add tests NodeTypeDictionary
-* [Testing] Add tests type AND
-* [Testing] Add tests Pins
-* [Testing] Add tests ObjectDictionary Utils
 
 ### v0.2
 * Chips Via Plugins
@@ -343,3 +309,37 @@
 
 ### v2.0
 * Arduino based hardware interfacing functionality
+
+## Wishlist
+* [Testing] Add tests for Flows connectToEmulator
+* [Testing] Add tests for Flows loadFlow
+* [Testing] Add tests for Flows loadClose
+* [Testing] Add RenderNode tests to kanban
+* [Testing] Add RenderLink tests to kanban
+* [Testing] Add RenderNodeProxy tests to kanban
+* [Testing] Add tests for Flows createNodeInSelectedFlow
+* [Testing] Add tests for Flows moveNode
+* [Testing] Add tests for Flows createConnection
+* [Testing] Add tests for Flows deleteConnection
+* [Testing] Add tests for Command CMDMoveNode
+* [Testing] Add tests for Command CMDGroup
+* [Testing] Add tests for Commands DoCMD
+* [Testing] Add tests for Commands UndoCMD
+* [Testing] Add tests for Commands RedoCMD
+* [Testing] Add tests for Commands stelthAddCMD
+* [Testing] Add tests for Commands stelthRemoveCMD
+* [Testing] Add tests for Selection setSelection
+* [Testing] Add tests for Selection addSelected
+* [Testing] Add tests for Selection startDragNode
+* [Testing] Add tests for Selection startDragConnection
+* [Testing] Add tests for Selection updateDrag
+* [Testing] Add tests for Selection stopDrag
+* [Testing] Add tests for Workspace LoadFlow
+* [Testing] Add tests for Workspace SelectFlow
+* [Testing] Add tests for Workspace SelectPrevFlow
+* [Testing] Add tests for Workspace SelectNextFlow
+* [Testing] Add tests NodeType
+* [Testing] Add tests NodeTypeDictionary
+* [Testing] Add tests type AND
+* [Testing] Add tests Pins
+* [Testing] Add tests ObjectDictionary Utils
