@@ -184,11 +184,11 @@
 * [Bug] Dropping Node when dragging it is unreliable
 
 ### Next Commit 2020-01-31
+* [Editor] Add right click menu for tabs
 
 ## Testing
 
 ## Doing
-* [Editor] Add right click menu for tabs
 
 ## Backlog
 ### v0.1

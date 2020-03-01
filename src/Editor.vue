@@ -23,7 +23,7 @@
     <div class="workspace">
       <div class="workspace-tabs">
         <div class="container">
-          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" style="position: relative;" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick" @contextmenu="handleTabClick" >{{index}}<FlowMenu v-if="flowMenuOpen && index == workspace.editor.selectedFlow"/></div>
+          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" style="position: relative;" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick($event, index)" @contextmenu="handleTabClick($event, index)" >{{index}}<FlowMenu :flowGUID="flowID" v-if="flowMenuOpen == index"/></div>
         </div>
         <v-btn
         id="add"
@@ -336,7 +336,7 @@ export default class Editor extends Vue {
   @Action('SelectPrevFlow', { namespace: 'workspace' }) SelectPrevFlow!: () => void;
   @Action('SelectNextFlow', { namespace: 'workspace' }) SelectNextFlow!: () => void;
 
-  flowMenuOpen: boolean = false
+  flowMenuOpen: number = -1
 
   created(){
     window.addEventListener('keydown', this.keydown, true)
@@ -501,7 +501,8 @@ export default class Editor extends Vue {
     
   }
   
-  handleTabClick(e: MouseEvent) {
+  handleTabClick(e: MouseEvent, tab: number) {
+    if(((((e.target as HTMLElement).parentElement as HTMLElement).parentElement as HTMLElement).classList as DOMTokenList).contains('workspace-tabs') == false) return; // Drop out if child was clicked
     const flowID = ((e.target as HTMLElement).attributes.getNamedItem('flowid') as Attr).value
     //if(e)
     if(e.button == 0){
@@ -509,7 +510,8 @@ export default class Editor extends Vue {
       this.SelectFlow(flowID)
     } else{
       console.log(`tab Right-Clicked: ${e.button}:${flowID}`)
-      this.flowMenuOpen = true
+      this.flowMenuOpen = tab
+      //this.flowMenuOpen = true
     }
 
     // console.log(arg1)
@@ -557,6 +559,7 @@ export default class Editor extends Vue {
   }
   handleMouseUp(e: MouseEvent) {
       console.log(`MouseUp`)
+      this.flowMenuOpen = -1
       if(this.panning){
         this.panning=false
       } else if(this.selectionStore.draggingNode){

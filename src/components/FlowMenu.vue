@@ -1,9 +1,9 @@
 <template>
     <div class="FlowMenu">
         <ol>
-            <li id="rename">Rename</li>
-            <li id="save">Save</li>
-            <li id="close">Close</li>
+            <li id="rename" @click="onClickItem('rename')">Rename</li>
+            <li id="save" @click="onClickItem('save')">Save</li>
+            <li id="close" @click="onClickItem('close')">Close</li>
         </ol>
     </div>
 </template>
@@ -60,9 +60,23 @@ export default class FlowMenu extends Vue {
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;
 
-    hover: number = -1
-
     @Prop({default:''})
-    guid!: string
+    flowGUID!: string
+
+    onClickItem(item: string){
+        switch (item) {
+            case 'rename':
+                console.log(`Menu: Rename Flow #${this.flowGUID}`)
+                break;
+            case 'save':
+                console.log(`Menu: Save Flow #${this.flowGUID}`)
+                break;
+            case 'close':
+                console.log(`Menu: Close Flow #${this.flowGUID}`)
+                break;
+            default:
+                break;
+        }
+    }
 }
 </script>
