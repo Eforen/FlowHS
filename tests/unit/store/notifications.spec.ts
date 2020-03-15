@@ -17,8 +17,6 @@ describe('Store: Notification', () => {
     store.replaceState(storeDef().state as RootState)
   })
   
-  it.skip('loadFlow', ()=>{})
-  
   it('Test Defaults', () => {
     // const msg = 'Welcome'
     // const wrapper = shallowMount(HelloWorld, {
@@ -58,9 +56,15 @@ describe('Store: Notification', () => {
     expect(store.state.notification.notifications[0].id).to.not.equal(store.state.notification.notifications[1].id)
   })
   
-  it.skip('timeout notification', ()=>{
-    store.dispatch('notification/createNotificaion', {text: "Test 123", closable:true, border:"left", icon:"mdi-redo"})
+  it('timeout notification', async ()=>{
+    store.dispatch('notification/createNotificaion', {text: "Test 123", closable:true, timeout:1000, border:"left", icon:"mdi-redo"})
 
+    expect(store.state.notification.notifications.length).to.equal(1, 'Notification not set')
+
+    await new Promise(resolve=>{
+      setTimeout(()=>{expect(store.state.notification.notifications.length).to.equal(1, 'Notification removed too early')}, 900)
+      setTimeout(()=>{expect(store.state.notification.notifications.length).to.equal(0, 'Notification was not removed'); resolve()}, 1100)
+    })
     //TODO: wait for a spesific random time
   })
   
