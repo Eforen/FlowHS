@@ -10,6 +10,6 @@ export const mutations: MutationTree<NotificationState> = {
         state.notifications = [...state.notifications, notification];
     },
     removeNotification(state, id: string){
-        state.notifications.filter(current => current.id != id);
+        state.notifications = state.notifications.filter(current => current.id != id);
     }
 };

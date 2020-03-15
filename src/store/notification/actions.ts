@@ -33,10 +33,11 @@ export const actions: ActionTree<NotificationState, RootState> = {
         //console.log('wtf')
         if(notification.timeout){
             setTimeout(()=>{
-                commit('removeNotification', notification.timeout)
+                commit('removeNotification', notification.id)
             })
         }
     },
-    removeNotificaion({ commit }, id: string) {
+    removeNotificaion({ commit, state }, id: string) {
+        commit('removeNotification', id)
     }
 };

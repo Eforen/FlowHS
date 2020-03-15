@@ -183,14 +183,15 @@
 * [Bug] Can't drop line being dragged
 * [Bug] Dropping Node when dragging it is unreliable
 * [Editor] Add right click menu for tabs
+* [Editor][Notification] createNotification action
 
 ### Next Commit 2020-01-31
-* [Editor][Notification] createNotification action
+* [Editor][Notification] removeNotification action
 
 ## Testing
 
 ## Doing
-* [Editor][Notification] removeNotification action
+* [Editor][Notification] notification timeout support
 * [Editor] Add Toast notification system store
 
 ## Backlog
