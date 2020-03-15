@@ -182,17 +182,19 @@
 * [Editor][Store] Delete Connection from store nodes and flow (Action and Mutation)
 * [Bug] Can't drop line being dragged
 * [Bug] Dropping Node when dragging it is unreliable
+* [Editor] Add right click menu for tabs
 
 ### Next Commit 2020-01-31
-* [Editor] Add right click menu for tabs
+* [Editor][Notification] createNotification action
 
 ## Testing
 
 ## Doing
+* [Editor][Notification] removeNotification action
+* [Editor] Add Toast notification system store
 
 ## Backlog
 ### v0.1
-* [Editor] Add Toast notification system store
 * [Editor] Add Toast notification for undo/redo
 * [Editor][File Management] Add flow renames
 * [Editor] Chip Names independent from filename

@@ -27,6 +27,9 @@ export const tests_CMDDeleteConnection = () => {
                    "history":[],
                    "redo":[]
                 },
+                "notification":{
+                  "notifications": []
+                },
                 "flows":{ 
                    "connectedToBackend":false,
                    "nodes":{ 
@@ -230,6 +233,9 @@ export const tests_CMDDeleteConnection = () => {
                   "history":[],
                   "redo":[]
                },
+               "notification":{
+                 "notifications": []
+               },
                "flows":{ 
                   "connectedToBackend":false,
                   "nodes":{ 
@@ -404,6 +410,9 @@ export const tests_CMDDeleteConnection = () => {
                    "historyCount":20,
                    "history":[],
                    "redo":[]
+                },
+                "notification":{
+                  "notifications": []
                 },
                 "flows":{ 
                    "connectedToBackend":false,
@@ -590,6 +599,9 @@ export const tests_CMDDeleteConnection = () => {
                   "historyCount":20,
                   "history":[],
                   "redo":[]
+               },
+               "notification":{
+                 "notifications": []
                },
                "flows":{ 
                   "connectedToBackend":false,

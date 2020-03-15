@@ -27,6 +27,9 @@ export const tests_CMDRemoveNode = () => {
                    "history":[],
                    "redo":[]
                 },
+                "notification":{
+                  "notifications": []
+                },
                 "flows":{ 
                    "connectedToBackend":false,
                    "nodes":{ 
@@ -232,6 +235,9 @@ export const tests_CMDRemoveNode = () => {
                    "redo":[ 
                    ]
                 },
+                "notification":{
+                  "notifications": []
+                },
                 "flows":{ 
                    "connectedToBackend":false,
                    "nodes":{ 
@@ -362,6 +368,9 @@ export const tests_CMDRemoveNode = () => {
                    "historyCount":20,
                    "history":[],
                    "redo":[]
+                },
+                "notification":{
+                  "notifications": []
                 },
                 "flows":{ 
                    "connectedToBackend":false,
@@ -550,6 +559,9 @@ export const tests_CMDRemoveNode = () => {
                    ],
                    "redo":[ 
                    ]
+                },
+                "notification":{
+                  "notifications": []
                 },
                 "flows":{ 
                    "connectedToBackend":false,

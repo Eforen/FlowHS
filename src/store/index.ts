@@ -3,6 +3,7 @@ import Vue from 'vue';
 import Vuex, { StoreOptions } from 'vuex';
 import { RootState, FullCombinedRootState } from './types';
 import { flows, state as flowsState } from './flows/index';
+import { notification, state as notificationState } from './notification/index';
 import { selection, state as selectionState } from './selection/index';
 import { workspace, state as workspaceState } from './workspace/index';
 import { commands, state as commandsState } from './commands/index';
@@ -13,6 +14,7 @@ export const storeDef: () => StoreOptions<RootState> = () => ({
     state: {
         version: '1.0.0', // a simple property
         flows: flowsState(),
+        notification: notificationState(),
         selection: selectionState(),
         workspace: workspaceState(),
         commands: commandsState()
@@ -20,6 +22,7 @@ export const storeDef: () => StoreOptions<RootState> = () => ({
     modules: {
         commands,
         flows,
+        notification,
         selection,
         workspace
     }
