@@ -103,6 +103,16 @@
       </div>
     </div>
     <div class="sidebar"> </div>
+    <div class="editor-notifications" v-if="notification">
+      <v-alert v-for="note in notification.notifications"  v-bind:key="`editor-notifications-${note.id}`"
+        :dismissible="note.closable"
+        color="cyan"
+        :border="note.border"
+        elevation="2"
+        colored-border
+        :icon="note.icon"
+      >{{note.text}}</v-alert>
+    </div>
   </v-container>
 </template>
 
@@ -113,6 +123,21 @@
   .workspace-chart svg.dragging g {
     pointer-events: none
   }
+  .editor-notifications {
+    position: absolute;
+    min-width: 80%;
+    left: 5em;
+    right: 5em;
+    bottom: 1em;
+  }
+  .editor-notifications > .v-alert {
+    opacity: 0.4;
+  }
+  
+  .editor-notifications > .v-alert:hover {
+    opacity: 0.75;
+  }
+
   .pallet {
     position: absolute;
     top: 0px;
@@ -304,6 +329,7 @@ import CMDMoveNode from './store/commands/cmds/CMDMoveNode';
 import CMDGroup from './store/commands/cmds/CMDGroup';
 import CMDConnectNodes from './store/commands/cmds/CMDConnectNodes';
 import CMDDeleteGUIDs from '@/store/commands/cmds/CMDDeleteGUIDs';
+import { NotificationState } from './store/notification/types';
 
 @Component({
   components: {
@@ -335,6 +361,9 @@ export default class Editor extends Vue {
   @Action('SelectFlow', { namespace: 'workspace' }) SelectFlow!: (flowID: string) => void;
   @Action('SelectPrevFlow', { namespace: 'workspace' }) SelectPrevFlow!: () => void;
   @Action('SelectNextFlow', { namespace: 'workspace' }) SelectNextFlow!: () => void;
+  @State('notification') notification!: NotificationState;
+  @Action('createNotification', { namespace: 'notification' }) createNotification!: (id: string) => void;
+  @Action('removeNotification', { namespace: 'notification' }) removeNotification!: (id: string) => void;
 
   flowMenuOpen: number = -1
 

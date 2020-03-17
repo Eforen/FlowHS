@@ -19,7 +19,9 @@
     - [Done 2020-01-20](#done-2020-01-20)
     - [Done 2020-01-28](#done-2020-01-28)
     - [Done 2020-01-31](#done-2020-01-31)
-    - [Next Commit 2020-01-31](#next-commit-2020-01-31)
+    - [Done 2020-03-08](#done-2020-03-08)
+    - [Done 2020-03-17](#done-2020-03-17)
+    - [Next Commit 2020-03-17](#next-commit-2020-03-17)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -184,18 +186,25 @@
 * [Bug] Dropping Node when dragging it is unreliable
 * [Editor] Add right click menu for tabs
 * [Editor][Notification] createNotification action
-* [Editor][Notification] removeNotification action
 
-### Next Commit 2020-01-31
+### Done 2020-03-08
+* [Editor][Notification] removeNotification action
 * [Editor][Notification] notification timeout support
 * [Editor] Add Toast notification system store
+
+### Done 2020-03-17
+
+### Next Commit 2020-03-17
+* [Editor] Add Toast notification visual elements
 
 ## Testing
 
 ## Doing
+* [Editor][Toast] fly in fly out
 
 ## Backlog
 ### v0.1
+* [BUG][Editor][Toast] notifications are too big
 * [Editor] Add Toast notification for undo/redo
 * [Editor][File Management] Add flow renames
 * [Editor] Chip Names independent from filename
