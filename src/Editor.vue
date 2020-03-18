@@ -111,6 +111,7 @@
         elevation="2"
         colored-border
         :icon="note.icon"
+        dense
       >{{note.text}}</v-alert>
     </div>
   </v-container>
@@ -129,9 +130,11 @@
     left: 5em;
     right: 5em;
     bottom: 1em;
+    z-index: 2000;
   }
   .editor-notifications > .v-alert {
     opacity: 0.4;
+    margin-bottom: 0.25em;
   }
   
   .editor-notifications > .v-alert:hover {

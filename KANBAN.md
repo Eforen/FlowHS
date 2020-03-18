@@ -191,21 +191,22 @@
 * [Editor][Notification] removeNotification action
 * [Editor][Notification] notification timeout support
 * [Editor] Add Toast notification system store
+* [Editor] Add Toast notification visual elements
+* [Editor] Add Toast notification for undo/redo
 
 ### Done 2020-03-17
 
 ### Next Commit 2020-03-17
-* [Editor] Add Toast notification visual elements
+* [BUG][Editor][Toast] notifications are too big
 
 ## Testing
 
 ## Doing
-* [Editor][Toast] fly in fly out
 
 ## Backlog
 ### v0.1
-* [BUG][Editor][Toast] notifications are too big
-* [Editor] Add Toast notification for undo/redo
+* [Editor][Toast] fly in fly out
+* [Editor][Toast] Commands have a to text function that is called for undo/redo toasts
 * [Editor][File Management] Add flow renames
 * [Editor] Chip Names independent from filename
 * [Editor] Chip Save/LOAD
