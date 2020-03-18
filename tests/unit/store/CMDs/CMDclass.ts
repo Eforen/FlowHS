@@ -11,6 +11,10 @@ class tester extends Command {
         super()
     }
     oldValue: number | null = null
+
+    shortDesc(): string {
+        return `Test Command`
+    }
     exe(dispatch: any, state: any): void {
         this.oldValue = state.target1
         state.target1 = this.target

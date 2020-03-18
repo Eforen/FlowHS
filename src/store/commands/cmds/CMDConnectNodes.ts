@@ -12,6 +12,10 @@ export default class CMDConnectNodes extends Command {
         //console.log("debug")
     }
 
+    shortDesc(): string {
+        return `Connect Nodes ${this.guidA}:${this.portA} ->  ${this.guidB}:${this.portB}`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         //console.log("Debug: CMDConnectNodes.exe")
         //const {guid, fromID, fromPort, toID, toPort} = this.con

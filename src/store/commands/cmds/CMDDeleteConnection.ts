@@ -11,6 +11,11 @@ export default class CMDDeleteConnection extends Command {
         super()
     }
 
+    shortDesc(): string {
+        if(this.wasCon) return `Delete Connection ${this.wasCon.fromID}:${this.wasCon.fromPort} ->  ${this.wasCon.toID}:${this.wasCon.toPort}`
+        else return `Delete Connection ${this.guid}`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         this.wasCon = state.flows.connections[this.guid]
         this.wasSelected = false

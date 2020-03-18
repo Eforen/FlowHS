@@ -10,6 +10,10 @@ export default class CMDMoveNode extends Command {
     }
     private oldX = 0
     private oldY = 0
+    
+    shortDesc(): string {
+        return `Move Node (${this.x}, ${this.y})`
+    }
 
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         const node = state.flows.nodes[this.nodeID]

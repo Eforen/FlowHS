@@ -9,6 +9,10 @@ export default class CMDGroup extends Command {
         super()
     }
 
+    shortDesc(): string {
+        return `${this.CMDs.length} Grouped CMDs`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         for (let index = this.CMDs.length - 1; index >= 0 ; index--) {
             const cmd = this.CMDs[index];

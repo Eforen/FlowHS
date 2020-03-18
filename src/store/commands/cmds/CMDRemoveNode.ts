@@ -15,6 +15,10 @@ export default class CMDRemoveNode extends Command {
         super()
     }
 
+    shortDesc(): string {
+        return `Delete Node ${this.nodeID}`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         ObjectForEach(state.flows.flows, (key, flow: Flow) => {
             if(flow.nodes.indexOf(this.nodeID) != -1){

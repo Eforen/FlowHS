@@ -33,6 +33,10 @@ export default class CMDDeleteGUIDs extends Command {
         })
     }
 
+    shortDesc(): string {
+        return `Delete ${this.guids.length} GUIDs`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         this.cmds.forEach(cmd=>{
             cmd.exe(dispatch, state)

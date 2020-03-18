@@ -8,6 +8,10 @@ export default class CMDAddNode extends Command {
         super()
     }
 
+    shortDesc(): string {
+        return `Add Node ${this.node.args.guid}`
+    }
+
     exe(dispatch: Dispatch, state: FullCombinedRootState): void {
         if(this.flow == "current"){
             dispatch('flows/createNodeInSelectedFlow', this.node, {root:true})
