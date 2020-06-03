@@ -23,7 +23,7 @@
     <div class="workspace">
       <div class="workspace-tabs">
         <div class="container">
-          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" style="position: relative;" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick($event, index)" @contextmenu="handleTabClick($event, index)" >{{index}}<FlowMenu :flowGUID="flowID" v-if="flowMenuOpen == index"/></div>
+          <div v-for="(flowID, index) in workspace.editor.loadedFlows" v-bind:key="`workspace-tabs-${index}-${flowID}`" v-bind:id="`workspace-tabs-${index}-${flowID}`" style="position: relative;" :flowID="flowID" :class="{selected:(index == workspace.editor.selectedFlow)}" @click="handleTabClick($event, index)" @contextmenu="handleTabClick($event, index)" >{{flowTitle(index)}}<FlowMenu :flowGUID="flowID" v-if="flowMenuOpen == index"/></div>
         </div>
         <v-btn
         id="add"
@@ -467,6 +467,7 @@ export default class Editor extends Vue {
       return []
     }
   }
+  
 
   get consInFlowCalc(): string[] {
     try {
@@ -494,6 +495,26 @@ export default class Editor extends Vue {
   node_filter: string = ''
   // selectedFlow: number = -1
   // loadedFlows: string[] = []
+
+  /**
+   * Gets the title of the flow indicated ny the specified index
+   * @argument index The index of the flow to get the title from.
+   * @return The title of the flow indicated by the specified index.
+   */
+  flowTitle(index: number): string {
+    if(this.workspace.editor.loadedFlows[index]){
+      let title = this.flows.flows[this.workspace.editor.loadedFlows[index]].title
+      let id = this.workspace.editor.loadedFlows[index]
+      // console.log(`title: ${title}\ntab: ${this.workspace.editor.loadedFlows[index]}\nindex: ${index}`)
+      if(title == id || title.trim() == ""){
+        return index.toString()
+      } else {
+        return title
+      }
+    } else {
+      return index.toString()
+    }
+  }
 
   AddNewFlow() {
     //this.createFlow({guid:'root', title: '', isProxy: false, filename: '', error: false, changed: true, inputs: [], outputs: [], nodes:[], connections: []})

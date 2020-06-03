@@ -10,6 +10,11 @@ export interface FlowActionMoveNode{
     y: number
 }
 
+export interface FlowActionRenameFlow{
+    flowID: string,
+    newName: string
+}
+
 export const actions: ActionTree<FlowsState, RootState> = {
     connectToEmulator({ commit }) {
         
@@ -63,6 +68,11 @@ export const actions: ActionTree<FlowsState, RootState> = {
         //console.log("Debug: deleteConnection")
         commit('unsetConnection', conGUID)
         commit('selection/unsetSelection', [conGUID], {root: true})
+    },
+    renameFlow({ commit, rootState }, payload:FlowActionRenameFlow) {
+        //console.log("Debug: deleteConnection")
+        //console.log(`Rename Action: ${payload.newName}`)
+        commit('renameFlow', payload)
     },
     // fetchData({ commit }): any {
     //     axios({

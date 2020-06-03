@@ -10,6 +10,7 @@ import { tests_CMDRemoveNode } from './CMDs/CMDDeleteNode'
 import { tests_CMDConnectNodes } from './CMDs/CMDConnectNodes'
 import { VueConstructor } from 'vue'
 import { tests_CMDDeleteConnection } from './CMDs/CMDDeleteConnection'
+import { tests_CMDRenameFlow } from './CMDs/CMDRenameFlow'
 
 
 const localVue = createLocalVue()
@@ -55,4 +56,5 @@ describe('Store: Commands', () => {
   tests_CMDConnectNodes()
   tests_CMDRemoveNode()
   tests_CMDDeleteConnection()
+  tests_CMDRenameFlow()
 })

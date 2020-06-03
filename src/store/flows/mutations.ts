@@ -4,12 +4,17 @@ import { MutationTree, Mutation } from 'vuex';
 import { FlowsState, Node, Flow, Connection, ConnectionDictionary } from './types';
 import { ObjectForEach, ObjectFilter, ObjectFind } from '@/util/ObjectDictionary';
 import { flows } from '.';
+import { FlowActionRenameFlow } from './actions';
 
 export const setFlow = (state: FlowsState, payload: Flow)=>{
     Vue.set(state.flows, payload.guid, payload)
 }
 export const setNode = (state: FlowsState, payload: Node) => {
     Vue.set(state.nodes, payload.args.guid, payload)
+}
+export const renameFlow = (state: FlowsState, payload: FlowActionRenameFlow)=>{
+    //console.log(`Rename Mutation: ${payload.newName}`)
+    state.flows[payload.flowID].title = payload.newName
 }
 export const removeNode: Mutation<FlowsState> = (state: FlowsState, nodeID: string) => {
     // If node does not exist bail out
@@ -136,6 +141,7 @@ export const unsetConnection = (state: FlowsState, conGUID: string) => {
 
 export const mutations: MutationTree<FlowsState> = {
     setFlow,
+    renameFlow,
     setNode,
     removeNode,
     setNodePos,

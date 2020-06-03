@@ -21,7 +21,7 @@
     - [Done 2020-01-31](#done-2020-01-31)
     - [Done 2020-03-08](#done-2020-03-08)
     - [Done 2020-03-17](#done-2020-03-17)
-    - [Next Commit 2020-03-17](#next-commit-2020-03-17)
+    - [Next Commit 2020-03-23](#next-commit-2020-03-23)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -196,17 +196,18 @@
 * [Editor] Add Toast notification visual elements
 * [Editor] Add Toast notification for undo/redo
 * [BUG][Editor][Toast] notifications are too big
-
-### Next Commit 2020-03-17
 * [Editor][Toast] Commands have a to text function that is called for undo/redo toasts
+
+### Next Commit 2020-03-23
+* [Editor][File Management] Add flow renames
 
 ## Testing
 
 ## Doing
+  * Hitting Enter in New Name Box should fire rename action.
 
 ## Backlog
 ### v0.1
-* [Editor][File Management] Add flow renames
 * [Editor] Chip Names independent from filename
 * [Editor] Chip Save/LOAD
 * [Editor] Chip Embed in other Files
