@@ -197,14 +197,15 @@
 * [Editor] Add Toast notification for undo/redo
 * [BUG][Editor][Toast] notifications are too big
 * [Editor][Toast] Commands have a to text function that is called for undo/redo toasts
+* [Editor][File Management] Add flow renames
 
 ### Next Commit 2020-03-23
-* [Editor][File Management] Add flow renames
+  * [Editor][File Management][Rename] Hitting Enter in New Name Box should fire rename action.
 
 ## Testing
 
 ## Doing
-  * Hitting Enter in New Name Box should fire rename action.
+  * [Editor][File Management][Rename] On rename should trigger focus
 
 ## Backlog
 ### v0.1

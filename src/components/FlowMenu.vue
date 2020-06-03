@@ -17,6 +17,7 @@
                         v-model="renamingName"
                         label="New Name"
                         outlined
+                        v-on:keyup="onFinishRename"
                     >{{renamingName}}</v-text-field>
                     </v-col>
                 </v-row>
