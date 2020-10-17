@@ -12,6 +12,9 @@ export const setFlow = (state: FlowsState, payload: Flow)=>{
 export const setNode = (state: FlowsState, payload: Node) => {
     Vue.set(state.nodes, payload.args.guid, payload)
 }
+export const setFlowFilename = (state: FlowsState, {flowID, filename}: {flowID: string, filename: string})=>{
+    state.flows[flowID].filename = filename
+}
 export const renameFlow = (state: FlowsState, payload: FlowActionRenameFlow)=>{
     //console.log(`Rename Mutation: ${payload.newName}`)
     state.flows[payload.flowID].title = payload.newName
@@ -142,6 +145,7 @@ export const unsetConnection = (state: FlowsState, conGUID: string) => {
 export const mutations: MutationTree<FlowsState> = {
     setFlow,
     renameFlow,
+    setFlowFilename,
     setNode,
     removeNode,
     setNodePos,

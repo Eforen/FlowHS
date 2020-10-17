@@ -199,19 +199,19 @@
 * [Editor][Toast] Commands have a to text function that is called for undo/redo toasts
 * [Editor][File Management] Add flow renames
 * [Editor][File Management][Rename] Hitting Enter in New Name Box should fire rename action.
+* [Editor][File Management][Rename] On rename should trigger focus
 
 ### Next Commit 2020-10-17
-* [Editor][File Management][Rename] On rename should trigger focus
+* [Editor] Chip Save
+* [Editor] Chip Names independent from filename
 
 ## Testing
 
 ## Doing
+* [Editor] Chip LOAD
 
 ## Backlog
 ### v0.1
-* [Editor][Bug] Right and Left don't work on rename model for some reason
-* [Editor] Chip Names independent from filename
-* [Editor] Chip Save/LOAD
 * [Editor] Chip Embed in other Files
 * [Builtin Chips] 1 Bit Pin-IN
 * [Consider] Be redundent with data a little for speed by storing all flowIDs a node is in in the node
@@ -229,6 +229,9 @@
 * [Builtin Chips] 1 Bit Pin-OUT
 * [Editor] Connections Get their render state from the Node they are from and do not store their own state
 * Make Command abstract track exe state and throw error if undo or exe is called in the wrong order
+* [Editor] Chip Save should cleanup .bak file renaming it back to the original filename if the save fails
+* [Editor] Chip Save should cause a toast message in the editor saying if the file was saved or not.
+* [Editor][Bug] Right and Left don't work on rename model for some reason
 
 ### v0.2
 * Chips Via Plugins

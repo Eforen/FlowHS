@@ -3,6 +3,7 @@ import { ActionTree } from 'vuex';
 import { FlowsState, Node, Flow, Connection } from './types';
 import { RootState } from '../types';
 import { ObjectCount, ObjectFind, ObjectForEach } from '@/util/ObjectDictionary';
+import { SaveDialogReturnValue, remote, ipcRenderer } from 'electron';
 
 export interface FlowActionMoveNode{
     node: string,
@@ -15,12 +16,62 @@ export interface FlowActionRenameFlow{
     newName: string
 }
 
+const getEncapsulatedFlow = (rootState: RootState, flowID: string) => {
+    return JSON.stringify({
+        flowID: flowID,
+        title: rootState.flows.flows[flowID].title,
+        inputs: rootState.flows.flows[flowID].inputs,
+        outputs: rootState.flows.flows[flowID].outputs,
+        connections: rootState.flows.flows[flowID].connections.map(connectionID => ({
+            guid: rootState.flows.connections[connectionID].guid,
+            fromID: rootState.flows.connections[connectionID].fromID,
+            fromPort: rootState.flows.connections[connectionID].fromPort,
+            toID: rootState.flows.connections[connectionID].toID,
+            toPort: rootState.flows.connections[connectionID].toPort
+        })),
+        nodes: rootState.flows.flows[flowID].nodes.map(nodeID =>({
+            guid: nodeID,
+            type: rootState.flows.nodes[nodeID].type, 
+            inputState: rootState.flows.nodes[nodeID].inputState,
+            args: rootState.flows.nodes[nodeID].args
+        }))
+    })
+}
+
 export const actions: ActionTree<FlowsState, RootState> = {
     connectToEmulator({ commit }) {
         
     },
     loadFlow({ commit }) {
         
+    }, 
+    async saveFlow({ commit, rootState }, flowGUID: string) {
+        let options = {
+            //Placeholder 1
+            title: "FlowHS: Save Chip",
+            
+            //Placeholder 2
+            defaultPath : rootState.flows.flows[flowGUID].filename.trim() == '' ? `${rootState.flows.flows[flowGUID].guid}.chip` : rootState.flows.flows[flowGUID].filename, //"C:\\BrainBell.png",
+            
+            //Placeholder 4
+            buttonLabel : "Save Chip File",
+            
+            //Placeholder 3
+            filters :[
+                {name: 'FlowHS Chip File', extensions: ['chip']},
+                {name: 'All Files', extensions: ['*']}
+            ]
+        }
+        
+        let r: SaveDialogReturnValue = await remote.dialog.showSaveDialog(options)
+        
+        if(r.canceled == false){
+            ipcRenderer.sendSync('SaveTrigger', r.filePath, getEncapsulatedFlow(rootState, flowGUID))
+            commit('setFlowFilename', {flowID: flowGUID, filename: r.filePath})
+            //console.log(r.filePath)
+        } else {
+            console.log('Save window closed without save canceling save action')
+        }
     }, 
     loadClose({ commit }) {
         
