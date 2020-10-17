@@ -7,17 +7,18 @@
         </ol>
         <v-overlay
             v-if="renaming"
-            :absolute="absolute"
             value="overlay"
         >
             <v-container>
                 <v-row>
                     <v-col cols="12">
                     <v-text-field
+                        ref="renameTextField"
                         v-model="renamingName"
                         label="New Name"
                         outlined
-                        v-on:keyup="onFinishRename"
+                        @keyup.enter="onKeyPress"
+                        @keyup.esc="onKeyPress"
                     >{{renamingName}}</v-text-field>
                     </v-col>
                 </v-row>
@@ -70,6 +71,7 @@
 
 <script lang="ts">
 import Vue from 'vue';
+import Vuetify from 'vuetify'
 import { State, Action, Getter } from 'vuex-class';
 //import HelloWorld from './components/HelloWorld.vue';
 import { Component, Prop } from 'vue-property-decorator'
@@ -96,6 +98,24 @@ export default class FlowMenu extends Vue {
     private renaming = false
     private renamingName = ''
 
+    onKeyPress(event: KeyboardEvent){
+        switch (event.keyCode) {
+            case 13: // Enter
+                // This is enter and thus the event is to finish renaming.
+                this.onFinishRename()
+                break;
+        
+            case 27: // Esc
+                // Pressing escape is to cancel
+                this.renaming = false
+                break;
+        
+            default:
+                // return event
+                break;
+        }
+    }
+
     onFinishRename(){
         let tempStr = this.flows.flows[this.flowGUID].title
         if(tempStr != null && tempStr != this.renamingName){
@@ -111,6 +131,11 @@ export default class FlowMenu extends Vue {
                 console.log(`Menu: Rename Flow #${this.flowGUID}`)
                 this.renamingName = this.flows.flows[this.flowGUID].title
                 this.renaming = true
+                setTimeout(()=>{
+                    //WARNING: Hacky cast any way to do this because the interface is not correct. This could cause a bug later should the api implementation change.
+                    //(this.$refs.renameTextField as any).$el.focus()
+                    console.log(this.$refs.renameTextField)
+                }, 100)
                 // tempStr = window.prompt(`What would you like to name flow ${this.flowGUID}`, this.flows.flows[this.flowGUID].title)
                 // if(tempStr == null || tempStr == this.flows.flows[this.flowGUID].title){
                 //     console.log('Rename canceled')
