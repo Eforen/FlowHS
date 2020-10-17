@@ -202,6 +202,7 @@
 
 ### Done 2020-10-17
 * [Editor][File Management][Rename] Hitting Enter in New Name Box should fire rename action.
+* [Editor][File Management][Rename] On rename should trigger focus
 
 ### Next Commit 2020-10-17
 * [Editor] Chip Save
