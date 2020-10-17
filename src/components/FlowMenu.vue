@@ -75,7 +75,7 @@ import Vuetify from 'vuetify'
 import { State, Action, Getter } from 'vuex-class';
 //import HelloWorld from './components/HelloWorld.vue';
 import { Component, Prop } from 'vue-property-decorator'
-import {ipcRenderer} from 'electron'
+import { ipcRenderer, remote, SaveDialogReturnValue } from 'electron'
 import { Node, FlowsState } from '../store/flows/types';
 import { SelectionState } from '../store/selection/types';
 import { ActionStartDragNode, ActionStopDrag, SelectionPayloadSetSelected, SelectionPayloadAddSelected, ActionStartDragConnection } from '../store/selection/actions';
@@ -91,6 +91,7 @@ export default class FlowMenu extends Vue {
     @State('selection') selectionStore!: SelectionState;
     @State('workspace') workspace!: WorkspaceState;
     @Action('DoCMD', { namespace: 'commands' }) doCMD!: (cmd: Command) => void
+    @Action('saveFlow', { namespace: 'flows' }) saveFlow!: (flowGUID: string) => void
 
     @Prop({default:''})
     flowGUID!: string
@@ -124,7 +125,31 @@ export default class FlowMenu extends Vue {
         this.renaming = false
     }
 
-    onClickItem(item: string){
+    async doSave() {
+        // let options = {
+        //     //Placeholder 1
+        //     title: "FlowHS: Save Chip",
+            
+        //     //Placeholder 2
+        //     defaultPath : this.flows.flows[this.flowGUID].filename.trim() == '' ? `${this.flows.flows[this.flowGUID].guid}.chip` : this.flows.flows[this.flowGUID].filename, //"C:\\BrainBell.png",
+            
+        //     //Placeholder 4
+        //     buttonLabel : "Save Chip File",
+            
+        //     //Placeholder 3
+        //     filters :[
+        //         {name: 'FlowHS Chip File', extensions: ['chip']},
+        //         {name: 'All Files', extensions: ['*']}
+        //     ]
+        // }
+        
+        // let r: SaveDialogReturnValue = await remote.dialog.showSaveDialog(options)
+        
+        // console.log(r.filePath)
+        this.saveFlow(this.flowGUID)
+    }
+
+    async onClickItem(item: string){
         let tempStr: string | null = ''
         switch (item) {
             case 'rename':
@@ -145,6 +170,9 @@ export default class FlowMenu extends Vue {
                 break;
             case 'save':
                 console.log(`Menu: Save Flow #${this.flowGUID}`)
+                await this.doSave()
+                // this.flows.flows[this.flowGUID].filename
+                // console.log(ipcRenderer.sendSync("saveFlowFile_getPath", this.flows.flows[this.flowGUID].filename.trim() == '' ? `${this.flows.flows[this.flowGUID].guid}.chip` : this.flows.flows[this.flowGUID].filename))
                 break;
             case 'close':
                 console.log(`Menu: Close Flow #${this.flowGUID}`)

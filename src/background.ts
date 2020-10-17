@@ -1,10 +1,11 @@
 'use strict'
 
-import { app, protocol, BrowserWindow, ipcMain } from 'electron'
+import { app, protocol, BrowserWindow, ipcMain, dialog } from 'electron'
 import {
   createProtocol,
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
+import * as fs from 'fs'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -129,6 +130,65 @@ ipcMain.on("minWindow", (event, arg) => {
     default:
       break
   }
+})
+
+ipcMain.on("saveFlowFile_getPath", (event, args) => {
+  event.returnValue = '';
+  let options = {
+    //Placeholder 1
+    title: "FlowHS: Save Chip",
+    
+    //Placeholder 2
+    defaultPath : args[0],//"C:\\BrainBell.png",
+    
+    //Placeholder 4
+    buttonLabel : "Save Electron File",
+    
+    //Placeholder 3
+    filters :[
+     {name: 'FlowHS Chip File', extensions: ['chip']},
+     {name: 'All Files', extensions: ['*']}
+    ]
+   }
+   
+   //Synchronous
+   let filename = dialog.showSaveDialog(options)
+   console.log(filename)
+   event.returnValue = filename
+   
+   //Or asynchronous - using callback
+  //  dialog.showSaveDialog(WIN, options, (filename) => {
+  //   console.log(filename)
+  //  })
+
+  //  dialog.showSaveDialog(mainWindow, options, args => {
+
+  //  })
+})
+
+ipcMain.on("SaveTrigger", async (event, path, data) => {
+  event.returnValue='false'
+  try {
+    let backedupFile = false;
+    if(fs.existsSync(path)) {
+      const existingFile = await fs.promises.stat(path)
+      if(existingFile.isFile()) await fs.promises.rename(path, `${path}.bak`)
+      if(existingFile.isDirectory()) {
+        dialog.showErrorBox('Error Saving', `Folder found at target path: \`${path}\``)
+        //event.reply()
+        return
+      }
+      backedupFile = true;
+    }
+    await fs.promises.writeFile(path, data)
+    event.returnValue='true'
+    if(backedupFile) await fs.promises.unlink(`${path}.bak`)
+  } catch (error){
+    dialog.showErrorBox('Error Saving', 'Your file may have been renamed with a .bak on the end of it if this is the case you will need to fix this before it will work to save this file.')
+    throw error
+  }
+  console.log('done')
+  //event.reply()
 })
 
 // Exit cleanly on request from parent process in development mode.
