@@ -30,7 +30,6 @@ const getEncapsulatedFlow = (rootState: RootState, flowID: string) => {
             toPort: rootState.flows.connections[connectionID].toPort
         })),
         nodes: rootState.flows.flows[flowID].nodes.map(nodeID =>({
-            guid: nodeID,
             type: rootState.flows.nodes[nodeID].type, 
             inputState: rootState.flows.nodes[nodeID].inputState,
             args: rootState.flows.nodes[nodeID].args

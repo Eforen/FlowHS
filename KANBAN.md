@@ -22,7 +22,8 @@
     - [Done 2020-03-08](#done-2020-03-08)
     - [Done 2020-03-17](#done-2020-03-17)
     - [Done 2020-10-17](#done-2020-10-17)
-    - [Next Commit 2020-10-17](#next-commit-2020-10-17)
+    - [Done 2020-10-19](#done-2020-10-19)
+    - [Next Commit 2020-10-19](#next-commit-2020-10-19)
   - [Testing](#testing)
   - [Doing](#doing)
   - [Backlog](#backlog)
@@ -203,10 +204,13 @@
 ### Done 2020-10-17
 * [Editor][File Management][Rename] Hitting Enter in New Name Box should fire rename action.
 * [Editor][File Management][Rename] On rename should trigger focus
-
-### Next Commit 2020-10-17
 * [Editor] Chip Save
 * [Editor] Chip Names independent from filename
+
+### Done 2020-10-19
+
+### Next Commit 2020-10-19
+* [Editor][Improvement] Chip Save should not save GUID multiple times only once in args
 
 ## Testing
 
@@ -246,6 +250,7 @@
 
 ### v0.3
 * [Editor][File Management][Rename] On rename should trigger focus
+* [Editor][File Management][Save/Load] Check Flow integrety on load and save. Should check every connection ID exists, should on save check that every node in flow has matching guid in its args.
 * [Main][No Project Loaded] New Project 
 * [Main][No Project Loaded] Open Project Folder
 * [Main][No Project Loaded] Recent Projects List
