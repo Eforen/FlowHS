@@ -43,8 +43,9 @@
         small dark
         v-on:click="OpenFlowsMenu"
       >
-        <v-icon v-if="true">mdi-menu</v-icon>
-        <v-icon v-if="false">mdi-menu-open</v-icon>
+        <v-icon v-if="true">mdi-folder-open</v-icon>
+        <!-- after using menu <v-icon v-if="true">mdi-menu</v-icon>
+        <v-icon v-if="false">mdi-menu-open</v-icon> -->
       </v-btn>
       </div>
       <!--
@@ -367,6 +368,7 @@ export default class Editor extends Vue {
   @State('notification') notification!: NotificationState;
   @Action('createNotification', { namespace: 'notification' }) createNotification!: (id: string) => void;
   @Action('removeNotification', { namespace: 'notification' }) removeNotification!: (id: string) => void;
+  @Action('loadFlowFromFilePicker', { namespace: 'flows' }) loadFlowFromFilePicker!: () => void
 
   flowMenuOpen: number = -1
 
@@ -542,16 +544,17 @@ export default class Editor extends Vue {
   doTheThing = false
   OpenFlowsMenu(e: MouseEvent) { 
     console.log(`Open Flow Menu`)
-    const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    this.doCMD(new CMDAddNode(debug1, this.loadedFlow))
-    //const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    const debug2: Node = { type: 'AND', args: {guid: uuid.v4(), x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
-    // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
-    const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}
-    this.doCMD(new CMDConnectNodes('', debug1.args.guid, 0, debug2.args.guid, 2))
-    //this.doTheThing = true
-    
+    // const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // this.doCMD(new CMDAddNode(debug1, this.loadedFlow))
+    // //const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // const debug2: Node = { type: 'AND', args: {guid: uuid.v4(), x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
+    // // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
+    // const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}
+    // this.doCMD(new CMDConnectNodes('', debug1.args.guid, 0, debug2.args.guid, 2))
+    // //this.doTheThing = true
+
+    this.loadFlowFromFilePicker()
   }
   
   handleTabClick(e: MouseEvent, tab: number) {

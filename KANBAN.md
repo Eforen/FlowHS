@@ -208,17 +208,19 @@
 * [Editor] Chip Names independent from filename
 
 ### Done 2020-10-19
+* [Editor][Improvement] Chip Save should not save GUID multiple times only once in args
 
 ### Next Commit 2020-10-19
-* [Editor][Improvement] Chip Save should not save GUID multiple times only once in args
+* [Editor][Notifications] Make helper function to dispatch notifications correctly from other actions
+* [Editor] Chip LOAD
 
 ## Testing
 
 ## Doing
-* [Editor] Chip LOAD
 
 ## Backlog
 ### v0.1
+* [Editor][Improvement] Move Save and Load via picker actions to the workspace store as that makes more sense
 * [Editor] Chip Embed in other Files
 * [Builtin Chips] 1 Bit Pin-IN
 * [Consider] Be redundent with data a little for speed by storing all flowIDs a node is in in the node
@@ -239,6 +241,7 @@
 * [Editor] Chip Save should cleanup .bak file renaming it back to the original filename if the save fails
 * [Editor] Chip Save should cause a toast message in the editor saying if the file was saved or not.
 * [Editor][Bug] Right and Left don't work on rename model for some reason
+* [Editor][TechDebt] Change notification creation in CMD actions to use helper function instead of direct dispatch
 
 ### v0.2
 * Chips Via Plugins

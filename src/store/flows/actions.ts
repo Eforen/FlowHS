@@ -1,9 +1,13 @@
 // profile/actions.ts
-import { ActionTree } from 'vuex';
+import { ActionTree, Dispatch } from 'vuex';
 import { FlowsState, Node, Flow, Connection } from './types';
 import { RootState } from '../types';
 import { ObjectCount, ObjectFind, ObjectForEach } from '@/util/ObjectDictionary';
-import { SaveDialogReturnValue, remote, ipcRenderer } from 'electron';
+import { SaveDialogReturnValue, remote, ipcRenderer, OpenDialogOptions, OpenDialogReturnValue } from 'electron';
+import { NodeTypeArgs } from '@/nodes/NodeType';
+import * as fs from 'fs';
+import { CreateNotification } from '@/store/notification/actions'
+import { doWorkspaceActionLoadFlow } from '../workspace/actions';
 
 export interface FlowActionMoveNode{
     node: string,
@@ -16,8 +20,31 @@ export interface FlowActionRenameFlow{
     newName: string
 }
 
-const getEncapsulatedFlow = (rootState: RootState, flowID: string) => {
-    return JSON.stringify({
+export interface FlowSaveFileConnection {
+    guid: string,
+    fromID: string,
+    fromPort: number,
+    toID: string,
+    toPort: number
+}
+
+export interface FlowSaveFileNode {
+    type: string, 
+    inputState: boolean[],
+    args: NodeTypeArgs
+}
+
+export interface FlowSaveFileData {
+    flowID: string,
+    title: string,
+    inputs: string[],
+    outputs: string[],
+    connections: FlowSaveFileConnection[],
+    nodes: FlowSaveFileNode[],
+}
+
+const getEncapsulatedFlow: (rootState: RootState, flowID: string) => FlowSaveFileData = (rootState, flowID) =>  {
+    return {
         flowID: flowID,
         title: rootState.flows.flows[flowID].title,
         inputs: rootState.flows.flows[flowID].inputs,
@@ -34,15 +61,123 @@ const getEncapsulatedFlow = (rootState: RootState, flowID: string) => {
             inputState: rootState.flows.nodes[nodeID].inputState,
             args: rootState.flows.nodes[nodeID].args
         }))
-    })
+    }
+}
+export const doLoadFlow: (dispatch: Dispatch, filePath: string, flowStr?: string) => Promise<{loaded: boolean, notification: string, id: string}> = async (dispatch, filePath, flowStr?) => {
+    return await dispatch('flows/loadFlow', {filePath, flowStr}, {root: true});
 }
 
 export const actions: ActionTree<FlowsState, RootState> = {
     connectToEmulator({ commit }) {
         
     },
-    loadFlow({ commit }) {
+    async loadFlowFromFilePicker({ commit, rootState, dispatch }){
+        let options: OpenDialogOptions = {
+            //Placeholder 1
+            title: "FlowHS: Save Chip",
+            
+            //Placeholder 4
+            buttonLabel : "Load Chip File",
+            
+            //Placeholder 3
+            filters :[
+                {name: 'FlowHS Chip File', extensions: ['chip']},
+                {name: 'All Files', extensions: ['*']}
+            ],
+
+            properties: ['multiSelections', 'openFile']
+        }
         
+        let r: OpenDialogReturnValue = await remote.dialog.showOpenDialog(options)
+        if(r.canceled == false && r.filePaths != undefined){
+            for (let i = 0; i < r.filePaths.length; i++) {
+                const filePath = r.filePaths[i];
+                const flow = await doLoadFlow(dispatch, filePath)
+                if(flow.loaded) await doWorkspaceActionLoadFlow(dispatch, flow.id)
+            }
+        }
+    },
+    /** 
+     * This action will load the var flow.
+     */
+    async loadFlow({ commit, rootState, dispatch }, {filePath, flowStr}:{filePath: string, flowStr?: string}) {
+        let flow: FlowSaveFileData
+        if(flowStr === undefined || flowStr.trim() == "") {
+            // Load the file from path
+            try {
+                flowStr = await (await fs.promises.readFile(filePath)).toString()
+            } catch (error) {
+                return {loaded: false, notification: await CreateNotification(dispatch, {
+                    closable: true,
+                    icon: "mdi-error",
+                    text: `Load Flow: Could not read file \`${filePath}\``,
+                    border: 'left'
+                }), id: ''}
+            }
+        }
+        try {
+            if(flowStr === undefined || flowStr.trim() == ""){
+                return {loaded: false, notification: await CreateNotification(dispatch, {
+                    closable: true,
+                    icon: "mdi-error",
+                    text: `Load Flow: Corruption \`637b9725-61b8-4692-b926-bc4957444c26\` or flow file was blank`,
+                    border: 'left'
+                }), id: ''}
+            }
+            flow = JSON.parse(flowStr)
+        } catch (error) {
+            return {loaded: false, notification: await CreateNotification(dispatch, {
+                closable: true,
+                icon: "mdi-error",
+                text: `Load Flow: Could parse flow`,
+                border: 'left'
+            }), id: ''}
+        }
+
+        if(rootState.flows.flows[flow.flowID]){
+            return {loaded: false, notification: await CreateNotification(dispatch, {
+                closable: true,
+                icon: "mdi-error",
+                text: `Load Flow: Flow ID (${flow.flowID}) already exists in editor. Please close the flow before re-opening.`,
+                border: 'left'
+            }), id: ''}
+        } else {
+            commit('setFlow', {
+                filename: filePath,
+                changed: false,
+                guid: flow.flowID,
+                connections: flow.connections.map(connection =>connection.guid),
+                nodes: flow.nodes.map(node =>node.args.guid),
+                inputs: flow.inputs,
+                outputs: flow.outputs,
+                title: flow.title,
+                error: false,
+                isProxy: false
+            } as Flow)
+            flow.nodes.forEach(node =>{
+                commit('setNode', {
+                    type: node.type, 
+                    inputState: node.inputState,
+                    args: node.args
+                } as Node)
+            })
+            flow.connections.forEach(connection =>{
+                commit('setConnection', {
+                    conGUID: connection.guid, 
+                    fromID: connection.fromID, 
+                    fromPort: connection.fromPort, 
+                    toID: connection.toID, 
+                    toPort: connection.toPort
+                })
+            })
+            return {loaded: true, notification: await CreateNotification(dispatch, {
+                closable: true,
+                icon: "mdi-error",
+                text: `Loaded Flow${flow.title.trim() == "" ? " ID #" :""}: ${flow.title.trim() == "" ? flow.flowID : flow.title}`,
+                border: 'left',
+                timeout: 2000
+            }), id: flow.flowID}
+        }
     }, 
     async saveFlow({ commit, rootState }, flowGUID: string) {
         let options = {
@@ -65,7 +200,7 @@ export const actions: ActionTree<FlowsState, RootState> = {
         let r: SaveDialogReturnValue = await remote.dialog.showSaveDialog(options)
         
         if(r.canceled == false){
-            ipcRenderer.sendSync('SaveTrigger', r.filePath, getEncapsulatedFlow(rootState, flowGUID))
+            ipcRenderer.sendSync('SaveTrigger', r.filePath, JSON.stringify(getEncapsulatedFlow(rootState, flowGUID)))
             commit('setFlowFilename', {flowID: flowGUID, filename: r.filePath})
             //console.log(r.filePath)
         } else {

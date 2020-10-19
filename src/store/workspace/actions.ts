@@ -1,5 +1,5 @@
 // profile/actions.ts
-import { ActionTree } from 'vuex';
+import { ActionTree, Action, Dispatch } from 'vuex';
 import { WorkspaceState } from './types';
 import { RootState } from '../types';
 
@@ -25,6 +25,10 @@ import { RootState } from '../types';
 //     /** Current Calculated Grid Move */
 //     gridY: number
 // }
+
+export const doWorkspaceActionLoadFlow = (dispatch: Dispatch, flowID: string) => {
+    return dispatch('workspace/LoadFlow', flowID, {root: true})
+}
 
 export const actions: ActionTree<WorkspaceState, RootState> = {
     LoadFlow({ dispatch, commit, state, rootState }, flowID: String) {
