@@ -2,26 +2,26 @@ import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../Nod
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
-export interface IAndArgs extends NodeTypeArgs {
+export interface IRelayArgs extends NodeTypeArgs {
     inputs: string
 }
-export const ntAndArgTypes: NodeTypeArgsDef = {
+export const ntRelayArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('AND')
-export class ntAnd extends BasicChip<IAndArgs> {
+@registerNodeType('RELAY')
+export class ntRelay extends BasicChip<IRelayArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({
-            title: "AND",
+            title: "Relay",
             color: '#a6bbcf',
             inputs: 2,
             outputs: 1,
             ...overrides
-        }, ntAndArgTypes)
+        }, ntRelayArgTypes)
     }
 
-    getTitle(args: IAndArgs){
+    getTitle(args: IRelayArgs){
         return `${this.config.title}`
     }
 }

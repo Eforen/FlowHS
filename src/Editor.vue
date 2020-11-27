@@ -334,6 +334,12 @@ import CMDGroup from './store/commands/cmds/CMDGroup';
 import CMDConnectNodes from './store/commands/cmds/CMDConnectNodes';
 import CMDDeleteGUIDs from '@/store/commands/cmds/CMDDeleteGUIDs';
 import { NotificationState } from './store/notification/types';
+import { IRelayArgs } from './nodes/types/RELAY';
+import { INotArgs } from './nodes/types/NOT';
+import { IOrArgs } from './nodes/types/OR';
+import { IXnorArgs } from './nodes/types/XNOR';
+import { INandArgs } from './nodes/types/NAND';
+import { IXorArgs } from './nodes/types/XOR';
 
 @Component({
   components: {
@@ -490,7 +496,14 @@ export default class Editor extends Vue {
     IO: [
       ['PinIn', NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
       ['PinOut', NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
+      ['RELAY', NodeTypeDictionary.getType('RELAY'), { } as IRelayArgs],
+      ['NOT', NodeTypeDictionary.getType('NOT'), { } as INotArgs],
+      ['OR', NodeTypeDictionary.getType('OR'), { } as IOrArgs],
+      ['NOR', NodeTypeDictionary.getType('NOR'), { } as IXnorArgs],
       ['AND', NodeTypeDictionary.getType('AND'), { } as IAndArgs],
+      ['NAND', NodeTypeDictionary.getType('NAND'), { } as INandArgs],
+      ['XOR', NodeTypeDictionary.getType('XOR'), { } as IXorArgs],
+      ['XNOR', NodeTypeDictionary.getType('XNOR'), { } as IXnorArgs]
     ]
   }
 

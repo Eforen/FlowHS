@@ -2,26 +2,26 @@ import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../Nod
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
-export interface IAndArgs extends NodeTypeArgs {
+export interface IOrArgs extends NodeTypeArgs {
     inputs: string
 }
-export const ntAndArgTypes: NodeTypeArgsDef = {
+export const ntOrArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('AND')
-export class ntAnd extends BasicChip<IAndArgs> {
+@registerNodeType('OR')
+export class ntOr extends BasicChip<IOrArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({
-            title: "AND",
+            title: "OR",
             color: '#a6bbcf',
             inputs: 2,
             outputs: 1,
             ...overrides
-        }, ntAndArgTypes)
+        }, ntOrArgTypes)
     }
 
-    getTitle(args: IAndArgs){
+    getTitle(args: IOrArgs){
         return `${this.config.title}`
     }
 }

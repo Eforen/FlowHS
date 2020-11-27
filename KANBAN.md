@@ -29,6 +29,7 @@
   - [Backlog](#backlog)
     - [v0.1](#v01)
     - [v0.2](#v02)
+    - [v0.2.2](#v022)
     - [v0.3](#v03)
     - [v0.4 (Quality of Life upgrade)](#v04-quality-of-life-upgrade)
     - [v0.5](#v05)
@@ -209,10 +210,10 @@
 
 ### Done 2020-10-19
 * [Editor][Improvement] Chip Save should not save GUID multiple times only once in args
-
-### Next Commit 2020-10-19
 * [Editor][Notifications] Make helper function to dispatch notifications correctly from other actions
 * [Editor] Chip LOAD
+
+### Next Commit 2020-10-19
 
 ## Testing
 
@@ -220,8 +221,9 @@
 
 ## Backlog
 ### v0.1
+* [Builtin Chips] NOT (1 BIT IN, 1 BIT OUT)
 * [Editor][Improvement] Move Save and Load via picker actions to the workspace store as that makes more sense
-* [Editor] Chip Embed in other Files
+* [Editor][Improvement] Chip Save should have notifications
 * [Builtin Chips] 1 Bit Pin-IN
 * [Consider] Be redundent with data a little for speed by storing all flowIDs a node is in in the node
 * [Consider] Be redundent with data a little for speed by storing all connectionIDs a node is in in the node
@@ -245,11 +247,13 @@
 
 ### v0.2
 * Chips Via Plugins
-* [Builtin Chips] NOT (1 BIT IN, 1 BIT OUT)
 * [Builtin Chips] OR (2 BIT IN, 1 BIT OUT)
 * [Builtin Chips] AND (2 BIT IN, 1 BIT OUT)
 * [Editor] Connection needs an invisable padding that absorbs cursor events so it can be hovered and clicked without perfact accuracy
 * [Bug?] Decide if this is a bug | Can connected to self
+
+### v0.2.2
+* [Editor] Chip Embed in other Files
 
 ### v0.3
 * [Editor][File Management][Rename] On rename should trigger focus
