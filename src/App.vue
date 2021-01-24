@@ -120,11 +120,11 @@ export default class App extends Vue {
   whatAmI: ApplicationType = ApplicationType.TBD
 
   closeWindow(){
-    ipcRenderer.sendSync("closeWindow", "main")
+    ipcRenderer.sendSync("closeWindow", this.whatAmI)
   }
 
   minWindow(){
-    ipcRenderer.sendSync("minWindow", "main")
+    ipcRenderer.sendSync("minWindow", this.whatAmI)
   }
 
   mounted(){

@@ -12,7 +12,7 @@ const isDevelopment = process.env.NODE_ENV !== 'production'
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow: BrowserWindow | null
-let editorWindow: BrowserWindow | null
+let simulatorWindow: BrowserWindow | null
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([{scheme: 'app', privileges: { secure: true, standard: true } }])
@@ -38,34 +38,29 @@ function createWindow () {
   })
 
   
-  ///////////////////
-  // Editor Window //
-  ///////////////////
+  //////////////////////
+  // Simulator Window //
+  //////////////////////
   
-  /*
-  editorWindow = new BrowserWindow({
-    width: 800, height:600,
-    show: true,
-    frame:false
-  })
+  
+  // Create the browser window.
+  simulatorWindow = new BrowserWindow({ width: 400, height: 200, frame:false, webPreferences: {
+    nodeIntegration: true
+  } })
 
   if (process.env.WEBPACK_DEV_SERVER_URL) {
     // Load the url of the dev server if in development mode
-    editorWindow.loadURL(`${process.env.WEBPACK_DEV_SERVER_URL as string}#editor`)
-    if (!process.env.IS_TEST) editorWindow.webContents.openDevTools()
+    simulatorWindow.loadURL(process.env.WEBPACK_DEV_SERVER_URL as string)
+    if (!process.env.IS_TEST) simulatorWindow.webContents.openDevTools()
   } else {
     createProtocol('app')
     // Load the index.html when not in development
-    editorWindow.loadURL('app://./index.html#editor')
+    simulatorWindow.loadURL('app://./index.html')
   }
 
-  editorWindow.on('closed', function () {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    editorWindow = null
+  simulatorWindow.on('closed', () => {
+    simulatorWindow = null
   })
-  */
 }
 
 // Quit when all windows are closed.
@@ -108,19 +103,23 @@ app.on('ready', async () => {
 ipcMain.on('whatAmI', (event, arg) => {
   // event.returnValue = '';
   if (mainWindow && event.sender == mainWindow.webContents) event.returnValue = ApplicationType.Editor
+  if (simulatorWindow && event.sender == simulatorWindow.webContents) event.returnValue = ApplicationType.Simulator
   else event.returnValue = ApplicationType.TBD
 })
 
 ipcMain.on("closeWindow", (event, arg) => {
   event.returnValue = '';
   switch (arg) {
-    case "main":
+    case ApplicationType.Editor:
       app.quit()
       break
-    case "editor":
-      if(editorWindow != null) editorWindow.hide()
+    case ApplicationType.Simulator:
+      if(simulatorWindow != null) simulatorWindow.hide()
       break
     default:
+      if (mainWindow && event.sender == mainWindow.webContents) app.quit()
+      if (simulatorWindow && event.sender == simulatorWindow.webContents) simulatorWindow.hide()
+      else console.log('Not sure what I am supposed to close... Did you make a new window?')
       break
   }
 })
@@ -128,13 +127,16 @@ ipcMain.on("closeWindow", (event, arg) => {
 ipcMain.on("minWindow", (event, arg) => {
   event.returnValue = '';
   switch (arg) {
-    case "main":
+    case ApplicationType.Editor:
       if(mainWindow != null) mainWindow.minimize()
       break
-    case "editor":
-      if(editorWindow != null) editorWindow.minimize()
+    case ApplicationType.Simulator:
+      if(simulatorWindow != null) simulatorWindow.minimize()
       break
     default:
+      if (mainWindow && event.sender == mainWindow.webContents) mainWindow.minimize()
+      if (simulatorWindow && event.sender == simulatorWindow.webContents) simulatorWindow.minimize()
+      else console.log('Not sure what I am supposed to minimize... Did you make a new window?')
       break
   }
 })
