@@ -6,6 +6,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 import * as fs from 'fs'
+import ApplicationType from './ApplicationType'
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
 // Keep a global reference of the window object, if you don't, the window will
@@ -102,6 +103,12 @@ app.on('ready', async () => {
     }
   }
   createWindow()
+})
+
+ipcMain.on('whatAmI', (event, arg) => {
+  // event.returnValue = '';
+  if (mainWindow && event.sender == mainWindow.webContents) event.returnValue = ApplicationType.Editor
+  else event.returnValue = ApplicationType.TBD
 })
 
 ipcMain.on("closeWindow", (event, arg) => {

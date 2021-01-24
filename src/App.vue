@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app :class="`APP-${whatAmI.toUpperCase()}`">
     <v-app-bar
       app
       color="primary"
@@ -47,7 +47,20 @@
     </v-app-bar>
 
     <v-content>
-      <Editor/><!---->
+      <v-progress-circular
+        v-if="whatAmI=='u'"
+        :size="100"
+        :width="12"
+        color="purple"
+        indeterminate/>
+      <v-progress-circular
+        v-if="whatAmI=='u'"
+        :size="100"
+        :width="6"
+        color="blue"
+        indeterminate/>
+      <Editor v-else-if="whatAmI=='e'"/>
+      <div v-else-if="whatAmI=='s'">Simulator Placeholder</div>
     </v-content>
   </v-app>
 </template>
@@ -74,6 +87,19 @@ body::-webkit-scrollbar {
   display: none;
   overflow: hidden;
 }
+
+.APP-U .v-progress-circular {
+  margin: auto;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+}
+
+.APP-U .v-content__wrap {
+  background: #434954;
+}
 </style>
 
 <script lang="ts">
@@ -82,26 +108,28 @@ import HelloWorld from './components/HelloWorld.vue';
 import Navigation from './components/Navigation.vue';
 import Editor from './Editor.vue';
 import {ipcRenderer} from 'electron'
+import Component from 'vue-class-component';
+import ApplicationType from './ApplicationType'
 
-export default Vue.extend({
-  name: 'App',
-
+@Component({
   components: {
     Editor
-  },
+  } 
+})
+export default class App extends Vue {
+  whatAmI: ApplicationType = ApplicationType.TBD
 
-  data: () => ({
-    //
-  }),
-
-  methods: {
-    closeWindow: () => {
-      ipcRenderer.sendSync("closeWindow", "main")
-    },
-
-    minWindow: () => {
-      ipcRenderer.sendSync("minWindow", "main")
-    },
+  closeWindow(){
+    ipcRenderer.sendSync("closeWindow", "main")
   }
-});
+
+  minWindow(){
+    ipcRenderer.sendSync("minWindow", "main")
+  }
+
+  mounted(){
+    this.whatAmI = ipcRenderer.sendSync("whatAmI")
+    console.log(`I am a ${this.whatAmI} window`)
+  }
+}
 </script>
