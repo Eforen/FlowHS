@@ -5,25 +5,32 @@ import { RootState, FullCombinedRootState } from './types';
 import { flows, state as flowsState } from './flows/index';
 import { notification, state as notificationState } from './notification/index';
 import { selection, state as selectionState } from './selection/index';
+import { simulation, state as simulationState } from './simulation/index';
 import { workspace, state as workspaceState } from './workspace/index';
 import { commands, state as commandsState } from './commands/index';
 
 Vue.use(Vuex);
 
-export const storeDef: () => StoreOptions<RootState> = () => ({
-    state: {
+export const defaultStoreState: () => RootState = ()=>{
+    return {
         version: '1.0.0', // a simple property
         flows: flowsState(),
         notification: notificationState(),
         selection: selectionState(),
+        simulation: simulationState(),
         workspace: workspaceState(),
         commands: commandsState()
-    },
+    }
+}
+
+export const storeDef: () => StoreOptions<RootState> = () => ({
+    state: defaultStoreState(),
     modules: {
         commands,
         flows,
         notification,
         selection,
+        simulation,
         workspace
     }
 })

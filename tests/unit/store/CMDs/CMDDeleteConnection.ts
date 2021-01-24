@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { shallowMount, createLocalVue } from '@vue/test-utils'
 //import HelloWorld from '@/components/HelloWorld.vue'
 import Vuex, { Store } from 'vuex'
-import { storeDef } from '@/store'
+import { defaultStoreState, storeDef } from '@/store'
 import { RootState } from '@/store/types'
 import Command from '@/store/commands/Command'
 import CMDDeleteConnection from '@/store/commands/cmds/CMDDeleteConnection'
@@ -21,6 +21,7 @@ export const tests_CMDDeleteConnection = () => {
             // Setup Store
             store = new Store(storeDef())
             store.replaceState({ 
+               ...defaultStoreState(),
                 "version":"1.0.0",
                 "commands":{ 
                    "historyCount":20,

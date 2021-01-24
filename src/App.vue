@@ -60,7 +60,7 @@
         color="blue"
         indeterminate/>
       <Editor v-else-if="whatAmI=='e'"/>
-      <div v-else-if="whatAmI=='s'">Simulator Placeholder</div>
+      <Simulator v-else-if="whatAmI=='s'"/>
     </v-content>
   </v-app>
 </template>
@@ -107,13 +107,15 @@ import Vue from 'vue';
 import HelloWorld from './components/HelloWorld.vue';
 import Navigation from './components/Navigation.vue';
 import Editor from './Editor.vue';
+import Simulator from './Simulator.vue';
 import {ipcRenderer} from 'electron'
 import Component from 'vue-class-component';
 import ApplicationType from './ApplicationType'
 
 @Component({
   components: {
-    Editor
+    Editor,
+    Simulator
   } 
 })
 export default class App extends Vue {
