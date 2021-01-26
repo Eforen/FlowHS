@@ -61,7 +61,7 @@ describe('Store: Notification', () => {
 
     expect(store.state.notification.notifications.length).to.equal(1, 'Notification not set')
 
-    await new Promise(resolve=>{
+    await new Promise<void>(resolve=>{
       setTimeout(()=>{expect(store.state.notification.notifications.length).to.equal(1, 'Notification removed too early')}, 900)
       setTimeout(()=>{expect(store.state.notification.notifications.length).to.equal(0, 'Notification was not removed'); resolve()}, 1100)
     })

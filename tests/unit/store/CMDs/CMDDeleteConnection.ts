@@ -228,6 +228,7 @@ export const tests_CMDDeleteConnection = () => {
             cmd.exe(store.dispatch, store.state)
             //console.log(JSON.stringify(store.state))
             expect(store.state).deep.equal({ 
+               ...defaultStoreState(),
                "version":"1.0.0",
                "commands":{ 
                   "historyCount":20,
@@ -406,6 +407,7 @@ export const tests_CMDDeleteConnection = () => {
              cmd.undo(store.dispatch, store.state)
 
              expect(store.state).deep.equal({ 
+               ...defaultStoreState(),
                 "version":"1.0.0",
                 "commands":{ 
                    "historyCount":20,
@@ -595,6 +597,7 @@ export const tests_CMDDeleteConnection = () => {
              })
             cmd.exe(store.dispatch, store.state)
             expect(store.state).deep.equal({ 
+               ...defaultStoreState(),
                "version":"1.0.0",
                "commands":{ 
                   "historyCount":20,

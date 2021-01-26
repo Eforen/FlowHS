@@ -5,7 +5,7 @@
     "tasks": [
         {
             "type": "npm",
-            "script": "test",
+            "script": "test:unit",
             "problemMatcher": []
         }
     ]

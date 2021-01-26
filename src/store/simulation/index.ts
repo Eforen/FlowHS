@@ -8,7 +8,8 @@ import { SimulationState } from './types';
 import { RootState } from '../types';
 
 export const state: () => SimulationState = () => ( {
-    nodes: [],
+    nodes: {},
+    connections: {}
 })
 
 const namespaced: boolean = true;
