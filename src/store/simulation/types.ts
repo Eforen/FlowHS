@@ -1,5 +1,7 @@
 // types.ts
 
+import NodeType, { NodeTypeArgs } from "@/nodes/NodeType";
+
 export const SimulationRoot = 'simulation'
 
 export interface SimulationNode {
@@ -8,6 +10,7 @@ export interface SimulationNode {
     inputState: boolean[],
     outputState: boolean[],
     outputGuids: (string|null)[]
+    cachedLogic?: (nodeState: SimulationNode) => boolean[] | null
 }
 export interface SimulationConnection {
     guid: string,

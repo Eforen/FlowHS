@@ -7,6 +7,7 @@ import { RootState } from '@/store/types'
 import { MakeSimulationActions, SimulationActions } from '@/store/simulation/actions'
 import * as uuid from 'uuid'
 import { SimulationConnection, SimulationNode } from '@/store/simulation/types'
+import { NodeLogicType } from '@/nodes/NodeType'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -293,21 +294,119 @@ describe('Store: Simulation', () => {
   it.skip('Make Sync Event when node state changes', () => {
   })
 
-  it.skip('Node Gate Logic: NOT', () => {
-  })
+  const logicTesting = [
+    [
+      NodeLogicType.AND,
+      [
+        [[0,0],[0]],
+        [[0,1],[0]],
+        [[1,0],[0]],
+        [[1,1],[1]]
+      ]
+    ],[
+      NodeLogicType.NAND,
+      [
+        [[0,0],[1]],
+        [[0,1],[1]],
+        [[1,0],[1]],
+        [[1,1],[0]]
+      ]
+    ],[
+      NodeLogicType.NOR,
+      [
+        [[0,0],[1]],
+        [[0,1],[0]],
+        [[1,0],[0]],
+        [[1,1],[0]]
+      ]
+    ],[
+      NodeLogicType.NOT,
+      [
+        [[0],[1]],
+        [[1],[0]]
+      ]
+    ],[
+      NodeLogicType.OR,
+      [
+        [[0,0],[0]],
+        [[0,1],[1]],
+        [[1,0],[1]],
+        [[1,1],[1]]
+      ]
+    ],[
+      NodeLogicType.RELAY,
+      [
+        [[0],[0]],
+        [[1],[1]]
+      ]
+    ],[
+      NodeLogicType.XNOR,
+      [
+        [[0,0],[1]],
+        [[0,1],[0]],
+        [[1,0],[0]],
+        [[1,1],[1]]
+      ]
+    ],[
+      NodeLogicType.XOR,
+      [
+        [[0,0],[0]],
+        [[0,1],[1]],
+        [[1,0],[1]],
+        [[1,1],[0]]
+      ]
+    ]
+  ]
+  
+  logicTesting.forEach(test =>{
+    const type = test[0] as NodeLogicType
+    const truthTable = test[1] as number[][][]
+    truthTable.forEach(([inputs, outputs])=>{
+      it(`Node Gate Logic: ${type} IN: ${JSON.stringify(inputs)}, OUT: ${JSON.stringify(outputs)}`, async () => {
+        const guids = [uuid.v4(), uuid.v4(), uuid.v4(), uuid.v4()]
+        const [guidFalse, guidTrue, guidSame, guidInv] = guids
+        
+        const inputState = inputs.map(s => s > 0)
+        const outputTarget = outputs.map(s => s > 0)
+        
+        const getStartState = (guid: string)=>{
+          switch (guid){
+            case guidTrue:
+              return outputs.map(s => true)
+            case guidFalse:
+              return outputs.map(s => false)
+            case guidSame:
+              return [...outputTarget]
+            case guidInv:
+              return outputTarget.map(s => !s)
+          }
+        }
 
-  it.skip('Node Gate Logic: AND', () => {
-  })
+        // Add all the nodes
+        for (let i = 0; i < guids.length; i++) {
+          const guid = guids[i];
+          await MakeSimulationActions.AddNode(store.dispatch, 
+            {
+              guid: guid, 
+              inputState: [...inputState], 
+              outputState: getStartState(guid), 
+              type: type, 
+              outputGuids: outputs.map(x => null)
+            } as SimulationNode
+          )
+        }
 
-  it.skip('Node Gate Logic: OR', () => {
-  })
+        // Run all the logical Updates
+        for (let i = 0; i < guids.length; i++) {
+          const guid = guids[i];
+          await MakeSimulationActions.Update(store.dispatch, guid)
+        }
 
-  it.skip('Node Gate Logic: NAND', () => {
-  })
-
-  it.skip('Node Gate Logic: PIN', () => {
-  })
-
-  it.skip('Node Gate Logic: PinOut', () => {
+        // Check all the output pins are correct
+        guids.forEach(guid =>expect(store.state.simulation.nodes[guid].outputState).to.deep.equal(outputTarget, `The output pins of ${JSON.stringify(getStartState(guid))} did not turn into ${JSON.stringify(outputTarget)}`))
+        // Confirm that the inputs did not change
+        guids.forEach(guid =>expect(store.state.simulation.nodes[guid].inputState, 'The Inputs should not change because of a logic update but they did.').to.deep.equal(inputState))
+      })
+    })
   })
 })

@@ -7,6 +7,8 @@ import { FlowsState, Node } from '../flows/types';
 import CMDMoveNode from '../commands/cmds/CMDMoveNode';
 import CMDConnectNodes from '../commands/cmds/CMDConnectNodes';
 import { MakeSimulationCommit } from './mutations';
+import NodeTypeDictionary from '@/nodes/NodeTypeDictionary';
+import '@/nodes/types'
 
 export enum SimulationActions {
     AddNode = "SIM_ADD_NODE",
@@ -44,8 +46,8 @@ export const MakeSimulationActions = {
         return dispatch(SimulationActions.SetConnectionState, {connectionGUID, pinState})
     },
     Update: (dispatch: Dispatch, nodeGUID: string, runFromRoot: boolean = true) => {
-        if(runFromRoot) return dispatch(`${SimulationRoot}/${SimulationActions.UpdateNode}`, {nodeGUID}, {root: true})
-        return dispatch(SimulationActions.UpdateNode, {nodeGUID})
+        if(runFromRoot) return dispatch(`${SimulationRoot}/${SimulationActions.UpdateNode}`, nodeGUID, {root: true})
+        return dispatch(SimulationActions.UpdateNode, nodeGUID)
     },
 }
 
@@ -86,6 +88,22 @@ export const actions: ActionTree<SimulationState, RootState> = {
         MakeSimulationCommit.SetConnectionState(commit, connectionGUID, pinState)
         if(connection.to != null) {
             MakeSimulationActions.SetNodeState(dispatch, connection.to, false, connection.toPin, pinState)
+        }
+    },
+    SIM_UPDATE_NODE({ commit, state, dispatch }, nodeGUID){
+        const node = state.nodes[nodeGUID]
+        if(node.cachedLogic == undefined) {
+            node.cachedLogic = NodeTypeDictionary.getType(node.type).processLogic
+        }
+
+        const result = node.cachedLogic(node)
+        if(result) {
+            for (let i = 0; i < result.length; i++) {
+                const output = result[i];
+                if(output != node.outputState[i]){
+                    MakeSimulationActions.SetNodeState(dispatch, nodeGUID, true, i, output)
+                }
+            }
         }
     }
 };

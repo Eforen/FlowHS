@@ -10,6 +10,7 @@ import uuid from 'uuid'
 import BasicChip from '@/nodes/types/BasicChip'
 import { IAndArgs } from '@/nodes/types/AND'
 import { NodeTypeOptions, NodeTypeArgs, NodeTypeArgsDef } from '@/nodes/NodeType'
+import { SimulationNode } from '@/store/simulation/types'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -55,6 +56,10 @@ export const tests_basicChips = () => {
 
             getTitle(args: IAndArgs){
                 return `${this.config.title}`
+            }
+
+            processLogic(nodeState: SimulationNode): boolean[] | null {
+                return null
             }
         }
 

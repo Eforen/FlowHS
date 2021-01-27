@@ -1,5 +1,6 @@
 import { RootState } from '@/store/types'
 import store from '@/store'
+import { SimulationNode } from '@/store/simulation/types'
 
 export enum NodeLogicType {
     AND = 'AND',
@@ -87,4 +88,15 @@ export default abstract class NodeType<T extends NodeTypeArgs> {
 
     abstract getErrorX(args: T, absolute: boolean): number
     abstract getErrorY(args: T, absolute: boolean): number
+    
+
+    /**
+     * Processes the logic the chip and returns the resulting outputs
+     * @param nodeState the current state of the node before processing
+     * @return the new outputs of the chip or null if no changes were made
+     */
+    abstract processLogic(nodeState: SimulationNode): boolean[] | null
+    // {
+    //     throw new Error('Logical Processing Not implemented')
+    // }
 }
