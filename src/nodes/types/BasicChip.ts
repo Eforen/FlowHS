@@ -1,3 +1,4 @@
+import { SimulationNode } from '@/store/simulation/types'
 import NodeType, { NodeTypeArgs, NodeTypeOptionSet, NodeTypeArgsDef, NodeTypeOptions } from '../NodeType'
 
 export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType<T> {
@@ -118,5 +119,14 @@ export default abstract class BasicChip<T extends NodeTypeArgs> extends NodeType
     }
     getErrorY(args: T, absolute: boolean): number {
         return (absolute? this.getRootY(args, absolute) : 0) + -2
+    }
+
+    /**
+     * Processes the logic the chip and returns the resulting outputs
+     * @param nodeState the current state of the node before processing
+     * @return the new outputs of the chip or null if no changes were made
+     */
+    processLogic(nodeState: SimulationNode): boolean[] | null {
+        throw new Error('Logical Processing Not implemented')
     }
 }

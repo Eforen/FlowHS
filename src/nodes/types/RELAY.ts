@@ -1,3 +1,4 @@
+import { SimulationNode } from "@/store/simulation/types";
 import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
@@ -23,5 +24,9 @@ export class ntRelay extends BasicChip<IRelayArgs> {
 
     getTitle(args: IRelayArgs){
         return `${this.config.title}`
+    }
+
+    processLogic(nodeState: SimulationNode): boolean[] | null {
+        return nodeState.inputState[0] != nodeState.outputState[0] ? [nodeState.inputState[0]] : null;
     }
 }

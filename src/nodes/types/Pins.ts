@@ -1,3 +1,4 @@
+import { SimulationNode } from "@/store/simulation/types";
 import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
@@ -19,6 +20,10 @@ export class ntPin extends BasicChip<IPinArgs> {
 
     getTitle(args: IPinArgs){
         return `${this.config.title}: ${args.pinName}`
+    }
+
+    processLogic(nodeState: SimulationNode): boolean[] | null {
+        return null; //All pin and pout will just terminate logic runs for now
     }
 }
 
