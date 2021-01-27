@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -27,7 +27,7 @@ export class ntPin extends BasicChip<IPinArgs> {
  ********************/
 // export interface IPinInArgs extends IPinArgs {
 // }
-@registerNodeType('PinIn')
+@registerNodeType(NodeLogicType.PIN)
 export class ntPinIn extends ntPin {
     constructor(overrides: NodeTypeOptions = {}){
         super({
@@ -48,7 +48,7 @@ export class ntPinIn extends ntPin {
 // export interface IPinOutArgs extends IPinArgs {
 // }
 
-@registerNodeType('PinOut')
+@registerNodeType(NodeLogicType.POUT)
 export class ntPinOut extends ntPin {
     constructor(overrides: NodeTypeOptions = {}){
         super({

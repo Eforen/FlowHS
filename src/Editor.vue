@@ -318,7 +318,7 @@ import FlowMenu from '@/components/FlowMenu.vue';
 import RenderNodeSpawnProxy from './components/RenderNodeSpawnProxy.vue';
 import { ipcRenderer } from 'electron'
 import { Node, Flow, FlowsState, Connection } from './store/flows/types';
-import NodeType, { NodeTypeArgs } from './nodes/NodeType';
+import NodeType, { NodeLogicType, NodeTypeArgs } from './nodes/NodeType';
 import { ntPinIn, ntPinOut, IPinArgs } from './nodes/types/Pins';
 import { ntAnd, IAndArgs } from './nodes/types/AND';
 import uuid from 'uuid';
@@ -494,16 +494,16 @@ export default class Editor extends Vue {
 
   palette: {[index: string]: [string, NodeType<any>, any][]} = {
     IO: [
-      ['PinIn', NodeTypeDictionary.getType('PinIn'), { pinName: 'A' } as IPinArgs],
-      ['PinOut', NodeTypeDictionary.getType('PinOut'), { pinName: 'A' } as IPinArgs],
-      ['RELAY', NodeTypeDictionary.getType('RELAY'), { } as IRelayArgs],
-      ['NOT', NodeTypeDictionary.getType('NOT'), { } as INotArgs],
-      ['OR', NodeTypeDictionary.getType('OR'), { } as IOrArgs],
-      ['NOR', NodeTypeDictionary.getType('NOR'), { } as IXnorArgs],
-      ['AND', NodeTypeDictionary.getType('AND'), { } as IAndArgs],
-      ['NAND', NodeTypeDictionary.getType('NAND'), { } as INandArgs],
-      ['XOR', NodeTypeDictionary.getType('XOR'), { } as IXorArgs],
-      ['XNOR', NodeTypeDictionary.getType('XNOR'), { } as IXnorArgs]
+      ['PinIn', NodeTypeDictionary.getType(NodeLogicType.PIN), { pinName: 'A' } as IPinArgs],
+      ['PinOut', NodeTypeDictionary.getType(NodeLogicType.POUT), { pinName: 'A' } as IPinArgs],
+      ['RELAY', NodeTypeDictionary.getType(NodeLogicType.RELAY), { } as IRelayArgs],
+      ['NOT', NodeTypeDictionary.getType(NodeLogicType.NOT), { } as INotArgs],
+      ['OR', NodeTypeDictionary.getType(NodeLogicType.OR), { } as IOrArgs],
+      ['NOR', NodeTypeDictionary.getType(NodeLogicType.NOR), { } as IXnorArgs],
+      ['AND', NodeTypeDictionary.getType(NodeLogicType.AND), { } as IAndArgs],
+      ['NAND', NodeTypeDictionary.getType(NodeLogicType.NAND), { } as INandArgs],
+      ['XOR', NodeTypeDictionary.getType(NodeLogicType.XOR), { } as IXorArgs],
+      ['XNOR', NodeTypeDictionary.getType(NodeLogicType.XNOR), { } as IXnorArgs]
     ]
   }
 
@@ -542,7 +542,7 @@ export default class Editor extends Vue {
   AddNewNode() {
     // x=2 y=7 title="Pin in: A" :error="false" :changed="false" :selected="false" :inputs="12" :outputs="6" icon='' :button="false"
     //const node: Node = { guid: '', x: 0, y: 0, title: '', error: false, changed: false, selected: false, button: false, inputs: 0, outputs: 0, icon: '', color: '', inputState: [], outputState: []}
-    const node: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    const node: Node = { type: NodeLogicType.PIN, args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     //this.createNodeInFlow({flowID: 'root', node})
     //this.doCMD(new CMDAddNode(node, this.loadedFlows[this.selectedFlow]))
     this.doCMD(new CMDAddNode(node, this.loadedFlow))
@@ -557,10 +557,10 @@ export default class Editor extends Vue {
   doTheThing = false
   OpenFlowsMenu(e: MouseEvent) { 
     console.log(`Open Flow Menu`)
-    // const debug1: Node = { type: 'PinIn', args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // const debug1: Node = { type: NodeLogicType.PIN, args: {guid: uuid.v4(), x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     // this.doCMD(new CMDAddNode(debug1, this.loadedFlow))
-    // //const debug2: Node = { type: 'PinOut', args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-    // const debug2: Node = { type: 'AND', args: {guid: uuid.v4(), x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // //const debug2: Node = { type: NodeLogicType.POUT, args: {guid: uuid.v4(), x: 10, y: 20, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+    // const debug2: Node = { type: NodeLogicType.AND, args: {guid: uuid.v4(), x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
     // this.doCMD(new CMDAddNode(debug2, this.loadedFlow))
     // // from="debug1" :fromPin=0 to="debug2" :toPin=0 :states="[true]"
     // const con: Connection = {guid:'', fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}

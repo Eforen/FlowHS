@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntXorArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('XOR')
+@registerNodeType(NodeLogicType.XOR)
 export class ntXor extends BasicChip<IXorArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({

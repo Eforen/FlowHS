@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntOrArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('OR')
+@registerNodeType(NodeLogicType.OR)
 export class ntOr extends BasicChip<IOrArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({

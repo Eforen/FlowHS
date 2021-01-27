@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntXnorArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('XNOR')
+@registerNodeType(NodeLogicType.XNOR)
 export class ntXnor extends BasicChip<IXnorArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({

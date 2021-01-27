@@ -305,7 +305,7 @@ describe('Store: Simulation', () => {
   it.skip('Node Gate Logic: NAND', () => {
   })
 
-  it.skip('Node Gate Logic: PinIn', () => {
+  it.skip('Node Gate Logic: PIN', () => {
   })
 
   it.skip('Node Gate Logic: PinOut', () => {

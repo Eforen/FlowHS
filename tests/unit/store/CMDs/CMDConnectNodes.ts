@@ -11,6 +11,7 @@ import uuid from 'uuid'
 import { IPinArgs } from '@/nodes/types/Pins'
 import { IAndArgs } from '@/nodes/types/AND'
 import CMDConnectNodes from '@/store/commands/cmds/CMDConnectNodes'
+import { NodeLogicType } from '@/nodes/NodeType'
 
 const localVue = createLocalVue()
 localVue.use(Vuex)
@@ -45,7 +46,7 @@ export const tests_CMDConnectNodes = () => {
                 "connectedToBackend": false,
                 "nodes": {
                     "7d20d645-2115-4936-8bf0-4e697505be2a": {
-                        "type": "PinIn",
+                        "type": "PIN",
                         "args": {
                             "guid": "7d20d645-2115-4936-8bf0-4e697505be2a",
                             "x": 2,
@@ -109,7 +110,7 @@ export const tests_CMDConnectNodes = () => {
                 "connectedToBackend": false,
                 "nodes": {
                     "7d20d645-2115-4936-8bf0-4e697505be2a": {
-                        "type": "PinIn",
+                        "type": NodeLogicType.PIN,
                         "args": {
                             "guid": "7d20d645-2115-4936-8bf0-4e697505be2a",
                             "x": 2,
@@ -123,7 +124,7 @@ export const tests_CMDConnectNodes = () => {
                         "outputState": []
                     },
                     "d159624c-cf1c-4192-a4cf-8d071c5eaa7e": {
-                        "type": "AND",
+                        "type": NodeLogicType.AND,
                         "args": {
                             "guid": "d159624c-cf1c-4192-a4cf-8d071c5eaa7e",
                             "x": 10,
@@ -175,7 +176,7 @@ export const tests_CMDConnectNodes = () => {
                 "connectedToBackend": false,
                 "nodes": {
                     "7d20d645-2115-4936-8bf0-4e697505be2a": {
-                        "type": "PinIn",
+                        "type": NodeLogicType.PIN,
                         "args": {
                             "guid": "7d20d645-2115-4936-8bf0-4e697505be2a",
                             "x": 2,
@@ -189,7 +190,7 @@ export const tests_CMDConnectNodes = () => {
                         "outputState": []
                     },
                     "d159624c-cf1c-4192-a4cf-8d071c5eaa7e": {
-                        "type": "AND",
+                        "type": NodeLogicType.AND,
                         "args": {
                             "guid": "d159624c-cf1c-4192-a4cf-8d071c5eaa7e",
                             "x": 10,
@@ -223,8 +224,8 @@ export const tests_CMDConnectNodes = () => {
                 }
             }
 
-            const debug1: Node = { type: 'PinIn', args: {guid: "7d20d645-2115-4936-8bf0-4e697505be2a", x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
-            const debug2: Node = { type: 'AND', args: {guid: "d159624c-cf1c-4192-a4cf-8d071c5eaa7e", x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+            const debug1: Node = { type: NodeLogicType.PIN, args: {guid: "7d20d645-2115-4936-8bf0-4e697505be2a", x: 2, y: 7, pinName:'A'} as IPinArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
+            const debug2: Node = { type: NodeLogicType.AND, args: {guid: "d159624c-cf1c-4192-a4cf-8d071c5eaa7e", x: 10, y: 20} as IAndArgs, error: false, changed: false, selected: false, inputState: [], outputState: []}
             const con: Connection = {guid:"a0a64a9c-6603-4476-a5f1-2f1373c79962", fromID: debug1.args.guid, toID: debug2.args.guid, fromPort: 0, toPort: 2, state: [false], selected: false}
             
             new CMDAddNode(debug1, "b8c6ff64-8097-468b-af51-5582c214a473").exe(store.dispatch, store.state)

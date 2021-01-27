@@ -1,6 +1,19 @@
 import { RootState } from '@/store/types'
 import store from '@/store'
 
+export enum NodeLogicType {
+    AND = 'AND',
+    NAND = 'NAND',
+    NOR = 'NOR',
+    NOT = 'NOT',
+    OR = 'OR',
+    RELAY = 'RELAY',
+    XNOR = 'XNOR',
+    XOR = 'XOR',
+    PIN = 'PIN',
+    POUT = 'POUT'
+}
+
 export interface NodeTypeOptionSet {
     title: string
     button: boolean, 

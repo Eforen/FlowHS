@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntRelayArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('RELAY')
+@registerNodeType(NodeLogicType.RELAY)
 export class ntRelay extends BasicChip<IRelayArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({

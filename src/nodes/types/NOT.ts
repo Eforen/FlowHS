@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntNotArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('NOT')
+@registerNodeType(NodeLogicType.NOT)
 export class ntNot extends BasicChip<INotArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({

@@ -49,7 +49,7 @@ export const tests_CMDRenameFlow = () => {
                      ]
                   },
                   "ba872058-b9fe-4aa1-87ce-f3d4cc8832ca":{ 
-                     "type":"PinOut",
+                     "type":"POUT",
                      "args":{ 
                         "pinName":"A",
                         "guid":"ba872058-b9fe-4aa1-87ce-f3d4cc8832ca",
@@ -67,7 +67,7 @@ export const tests_CMDRenameFlow = () => {
                      ]
                   },
                   "4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4":{ 
-                     "type":"PinIn",
+                     "type":"PIN",
                      "args":{ 
                         "pinName":"A",
                         "guid":"4bf2ced6-3665-42ce-a2c5-e96f82b9cdf4",
@@ -85,7 +85,7 @@ export const tests_CMDRenameFlow = () => {
                      ]
                   },
                   "e1a2381b-35d0-4155-8659-a53e88e0600e":{ 
-                     "type":"PinIn",
+                     "type":"PIN",
                      "args":{ 
                         "pinName":"A",
                         "guid":"e1a2381b-35d0-4155-8659-a53e88e0600e",

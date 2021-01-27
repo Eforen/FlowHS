@@ -1,4 +1,4 @@
-import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs } from "../NodeType";
+import NodeType, { NodeTypeOptions, NodeTypeArgsDef, NodeTypeArgs, NodeLogicType } from "../NodeType";
 import { registerNodeType } from '../NodeTypeDictionary';
 import BasicChip from './BasicChip';
 
@@ -9,7 +9,7 @@ export const ntNandArgTypes: NodeTypeArgsDef = {
     inputs: 'string'
 }
 
-@registerNodeType('NAND')
+@registerNodeType(NodeLogicType.NAND)
 export class ntNand extends BasicChip<INandArgs> {
     constructor(overrides: NodeTypeOptions = {}){
         super({
